@@ -2,6 +2,11 @@
 
 Repository for scripts and resources used for the recovery of metagenome assembled genomes (MAGs) for the [Microflora Danica](https://www.en.bio.aau.dk/research/projects/microflora-danica) project.
 
+## Overview
+* MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline.
+* Automated MAG phylogeny workflow used in the project is available [here](https://github.com/aaronmussig/mag-phylogeny).
+* De-replicated MAGs, sequenced reads and raw Nanopore data can be downloaded from [ENA](https://www.ebi.ac.uk/ena/browser/view/PRJEB58634).
+
 ## Repo structure
 
 The repo is structured in a way that the folders and the subfolders store the contet in the least ambiguous way possible.
@@ -19,7 +24,4 @@ The repo is structured in a way that the folders and the subfolders store the co
 | ├── README.md | The explanation of the project, workflow and results, written in a [flavored markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github) |
 | └── LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
 
-## Overview
-* MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline.
-* Automated MAG phylogeny workflow used in the project is available [here](https://github.com/aaronmussig/mag-phylogeny).
-* De-replicated MAGs, sequenced reads and raw Nanopore data can be downloaded from [ENA](https://www.ebi.ac.uk/ena/browser/view/PRJEB58634).
+
