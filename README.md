@@ -20,4 +20,5 @@ The repo is structured in a way that the folders and the subfolders store the co
 | └── LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
 
 ## Workflow
-MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline.
+* MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline.
+* Automated MAG phylogeny workflow used in the project is available [here](https://github.com/aaronmussig/mag-phylogeny).
