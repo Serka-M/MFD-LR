@@ -8,7 +8,7 @@ The repo is structured in a way that the folders and the subfolders store the co
 
 | Folder | Content |
 | --- | --- |
-| project_repo | The main repo of the (sub)project, in this case the [alab_repo_template](https://github.com/fdelogu/alab_repo_template). |
+| project_repo | The main repo of the (sub)project, in this case the [alab_repo_template](https://github.com/cmc-aau/alab_repo_template). |
 | ├── data/ | The input for the project. |
 | │   ├── links/ | The [symbolic links](https://manpages.ubuntu.com/manpages/bionic/man8/sln.8.html) pointing to the raw (or consolidated) A lab data, which are stored separately. This ensures that the original data are protected form users' errors and avoids unnecessary data duplication. |
 | │   ├── downloads/ | The raw data downloaded for this project. Futher subfolders might be necessary to keep this section tidy. |
