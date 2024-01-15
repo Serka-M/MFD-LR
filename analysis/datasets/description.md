@@ -53,47 +53,61 @@
 | deep_seq | MFD sample that was deeply sequenced with Nanopore |
 | shallow_seq | MFD sample (shallow metagenome) that was used for multi-sample binning |
 
-### Dataset S3
+### Dataset S3 — dataset for per-MAG features
 | Category | Description |
 | --- | --- |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-
+| fieldsample_barcode | Sequenced sample ID |
+| bin | Genome bin ID |
+| Completeness_CheckM1 | Genome bin completeness estimate, reported by CheckM |
+| Contamination_CheckM1 | Genome bin contamination estimate, reported by CheckM |
+| Strain_Heterogeneity | Genome bin strain heterogeneity estimate, reported by CheckM |
+| Completeness_CheckM2 | Genome bin completeness estimate, reported by CheckM2 |
+| Contamination_CheckM2 | Genome bin contamination estimate, reported by CheckM2 |
+| Coding_Density | Genome bin gene coding density value, reported by CheckM2 |
+| Contig_N50 | Genome bin N50 in bp, reported by CheckM2 |
+| Average_Gene_Length | Average gene length in bp, reported by CheckM2 |
+| Genome_Size | Genome bin size in bp, reported by CheckM2 |
+| GC_Content | Genome bin guanine-cytosine content percentage |
+| Total_Contigs | Number of contigs, reported by CheckM2 |
+| Max_Contig_Length | Length of the longest contig in bp, reported by CheckM2 |
+| N90 | Genome bin N90 in bp, reported by Quast |
+| auN | Nx area under the curve, reported by Quast |
+| N_per_100kb | Rate of Ns in a genome bin per 100 kb, reported by Quast |
+| cov | Average genome bin coverage, reported by CoverM |
+| r_abund | Average genome bin relative abundance (%), reported by CoverM |
+| CDS_all | Number of protein coding genes, reported by Bakta |
+| CDS_hyp | Number of hypothetical protein coding genes, reported by Bakta |
+| bakta_tRNA_all | Number of all tRNA genes genes, reported by Bakta |
+| bakta_tRNA_uniq |  Number of unique tRNA genes genes, reported by Bakta |
+| bakta_16S | Number of 16S rRNA genes genes, reported by Bakta |
+| bakta_23S | Number of 23S rRNA genes genes, reported by Bakta |
+| bakta_5S | Number of 5S rRNA genes genes, reported by Bakta |
+| bac_16S | Number of 16S rRNA genes genes, reported by Barrnap (bacterial model) |
+| bac_23S | Number of 23S rRNA genes genes, reported by Barrnap (bacterial model) |
+| bac_5S |  Number of 5S rRNA genes genes, reported by Barrnap (bacterial model) |
+| arc_16S | Number of 16S rRNA genes genes, reported by Barrnap (archaeal model) |
+| arc_23S | Number of 23S rRNA genes genes, reported by Barrnap (archaeal model) |
+| arc_5S | Number of 5S rRNA genes genes, reported by Barrnap (archaeal model) |
+| bac_trna | Number of unique tRNA genes genes, reported by tRNAscan-SE (bacterial model) |
+| arc_trna | Number of unique tRNA genes genes, reported by tRNAscan-SE (archaeal model) |
+| MAG_status | Genome bin quality ranking according to [MIMAG standards](https://www.nature.com/articles/nbt.3893) |
+| MAG_status2 | Genome bin ranking from 'MAG_status', where circular MAGs are marked separately |
+| drep_cluster | Genome bin de-replication cluster ID |
+| rep_status | Genome bin status as representative within the de-replicated bins |
+| gtdb_classification | MAG taxonomic classification, reported by GTDB-tk |
+| fastani_ani | Average nucleotide identity for a close match, reported by GTDB-tk |
+| fastani_af | Alignment fraction for close match, reported by GTDB-tk |
+| closest_placement_ani | Top ANI match thats is < 95 %, reported by GTDB-tk |
+| closest_placement_af | Alignment fraction for matches with < 95 % ANI, reported by GTDB-tk |
+| classification_method | MAG taxonomic classification method, reported by GTDB-tk |
+| msa_percent | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
+| red_value | Relative Evolutionary Divergence for a distant match, reported by GTDB-tk |
+| phyl_classification | MAG phylogenetic classification, reported by [custom phylogeny workflow](https://github.com/aaronmussig/mag-phylogeny) |
+| mfd_sampletype | Sample type |
+| mfd_areatype | Sample area type |
+| mfd_hab1 | Sample habitat ontology (level 1) |
+| mfd_hab2 | Sample habitat ontology (level 2) |
+| mfd_hab3 | Sample habitat ontology (level 3) |
+| ENA_id | ENA ID for the genome bin (representative bin only) |
 
 [//]: # (Written by Mantas Sereika)
-
-
