@@ -1,6 +1,6 @@
 ## Intro
 
-Repository for scripts and resources used for the recovery of metagenome assembled genomes (MAGs) for the [Microflora Danica](https://www.en.bio.aau.dk/research/projects/microflora-danica) project.
+Repository for scripts and resources used for the recovery of metagenome assembled genomes (MAGs) for the [Microflora Danica](https://www.en.bio.aau.dk/research/projects/microflora-danica) (MFD) project.
 
 ## Overview
 * MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline.
