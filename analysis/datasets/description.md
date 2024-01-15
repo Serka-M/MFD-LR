@@ -91,7 +91,7 @@
 | bac_trna | Number of unique tRNA genes genes, reported by tRNAscan-SE (bacterial model) |
 | arc_trna | Number of unique tRNA genes genes, reported by tRNAscan-SE (archaeal model) |
 | MAG_status | Genome bin quality ranking according to [MIMAG standards](https://www.nature.com/articles/nbt.3893) |
-| MAG_status2 | Genome bin ranking from 'MAG_status', where circular MAGs are marked separately |
+| MAG_status2 | Genome bin ranking from `MAG_status`, where circular MAGs are marked separately |
 | drep_cluster | Genome bin de-replication cluster ID |
 | rep_status | Genome bin status as representative within the de-replicated bins |
 | gtdb_classification | MAG taxonomic classification, reported by GTDB-tk |
