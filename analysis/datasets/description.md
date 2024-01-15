@@ -7,9 +7,9 @@
 | habitat_typenumber | Sample habitat type number, as described in the [MFD metadata](https://github.com/cmc-aau/mfd_metadata) |
 | mfd_sampletype | Sample type |
 | mfd_areatype | Sample area type |
-| mfd_hab1 | Sample habitat level 1 |
-| mfd_hab2 | Sample habitat level 2 |
-| mfd_hab3 | Sample habitat level 3 |
+| mfd_hab1 | Sample habitat ontology (level 1) |
+| mfd_hab2 | Sample habitat ontology (level 2) |
+| mfd_hab3 | Sample habitat ontology (level 3) |
 | longitude | Sample longitude coordinates |
 | latitude | Sample latitude coordinates  |
 | assembled | Percentage of sequenced reads that mapped to the assembly, reported by Flye |
@@ -36,12 +36,12 @@
 | nanopore | Nanopore chemistry used for sequencing |
 | speed_bps | Nanopore sequencing speed mode in bps |
 | sampling_khz | Nanopore sequencing sampling rate in KHz |
-| device | Sequencing device |
+| device | Sequencing device used for sample |
 | minknow_v | Version of MinKNOW used during sequencing |
 | basecaller | Basecaller name |
 | basecaller_v | Basecaller version |
 | mmlong2_v | Version of mmlong2 used for MAG recovery |
-| ENA_id | Sample ID in ENA |
+| ENA_id | Sample ID in [ENA](https://www.ebi.ac.uk/ena/browser) |
 | ENA_raw1 | ENA ID for batch 1 of raw Nanopore signal data |
 | ENA_raw2 | ENA ID for batch 2 of raw Nanopore signal data |
 | ENA_raw3 | ENA ID for batch 3 of raw Nanopore signal data |
