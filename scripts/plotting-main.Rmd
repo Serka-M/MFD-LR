@@ -1,0 +1,168 @@
+---
+title: "R code for plotting main figures"
+author: ""
+date: ""
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+###  Load dependencies
+```{r, include=TRUE, message=FALSE}
+library(stringr)
+library(stringi)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(mapDK)
+library(iNEXT)
+library(ggsankey)
+library(ggbeeswarm)
+library(grid)
+library(ggplotify)
+library(lemon)
+library(pals)
+library(gridExtra)
+```
+
+
+### Load data
+```{r, include=TRUE}
+gen <- read.delim("../analysis/datasets/dataset_S1.tsv", sep="\t", header=T)
+mags <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
+```
+
+
+### Plot presets
+```{r, include=TRUE}
+colors <- c("#85660D","#FEAF16","#690726","#90AD1C","#1C8356","#4eb3d3",
+            "#1CBE4F","#782AB6","#DEA0FD","#325A9B","#C4451C","#F8A19F" )
+
+labels <- c("Bogs, mires and fens"="#85660D",
+            "Coastal"="#FEAF16",
+            "Dunes"="#690726",
+            "Fields"="#90AD1C",
+            "Forests"="#1C8356",
+            "Freshwater"="#4eb3d3",
+            "Grassland formations"="#1CBE4F",
+            "Natural, unassigned habitat"="#782AB6",
+            "Rocky habitats and caves"="#DEA0FD",
+            "Saltwater"="#325A9B",
+            "Temperate heath and scrub"="#C4451C",
+            "Urban"="#F8A19F",
+            "Soil"="#7c4807",
+            "Sediment"="#b3b3b3",
+            "Water"="#0080FE")
+
+preset_gen1 <- list(theme_bw(),
+                    theme(legend.position = "none",
+                           axis.title.y = element_text(size = 7), 
+                           axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6),
+                           axis.text.x = element_text(size = 6),
+                           panel.grid.minor = element_line(size = 0.15),
+                           panel.grid.major = element_line(size = 0.3)),
+                    scale_x_discrete(guide = guide_axis(angle = 45)),
+                    scale_color_manual(values=labels))
+
+preset_gen2 <- list(theme_bw(),
+                    theme(legend.position = "bottom",
+                          legend.text=element_text(size=7),
+                          legend.title = element_text(size=7),
+                           axis.title.y = element_text(size = 7), 
+                           axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6),
+                           axis.text.x = element_text(size = 6),
+                           panel.grid.minor = element_line(size = 0.15),
+                           panel.grid.major = element_line(size = 0.3)))
+
+preset_gen3 <- list(theme_bw(),
+                    theme(legend.position = "none",
+                           axis.title.y = element_text(size = 7), 
+                           axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6),
+                           axis.text.x = element_text(size = 6),
+                           axis.ticks = element_blank(),
+                           panel.grid.minor = element_line(size = 0.15),
+                           panel.grid.major = element_line(size = 0.3)),
+                     coord_flip())
+```
+
+
+### Map of sequenced samples
+```{r, include=TRUE}
+map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") + 
+  geom_point(data = gen, aes(x = longitude, y = latitude, group = NA, color = mfd_hab1), size = 1) +
+  theme(legend.key=element_blank(), legend.position = "bottom",
+        legend.text=element_text(size=7),legend.title = element_text(size=7),
+        legend.key.size = unit(3.5, 'mm'), legend.spacing.x = unit(4, 'mm')) +
+  labs(col="Habitat:") + 
+  scale_color_manual(values=colors) +
+  guides(colour = guide_legend(override.aes = list(size=1.2), ncol=3, title.position = "top")) 
+```
+
+
+### General yield, N50, data efficacy plots
+```{r, include=TRUE}
+gen$name1 <- ""
+
+plot_yield <- ggplot(data=gen, aes(x=name1, y=reads_size_bp/10**9)) + labs(title="", y="Sequenced yield (gbp)", x="") +
+              geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#1b9e77", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+
+plot_n50_read <- ggplot(data=gen, aes(x=name1, y=reads_N50_bp/10**3)) + labs(title="", y="Read N50 (kbp)", x="") +
+                 geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#d95f02", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+
+plot_n50_assembly <- ggplot(data=gen, aes(x=name1, y=contigs_N50_bp/10**3)) + labs(title="", y="Contig N50 (kbp)", x="") +
+                     geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#7570b3", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+
+plot_rate_assembly <- ggplot(data=gen, aes(x=name1, y=assembled)) + labs(title="", y="Sequenced data asssembled (%)", x="") +
+                      geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#e7298a", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+
+plot_rate_bin <- ggplot(data=gen, aes(x=name1, y=r_abund*assembled/100)) + labs(title="", y="Sequenced data binned (%)", x="") +
+                 geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#66a61e", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+
+plot_rate_mags <- ggplot(data=gen, aes(x=name1, y=HQ_mags+MQ_mags)) + labs(title="", y="Mags recovered", x="")  +
+                  geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#8c510a", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+```
+
+
+### Figure 1
+```{r, include=TRUE}
+plot_leg <- get_legend(map)
+plot_leg <- as_ggplot(plot_leg)
+
+fig1_a <- ggarrange(map, plot_leg, nrow=2, ncol=1, legend = "none", common.legend = FALSE, labels = "a", font.label = list(size = 9), heights=c(3,1))
+
+fig1_bf <- ggarrange(plot_yield, plot_n50_read, plot_n50_assembly, plot_rate_assembly, plot_rate_mags, plot_rate_bin,
+                     nrow=6, ncol=1, legend = "none", common.legend = FALSE, 
+                     labels = c("b","c","d","e","f", "g"), font.label = list(size = 9))
+
+fig1 <- ggarrange(fig1_a, fig1_bf, nrow=1, ncol=2, legend = "none", common.legend = FALSE, widths=c(2,1))
+
+ggsave(file="../analysis/figures/Fig1.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
+### Supplementary Figure 1
+```{r, include=TRUE}
+plot_gb <- ggplot(data=gen, aes(x=mfd_hab1, y=reads_size_bp/10**9, color=mfd_hab1)) + labs(title="", y="Sequenced yield (gbp)", x="") +
+           geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
+
+plot_read_n50 <- ggplot(data=gen, aes(x=mfd_hab1, y=reads_N50_bp/10**3, color=mfd_hab1)) + labs(title="", y="Read N50 (kbp)", x="") +
+                 geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
+
+plot_asm <- ggplot(data=gen, aes(x=mfd_hab1, y=assembled, color=mfd_hab1)) + labs(title="", y="Data assembled (%)", x="") + 
+            geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
+
+plot_con_n50 <- ggplot(data=gen, aes(x=mfd_hab1, y=contigs_N50_bp/10**3, color=mfd_hab1)) + labs(title="", y="Contig N50 (kbp)", x="") + 
+                geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
+  
+plots_FS1 <- ggarrange(plot_gb, plot_asm, plot_read_n50, plot_con_n50, nrow=2, ncol=2, align = c("v"),
+                       legend = "none", common.legend = FALSE, labels = c("a","b", "c", "d"), font.label = list(size = 9))
+
+ggsave(file="../analysis/figures/FigS1.pdf", height = 150, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+

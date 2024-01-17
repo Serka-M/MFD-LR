@@ -7,9 +7,9 @@
 | habitat_typenumber | Sample habitat type number, as described in the [MFD metadata](https://github.com/cmc-aau/mfd_metadata) |
 | mfd_sampletype | Sample type |
 | mfd_areatype | Sample area type |
-| mfd_hab1 | Sample habitat ontology (level 1) |
-| mfd_hab2 | Sample habitat ontology (level 2) |
-| mfd_hab3 | Sample habitat ontology (level 3) |
+| mfd_hab1 | Sample habitat descriptor (level 1) |
+| mfd_hab2 | Sample habitat descriptor (level 2) |
+| mfd_hab3 | Sample habitat descriptor (level 3) |
 | longitude | Sample longitude coordinates |
 | latitude | Sample latitude coordinates  |
 | assembled | Percentage of sequenced reads that mapped to the assembly, reported by Flye |
@@ -102,12 +102,12 @@
 | classification_method | MAG taxonomic classification method, reported by GTDB-tk |
 | msa_percent | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
 | red_value | Relative Evolutionary Divergence for a distant match, reported by GTDB-tk |
-| phyl_classification | MAG phylogenetic classification, reported by [custom phylogeny workflow](https://github.com/aaronmussig/mag-phylogeny) |
+| phyl_classification | MAG phylogenetic classification, reported by [custom phylogeny workflow](https://github.com/aaronmussig/mag-phylogeny) (representative bins only) |
 | mfd_sampletype | Sample type |
 | mfd_areatype | Sample area type |
-| mfd_hab1 | Sample habitat ontology (level 1) |
-| mfd_hab2 | Sample habitat ontology (level 2) |
-| mfd_hab3 | Sample habitat ontology (level 3) |
-| ENA_id | ENA ID for the genome bin (representative bin only) |
+| mfd_hab1 | Sample habitat descriptor (level 1) |
+| mfd_hab2 | Sample habitat descriptor (level 2) |
+| mfd_hab3 | Sample habitat descriptor (level 3) |
+| ENA_id | ENA ID for the genome bin (representative bins only) |
 
 [//]: # (Written by Mantas Sereika)
