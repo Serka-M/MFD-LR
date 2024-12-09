@@ -1,0 +1,262 @@
+bin	genus_proposed	species_proposed	gender	genus_explanation	species_explanation	GTDB_phylum	GTDB_class	GTDB_order	GTDB_family
+MFD00008.bin.1.129	Egtvedisoma 	proximum	neut.	Lineage found nearby  Egtved	A species related to but distinct from the existing species	Nitrospirota	JACRHJ01	JACRHJ01	JACRHJ01
+MFD00032.bin.1.47	Vidstrupibacterium	scandium	neut.	Lineage found nearby  Vidstrup	A species from Scandinavia	Actinomycetota	Actinomycetes	JAHEKZ01	JAHEKZ01
+MFD00032.bin.1.63	Venebjergibacter	sediminis	masch.	Lineage found nearby  Vennebjerg	A species found in sediments	Actinomycetota	Thermoleophilia	UBA2241	UBA2241
+MFD00032.bin.c.1	Tornbyimorpha	aquidulcis	fem.	Lineage found nearby  Tornby	A species found in freshwater	Elusimicrobiota	Elusimicrobia	2-01-FULL-59-12	2-01-FULL-59-12
+MFD00822.bin.1.1	Nibeplasma	litorale	neut.	Lineage found nearby  Nibe	A species found in the coast	Verrucomicrobiota	Verrucomicrobiae	Chthoniobacterales	UBA10450
+MFD00905.bin.1.35	Gedvedisoma 	simile	neut.	Lineage found nearby  Gedved	A species related to but distinct from the existing species	Patescibacteria	ABY1	SG8-24	CAIQCM01
+MFD00905.bin.1.36	Lundumimicrobium	lacustre	neut.	Lineage found nearby  Lundum	A species found in a lake	Fermentibacterota	Fermentibacteria	Fermentibacterales	Fermentibacteraceae
+MFD00905.bin.1.44	Nebelisoma 	aquidulce	neut.	Lineage found nearby  Nebel	A species found in freshwater	Actinomycetota	Acidimicrobiia	Acidimicrobiales	Microtrichaceae
+MFD00964.bin.1.138	Vindingibacter	telluricus	masch.	Lineage found nearby  Vinding	A species found in soil	Acidobacteriota	Terriglobia	Acidoferrales	UBA7541
+MFD00964.bin.1.196	Kolkeribacter	glebicus	masch.	Lineage found nearby  Koelkaer	A species found in soil	Verrucomicrobiota	Verrucomicrobiae	Chthoniobacterales	JAFAMB01
+MFD00964.bin.1.235	Isenvadisoma 	aridum	neut.	Lineage found nearby  Isenvad	A species found in sand	Acidobacteriota	Terriglobia	Acidoferrales	UBA7541
+MFD01213.bin.c.1	Lystrupibacter	aridus	masch.	Lineage found nearby  Lystrup	A species found in sand	Planctomycetota	Phycisphaerae	Tepidisphaerales	Tepidisphaeraceae
+MFD01213.bin.c.2	Vivildibacterium	aridum	neut.	Lineage found nearby  Vivild	A species found in sand	Verrucomicrobiota	Verrucomicrobiae	Chthoniobacterales	SZAS-18
+MFD01223.bin.1.26	Enstedimorpha	humica	fem.	Lineage found nearby  Ensted	A species found in soil	Patescibacteria	Paceibacteria	UBA9973	CALRBL01
+MFD01223.bin.1.54	Kliplevimonas	adiacens	fem.	Lineage found nearby  Kliplev	A species related to but distinct from the existing species	Eremiobacterota	Eremiobacteria	Baltobacterales	Baltobacteraceae
+MFD01231.bin.1.11	Ugeplasma	scandium	neut.	Lineage found nearby  Uge	A species from Scandinavia	Acidobacteriota	Terriglobia	Bryobacterales	Bryobacteraceae
+MFD01275.bin.1.111	Horbyimonas	terrestris	fem.	Lineage found nearby  Hoerby	A species found in soil	Patescibacteria	Saccharimonadia	Saccharimonadales	UBA4665
+MFD01275.bin.1.17	Gjerildisoma 	glebicum	neut.	Lineage found nearby  Gjerrild	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD01275.bin.1.276	Godthabibacter	glebicus	masch.	Lineage found nearby  Godthaab	A species found in soil	Gemmatimonadota	Gemmatimonadetes	Gemmatimonadales	GWC2-71-9
+MFD01275.bin.1.42	Hemediplasma	telluricum	neut.	Lineage found nearby  Hemmed	A species found in soil	Actinomycetota	Actinomycetes	Propionibacteriales	Nocardioidaceae
+MFD01275.bin.1.70	Strandiplasma	europaeum	neut.	Lineage found nearby  Bonnerup Strand	A species from Europe	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD01275.bin.1.89	Rimsosoma 	septentrionale	neut.	Lineage found nearby  Rimsoe	A species from the north	Patescibacteria	Saccharimonadia	Saccharimonadales	2-12-FULL-41-12
+MFD01275.bin.1.95	Vegersleviplasma	aridum	neut.	Lineage found nearby  Veggerslev	A species found in sand	Patescibacteria	Saccharimonadia	UBA4664	SCTI01
+MFD01275.bin.c.19	Karlbyisoma 	glebicum	neut.	Lineage found nearby  Karlby	A species found in soil	Actinomycetota	Actinomycetes	Sporichthyales	Sporichthyaceae
+MFD01275.bin.c.8	Glesborgibacter	aridus	masch.	Lineage found nearby  Glesborg	A species found in sand	Patescibacteria	Saccharimonadia	UBA4664	JAHWKN01
+MFD01299.bin.1.245	Olgodibacterium	septentrionale	neut.	Lineage found nearby  Olgod	A species from the north	Nitrospirota	Thermodesulfovibrionia	Thermodesulfovibrionales	JdFR-86
+MFD01299.bin.c.3	Olgodimorpha	aquidulcis	fem.	Lineage found nearby  Oelgod	A species found in freshwater	Nitrospirota	Thermodesulfovibrionia	Thermodesulfovibrionales	SM23-35
+MFD01299.bin.c.4	Streleviplasma	lacustre	neut.	Lineage found nearby  Strellev	A species found in a lake	Chloroflexota	Dehalococcoidia	SM23-28-2	SM23-28-2
+MFD01476.bin.1.124	Resenibacter	contiguus	masch.	Lineage found nearby  Resen	A species related to but distinct from the existing species	Bacteroidota	UBA10030	UBA10030	SZUA-254
+MFD01476.bin.1.22	Ejsingibacter	sediminis	masch.	Lineage found nearby  Ejsing	A species found in sediments	Acidobacteriota	Terriglobia	Bryobacterales	Bryobacteraceae
+MFD01476.bin.1.72	Vinderupibacter	lacustris	masch.	Lineage found nearby  Vinderup	A species found in a lake	Patescibacteria	Microgenomatia	Levybacterales	UBA12049
+MFD01476.bin.c.1	Ronbjergibacter	aquidulcis	masch.	Lineage found nearby  Roenbjerg	A species found in freshwater	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	Fen-181
+MFD01689.bin.1.23	Vardesoma 	danicum	neut.	Lineage found nearby  Varde	A species from Denmark	Acidobacteriota	Terriglobia	Terriglobales	SbA1
+MFD01689.bin.1.35	Bryndumimorpha	contigua	fem.	Lineage found nearby  Bryndum	A species related to but distinct from the existing species	Cyanobacteriota	Cyanobacteriia	Cyanobacteriales	Oscillatoriaceae
+MFD01689.bin.1.76	Nesbjergimonas	terrestris	fem.	Lineage found nearby  Naesbjerg	A species found in soil	Eremiobacterota	Eremiobacteria	Baltobacterales	Baltobacteraceae
+MFD01716.bin.c.1	Estvadimorpha	terrea	fem.	Lineage found nearby  Estvad	A species found in soil	Dependentiae	Babeliae	Babeliales	Vermiphilaceae
+MFD01721.bin.1.114	Agedrupimicrobium	nordicum	neut.	Lineage found nearby  Agedrup	A species from the Nordic region	Eisenbacteria	RBG-16-71-46	JABDJR01	Unclassified
+MFD01721.bin.1.192	Bulerupimicrobium	oricum	neut.	Lineage found nearby  Bullerup	A species found in the coast	Actinomycetota	Actinomycetes	Actinomycetales	Dermatophilaceae
+MFD01721.bin.1.199	Munkebobacter	litoralis	masch.	Lineage found nearby  Munkebo	A species found in the coast	Actinomycetota	Actinomycetes	Propionibacteriales	Nocardioidaceae
+MFD01721.bin.1.239	Sedenibacterium	oricum	neut.	Lineage found nearby  Seden	A species found in the coast	Acidobacteriota	Thermoanaerobaculia	Multivoradales	UBA5704
+MFD01721.bin.1.268	Ostrupimorpha	litoralis	fem.	Lineage found nearby  Oestrup	A species found in the coast	Pseudomonadota	Gammaproteobacteria	JAURND01	Unclassified
+MFD01721.bin.1.315	Asumimorpha	orica	fem.	Lineage found nearby  Aasum	A species found in the coast	Pseudomonadota	Gammaproteobacteria	UBA6429	Unclassified
+MFD01721.bin.1.322	Volsmosemorpha	glebica	fem.	Lineage found nearby  Vollsmose	A species found in soil	Actinomycetota	Actinomycetes	Actinomycetales	Dermatophilaceae
+MFD01721.bin.1.333	Kolstrupisoma 	litorale	neut.	Lineage found nearby  Koelstrup	A species found in the coast	Bacteroidota	Rhodothermia	Rhodothermales	Rubricoccaceae
+MFD01721.bin.1.37	Stigemonas	orica	fem.	Lineage found nearby  Stige	A species found in the coast	Bacteroidota	Ignavibacteria	Ignavibacteriales	Ignavibacteriaceae
+MFD01721.bin.1.65	Marslevisoma 	ripicum	neut.	Lineage found nearby  Marslev	A species found in the coast	Bacteroidota	Bacteroidia	Bacteroidales	GCA-2748055
+MFD01721.bin.1.79	Skebyibacterium	oricum	neut.	Lineage found nearby  Skeby	A species found in the coast	Gemmatimonadota	Gemmatimonadetes	Gemmatimonadales	Gemmatimonadaceae
+MFD01721.bin.1.80	Drigstrupiplasma	oricum	neut.	Lineage found nearby  Drigstrup	A species found in the coast	Bacteroidota	Ignavibacteria	Ignavibacteriales	Melioribacteraceae
+MFD01721.bin.1.82	Lumbyimicrobium	telluricum	neut.	Lineage found nearby  Lumby	A species found in soil	Gemmatimonadota	Gemmatimonadetes	Longimicrobiales	RSA9
+MFD01721.bin.1.94	Birkendemonas	litoralis	fem.	Lineage found nearby  Birkende	A species found in the coast	Bacteroidota	Rhodothermia	Rhodothermales	BA12
+MFD01721.bin.1.99	Korslokebacterium	ripicum	neut.	Lineage found nearby  Korsloekke	A species found in the coast	Actinomycetota	Actinomycetes	Actinomycetales	Kineosporiaceae
+MFD01721.bin.c.5	Odensebacter	terrestris	masch.	Lineage found nearby  Odense	A species found in soil	Gemmatimonadota	Gemmatimonadetes	Longimicrobiales	RSA9
+MFD01872.bin.1.224	Thorstrupimicrobium	terrestre	neut.	Lineage found nearby  Thorstrup	A species found in soil	Acidobacteriota	Thermoanaerobaculia	UBA5066	UBA5066
+MFD01872.bin.1.66	Janderupimorpha	similis	fem.	Lineage found nearby  Janderup	A species related to but distinct from the existing species	Acidobacteriota	Aminicenantia	Aminicenantales	RBG-16-66-30
+MFD01916.bin.1.18	Jerupiplasma	septentrionale	neut.	Lineage found nearby  Jerup	A species from the north	Patescibacteria	Gracilibacteria	Peribacterales	Peribacteraceae
+MFD01916.bin.1.28	Albekimorpha	propinqua	fem.	Lineage found nearby  Albaek	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	Nevskiales	Nevskiaceae
+MFD01916.bin.c.5	Rabjergisoma 	aridum	neut.	Lineage found nearby  Raabjerg	A species found in sand	Acidobacteriota	Blastocatellia	Pyrinomonadales	Pyrinomonadaceae
+MFD01916.bin.c.6	Strandbyiplasma	aridum	neut.	Lineage found nearby  Strandby	A species found in sand	Acidobacteriota	Vicinamibacteria	Fen-336	Fen-336
+MFD01916.bin.c.8	Elingibacterium	glebicum	neut.	Lineage found nearby  Elling	A species found in soil	Patescibacteria	Microgenomatia	Levybacterales	UBA12049
+MFD02134.bin.1.158	Visingimonas	terrestris	fem.	Lineage found nearby  Soender Vissing	A species found in soil	Actinomycetota	Thermoleophilia	Miltoncostaeales	Miltoncostaeaceae
+MFD02134.bin.1.166	Johanesiplasma	telluricum	neut.	Lineage found nearby  Sankt Johannes	A species found in soil	Actinomycetota	Actinomycetes	JAHEKZ01	JAHEKZ01
+MFD02134.bin.1.63	Themisoma 	terrestre	neut.	Lineage found nearby  Them	A species found in soil	Actinomycetota	Actinomycetes	JAHEKZ01	JAHEKZ01
+MFD02199.bin.1.2	Pjedstedimicrobium	proximum	neut.	Lineage found nearby  Pjedsted	A species related to but distinct from the existing species	Actinomycetota	Thermoleophilia	Gaiellales	Gaiellaceae
+MFD02242.bin.1.86	Tilstisoma 	proximum	neut.	Lineage found nearby  Tilst	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	Steroidobacterales	Steroidobacteraceae
+MFD02248.bin.1.137	Byrumisoma 	humicum	neut.	Lineage found nearby  Byrum	A species found in soil	Pseudomonadota	Alphaproteobacteria	Unclassified	Unclassified
+MFD02248.bin.1.208	Vesteromorpha	glebica	fem.	Lineage found nearby  Vesteroe	A species found in soil	Pseudomonadota	Gammaproteobacteria	Coxiellales	Coxiellaceae
+MFD02248.bin.1.22	Byrumimonas	septentrionalis	fem.	Lineage found nearby  Byrum	A species from the north	Pseudomonadota	Alphaproteobacteria	Dongiales	Dongiaceae
+MFD02360.bin.1.316	Rehrisoma 	proximum	neut.	Lineage found nearby  Raehr	A species related to but distinct from the existing species	Actinomycetota	Thermoleophilia	Gaiellales	Gaiellaceae
+MFD02360.bin.1.49	Vigsobacter	terrestris	masch.	Lineage found nearby  Vigsoe	A species found in soil	Pseudomonadota	Alphaproteobacteria	Dongiales	Dongiaceae
+MFD02416.bin.1.10	Bleremorpha	ripica	fem.	Lineage found nearby  Blaere	A species found in the coast	Pseudomonadota	Gammaproteobacteria	Chromatiales	Sedimenticolaceae
+MFD02416.bin.1.110	Skivumimonas	orica	fem.	Lineage found nearby  Skivum	A species found in the coast	Actinomycetota	Actinomycetes	Acidothermales	Acidothermaceae
+MFD02416.bin.1.121	Giveribacterium	oricum	neut.	Lineage found nearby  Giver	A species found in the coast	Pseudomonadota	Alphaproteobacteria	43-37	Unclassified
+MFD02416.bin.1.122	Ejdrupimorpha	ripica	fem.	Lineage found nearby  Ejdrup	A species found in the coast	Thermoplasmatota	Thermoplasmata	Methanomassiliicoccales	UBA472
+MFD02416.bin.1.123	Arsibacter	oricus	masch.	Lineage found nearby  Aars	A species found in the coast	Patescibacteria	JABMPQ01	JABMPQ01	Unclassified
+MFD02416.bin.1.279	Gunderstedibacter	oricus	masch.	Lineage found nearby  Gundersted	A species found in the coast	Pseudomonadota	Gammaproteobacteria	Rariloculales	Rariloculaceae
+MFD02416.bin.1.281	Vegerbyisoma 	ripicum	neut.	Lineage found nearby  Veggerby	A species found in the coast	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	UBA2999
+MFD02416.bin.1.319	Suldrupibacter	oricus	masch.	Lineage found nearby  Suldrup	A species found in the coast	Zixibacteria	MSB-5A5	GN15	FEB-12
+MFD02416.bin.1.351	Bislevisoma 	vicinum	neut.	Lineage found nearby  Bislev	A species related to but distinct from the existing species	Acidobacteriota	Vicinamibacteria	Fen-336	Fen-336
+MFD02416.bin.1.36	Ajstrupibacter	nordicus	masch.	Lineage found nearby  Store Ajstrup	A species from the Nordic region	Pseudomonadota	Gammaproteobacteria	CALZJG01	CALZJG01
+MFD02416.bin.1.397	Binderupimicrobium	litorale	neut.	Lineage found nearby  Binderup	A species found in the coast	Patescibacteria	ABY1	BM507	UBA12075
+MFD02416.bin.1.4	Alstrupiplasma	propinquum	neut.	Lineage found nearby  Alstrup	A species related to but distinct from the existing species	Desulfobacterota	JACQYL01	JACQYL01	Unclassified
+MFD02416.bin.1.43	Havbrobacter	scandius	masch.	Lineage found nearby  Havbro	A species from Scandinavia	Pseudomonadota	Alphaproteobacteria	SMXQ01	SMXQ01
+MFD02416.bin.1.7	Brorstrupimicrobium	ripicum	neut.	Lineage found nearby  Brorstrup	A species found in the coast	Pseudomonadota	Gammaproteobacteria	Unclassified	Unclassified
+MFD02416.bin.1.81	Gislumibacter	litoralis	masch.	Lineage found nearby  Gislum	A species found in the coast	Bacteroidota	Kapaibacteriia	OLB7	OLB7
+MFD02416.bin.1.95	Flejsborgimicrobium	oricum	neut.	Lineage found nearby  Flejsborg	A species found in the coast	Gemmatimonadota	Gemmatimonadetes	Gemmatimonadales	Gemmatimonadaceae
+MFD02416.bin.c.14	Oudrupibacter	litoralis	masch.	Lineage found nearby  Oudrup	A species found in the coast	Bacteroidota	Ignavibacteria	Ignavibacteriales	Ignavibacteriaceae
+MFD02416.bin.c.17	Arestrupimorpha	glebica	fem.	Lineage found nearby  Aarestrup	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD02416.bin.c.3	Haverslevimicrobium	ripicum	neut.	Lineage found nearby  Haverslev	A species found in the coast	Patescibacteria	Dojkabacteria	J137	J137
+MFD02579.bin.c.1	Byrumimorpha	danica	fem.	Lineage found nearby  Byrum	A species from Denmark	Pseudomonadota	Alphaproteobacteria	Acetobacterales	Acetobacteraceae
+MFD02581.bin.1.63	Tebringibacterium	scandium	neut.	Lineage found nearby  Taebring	A species from Scandinavia	Actinomycetota	Actinomycetes	Actinomycetales	Dermatophilaceae
+MFD02832.bin.1.183	Nylarskeribacterium	simile	neut.	Lineage found nearby  Nylarsker	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	Legionellales	Legionellaceae
+MFD02832.bin.1.37	Vestermariebacterium	danicum	neut.	Lineage found nearby  Vestermarie	A species from Denmark	Patescibacteria	JAEDAM01	BD1-5	UBA2023
+MFD02840.bin.1.11	Ronemicrobium	ripicum	neut.	Lineage found nearby  Roenne	A species found in the coast	Actinomycetota	Actinomycetes	Propionibacteriales	Nocardioidaceae
+MFD02840.bin.1.236	Ronebacter	terrestris	masch.	Lineage found nearby  Ronne	A species found in soil	Actinomycetota	Thermoleophilia	Gaiellales	Gaiellaceae
+MFD02840.bin.1.295	Knudskeribacterium	ripicum	neut.	Lineage found nearby  Knudsker	A species found in the coast	Actinomycetota	Actinomycetes	Mycobacteriales	Cryptosporangiaceae
+MFD02979.bin.1.148	Hadsteniplasma	aquidulce	neut.	Lineage found nearby  Hadsten	A species found in freshwater	Acidobacteriota	Terriglobia	Versatilivoradales	Versatilivoraceae
+MFD02979.bin.1.88	Hadbjergiplasma	aquidulce	neut.	Lineage found nearby  Hadbjerg	A species found in freshwater	Actinomycetota	Coriobacteriia	Anaerosomatales	JACRBU01
+MFD02979.bin.c.5	Haldumibacterium	aquidulce	neut.	Lineage found nearby  Haldum	A species found in freshwater	Bacteroidota	Bacteroidia	Cytophagales_A	Amoebophilaceae
+MFD03066.bin.c.1	Kolindimicrobium	contiguum	neut.	Lineage found nearby  Kolind	A species related to but distinct from the existing species	Actinomycetota	Actinomycetes	Mycobacteriales	CADCTP01
+MFD03066.bin.c.3	Ebdrupiplasma	europaeum	neut.	Lineage found nearby  Ebdrup	A species from Europe	Actinomycetota	Nitriliruptoria	Nitriliruptorales	Nitriliruptoraceae
+MFD03250.bin.1.122	Kalundborgimicrobium	aquidulce	neut.	Lineage found nearby  Kalundborg	A species found in freshwater	Bacteroidota	Bacteroidia	Cytophagales	Cyclobacteriaceae
+MFD03250.bin.1.125	Nyvangimonas	aquidulcis	fem.	Lineage found nearby  Nyvang	A species found in freshwater	Pseudomonadota	Alphaproteobacteria	Rhizobiales	Unclassified
+MFD03250.bin.1.162	Arbyimicrobium	aquidulce	neut.	Lineage found nearby  Aarby	A species found in freshwater	Cyanobacteriota	Cyanobacteriia	Cyanobacteriales	SIO1D9
+MFD03250.bin.1.191	Pedersiplasma	aquidulce	neut.	Lineage found nearby  Sankt Peders	A species found in freshwater	Planctomycetota	Phycisphaerae	Phycisphaerales	Phycisphaeraceae
+MFD03250.bin.1.61	Rakleviplasma	danicum	neut.	Lineage found nearby  Raklev	A species from Denmark	Pseudomonadota	Alphaproteobacteria	Caulobacterales	Hyphomonadaceae
+MFD03250.bin.c.3	Tomerupimicrobium	aquaticum	neut.	Lineage found nearby  Toemmerup	A species found in water	Bacteroidota	Bacteroidia	Flavobacteriales	Vicingaceae
+MFD03250.bin.c.5	Rorbyimonas	aquidulcis	fem.	Lineage found nearby  Roerby	A species found in freshwater	Bdellovibrionota	Bacteriovoracia	Bacteriovoracales	Bacteriovoracaceae
+MFD03250.bin.c.6	Udbyimicrobium	aquidulce	neut.	Lineage found nearby  Udby	A species found in freshwater	Pseudomonadota	Gammaproteobacteria	JABDGN01	Unclassified
+MFD03250.bin.c.7	Verslevimonas	aquidulcis	fem.	Lineage found nearby  Vaerslev	A species found in freshwater	Pseudomonadota	Alphaproteobacteria	JAJTHO01	Unclassified
+MFD03323.bin.1.18	Viskumimicrobium	terrestre	neut.	Lineage found nearby  Viskum	A species found in soil	Desulfobacterota_B	Binatia	Binatales	Binataceae
+MFD03346.bin.1.39	Thorningimonas	terrea	fem.	Lineage found nearby  Thorning	A species found in soil	Acidobacteriota	Terriglobia	Acidoferrales	UBA7541
+MFD03726.bin.1.10	Vojensiplasma	propinquum	neut.	Lineage found nearby  Vojens	A species related to but distinct from the existing species	Chloroflexota	Dehalococcoidia	SZUA-161	SZUA-161
+MFD03726.bin.1.201	Skrydstrupisoma 	proximum	neut.	Lineage found nearby  Skrydstrup	A species related to but distinct from the existing species	Bacteroidota	UBA10030	UBA10030	Unclassified
+MFD03726.bin.1.50	Jegerupimicrobium	danicum	neut.	Lineage found nearby  Jegerup	A species from Denmark	Spirochaetota	Brevinematia	Brevinematales	JAOACQ01
+MFD03726.bin.c.1	Maugstrupisoma 	danicum	neut.	Lineage found nearby  Maugstrup	A species from Denmark	Acidobacteriota	Terriglobia	Bryobacterales	Bryobacteraceae
+MFD03726.bin.c.3	Haderslevibacterium	nordicum	neut.	Lineage found nearby  Gammel Haderslev	A species from the Nordic region	Margulisbacteria	WOR-1	Unclassified	Unclassified
+MFD03726.bin.c.7	Nustrupimicrobium	vicinum	neut.	Lineage found nearby  Nustrup	A species related to but distinct from the existing species	Pseudomonadota	Alphaproteobacteria	ATCC43930	Stellaceae
+MFD03804.bin.1.167	Thyboronibacter	europaeus	masch.	Lineage found nearby  Thyboron	A species from Europe	Acidobacteriota	Unclassified	Unclassified	Unclassified
+MFD03804.bin.1.238	Thyboronimonas	aquidulcis	fem.	Lineage found nearby  Thyboroen	A species found in freshwater	Pseudomonadota	Gammaproteobacteria	GRL18	GRL18
+MFD03804.bin.1.81	Ageriplasma	septentrionale	neut.	Lineage found nearby  Agger	A species from the north	Desulfobacterota	Desulfobacteria	Desulfobacterales	Unclassified
+MFD04212.bin.1.1	Nyordimorpha	arida	fem.	Lineage found nearby  Nyord	A species found in sand	Actinomycetota	Actinomycetes	Actinomycetales	GCA-002748415
+MFD04212.bin.1.17	Stegemonas	arida	fem.	Lineage found nearby  Stege	A species found in sand	Actinomycetota	Actinomycetes	Mycobacteriales	Micromonosporaceae
+MFD04212.bin.1.184	Keldbyimicrobium	aridum	neut.	Lineage found nearby  Keldby	A species found in sand	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD04212.bin.1.186	Elmelundeplasma	glebicum	neut.	Lineage found nearby  Elmelunde	A species found in soil	Actinomycetota	Actinomycetes	Propionibacteriales	Nocardioidaceae
+MFD04212.bin.1.43	Kalvehavesoma 	humicum	neut.	Lineage found nearby  Kalvehave	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	Thermoleophilaceae
+MFD04212.bin.c.13	Boresoma 	boreale	neut.	Lineage found nearby  Borre	A species from the north	Patescibacteria	Saccharimonadia	Saccharimonadales	CAIJKY01
+MFD04212.bin.c.9	Damsholtemonas	arida	fem.	Lineage found nearby  Damsholte	A species found in sand	Actinomycetota	Thermoleophilia	Solirubrobacterales	Thermoleophilaceae
+MFD04408.bin.1.1	Starupimonas	aquidulcis	fem.	Lineage found nearby  Starup	A species found in freshwater	Armatimonadota	CAIYQO01	WVXJ01	DTIZ01
+MFD04408.bin.1.13	Starupibacter	sediminis	masch.	Lineage found nearby  Soender Starup	A species found in sediments	Acidobacteriota	Aminicenantia	Aminicenantales	JAFGAV01
+MFD04408.bin.1.134	Hadersleviplasma	nordicum	neut.	Lineage found nearby  Haderslev	A species from the Nordic region	Planctomycetota	Planctomycetia	Pirellulales	Thermoguttaceae
+MFD04408.bin.1.141	Grarupimorpha	nordica	fem.	Lineage found nearby  Grarup	A species from the Nordic region	Patescibacteria	Paceibacteria	Moranbacterales	JAPLXC01
+MFD04408.bin.1.172	Vilstrupimicrobium	nordicum	neut.	Lineage found nearby  Vilstrup	A species from the Nordic region	Planctomycetota	Phycisphaerae	Sedimentisphaerales	SG8-4
+MFD04408.bin.1.18	Bjerningisoma 	boreale	neut.	Lineage found nearby  Bjerning	A species from the north	Spirochaetota	Spirochaetia	SZUA-6	Fen-1364
+MFD04408.bin.1.36	Moltrupimonas	europaea	fem.	Lineage found nearby  Moltrup	A species from Europe	Bacteroidota	UBA10030	UBA10030	Unclassified
+MFD04408.bin.1.44	Hoptrupimorpha	proxima	fem.	Lineage found nearby  Hoptrup	A species related to but distinct from the existing species	Zixibacteria	MSB-5A5	MSB-5A5	RBG-16-43-9
+MFD04408.bin.1.61	Vonsbekibacter	propinquus	masch.	Lineage found nearby  Vonsbaek	A species related to but distinct from the existing species	Patescibacteria	Microgenomatia	UBA1406	GWC2-37-13
+MFD04408.bin.1.96	Halkimicrobium	scandium	neut.	Lineage found nearby  Halk	A species from Scandinavia	Chloroflexota	Dehalococcoidia	Dehalococcoidales	BS750m-G39
+MFD04408.bin.c.1	Fjelstrupimorpha	nordica	fem.	Lineage found nearby  Fjelstrup	A species from the Nordic region	Acidobacteriota	Aminicenantia	Aminicenantales	JAFGAV01
+MFD04408.bin.c.6	Osbyibacter	sediminis	masch.	Lineage found nearby  Oesby	A species found in sediments	Patescibacteria	UBA1384	UBA12157	JAENIV01
+MFD04434.bin.1.124	Henemonas	humica	fem.	Lineage found nearby  Henne	A species found in soil	Pseudomonadota	Gammaproteobacteria	Unclassified	Unclassified
+MFD04434.bin.1.50	Nebelimonas	arida	fem.	Lineage found nearby  Norre Nebel	A species found in sand	Actinomycetota	Acidimicrobiia	Acidimicrobiales	RAAP-2
+MFD04434.bin.c.2	Nebelimorpha	arida	fem.	Lineage found nearby  Noerre Nebel	A species found in sand	Dependentiae	Babeliae	Babeliales	JANWKD01
+MFD04463.bin.1.19	Outrupisoma 	aridum	neut.	Lineage found nearby  Outrup	A species found in sand	Acidobacteriota	Terriglobia	Acidoferrales	UBA7541
+MFD04463.bin.c.16	Lonemorpha	europaea	fem.	Lineage found nearby  Loenne	A species from Europe	Dependentiae	Babeliae	Babeliales	Vermiphilaceae
+MFD04492.bin.1.108	Ryeplasma	lacustre	neut.	Lineage found nearby  Gammel Rye	A species found in a lake	Actinomycetota	Thermoleophilia	UBA2241	UBA2241
+MFD04492.bin.1.203	Vorladegardisoma 	lacustre	neut.	Lineage found nearby  Voerladegaard	A species found in a lake	Planctomycetota	Planctomycetia	Pirellulales	Thermoguttaceae
+MFD04492.bin.1.23	Ryimicrobium	lacustre	neut.	Lineage found nearby  Ry	A species found in a lake	Halobacteriota	Methanosarcinia	Methanotrichales	Methanotrichaceae
+MFD04492.bin.1.43	Alingibacterium	nordicum	neut.	Lineage found nearby  Alling	A species from the Nordic region	Planctomycetota	Phycisphaerae	Tepidisphaerales	Tepidisphaeraceae
+MFD04540.bin.1.28	Padborgibacter	europaeus	masch.	Lineage found nearby  Padborg	A species from Europe	Patescibacteria	Saccharimonadia	Saccharimonadales	UBA4665
+MFD04540.bin.1.40	Bovimicrobium	septentrionale	neut.	Lineage found nearby  Bov	A species from the north	FCPU426	Palsa-1180	Palsa-1180	Palsa-1180
+MFD04540.bin.1.59	Krusabacter	terrestris	masch.	Lineage found nearby  Krusa	A species found in soil	Pseudomonadota	Alphaproteobacteria	ATCC43930	Stellaceae
+MFD04716.bin.1.11	Skagenibacterium	vicinum	neut.	Lineage found nearby  Skagen	A species related to but distinct from the existing species	Patescibacteria	Gracilibacteria	JAUYGZ01	DAOVYC01
+MFD04716.bin.1.116	Skagenimonas	sediminis	fem.	Lineage found nearby  Skagen	A species found in sediments	Bacteroidota	UBA10030	UBA10030	UBA6906
+MFD04716.bin.1.185	Skagenisoma 	nordicum	neut.	Lineage found nearby  Skagen	A species from the Nordic region	Patescibacteria	WWE3	UBA101185	UBA10185
+MFD04716.bin.1.312	Skageniplasma	vicinum	neut.	Lineage found nearby  Skagen	A species related to but distinct from the existing species	Krumholzibacteriota	Krumholzibacteria	LZORAL124-64-63	LZORAL124-64-63
+MFD04716.bin.1.71	Skagenimicrobium	propinquum	neut.	Lineage found nearby  Skagen	A species related to but distinct from the existing species	Cyanobacteriota	Cyanobacteriia	PCC-9006	Prochlorotrichaceae
+MFD04780.bin.1.207	Abybromorpha	tellurica	fem.	Lineage found nearby  Abybro	A species found in soil	Pseudomonadota	Gammaproteobacteria	DSM-16500	DSM-16500
+MFD04780.bin.2.113	Jetsmarkiplasma	scandium	neut.	Lineage found nearby  Jetsmark	A species from Scandinavia	Patescibacteria	Paceibacteria	UBA9973	UBA6065
+MFD04850.bin.1.9	Stagstrupibacter	borealis	masch.	Lineage found nearby  Stagstrup	A species from the north	Actinomycetota	Actinomycetes	Unclassified	Unclassified
+MFD04850.bin.c.1	Skyumibacter	affinis	masch.	Lineage found nearby  Skyum	A species related to but distinct from the existing species	Actinomycetota	Thermoleophilia	Unclassified	Unclassified
+MFD04935.bin.1.3	Sonderhomorpha	arida	fem.	Lineage found nearby  Soenderho	A species found in sand	Actinomycetota	Actinomycetes	JACCUZ01	JACCUZ01
+MFD04935.bin.1.62	Nordbyibacterium	glebicum	neut.	Lineage found nearby  Nordby	A species found in soil	Actinomycetota	Actinomycetes	Propionibacteriales	Actinopolymorphaceae
+MFD04944.bin.1.147	Bjerebyimonas	tellurica	fem.	Lineage found nearby  Bjerreby	A species found in soil	Acidobacteriota	Terriglobia	Terriglobales	SbA1
+MFD04944.bin.1.16	Strynoplasma	nordicum	neut.	Lineage found nearby  Strynoe	A species from the Nordic region	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD04944.bin.1.167	Drejomonas	terrestris	fem.	Lineage found nearby  Drejoe	A species found in soil	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	UBA2999
+MFD04944.bin.1.23	Rudkobingimonas	affinis	fem.	Lineage found nearby  Rudkobing	A species related to but distinct from the existing species	Actinomycetota	Acidimicrobiia	IMCC26256	JACDBD01
+MFD04944.bin.1.263	Rudkobingimorpha	glebica	fem.	Lineage found nearby  Rudkoebing	A species found in soil	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	SCN-69-37
+MFD04944.bin.1.291	Tronsemonas	contigua	fem.	Lineage found nearby  Troense	A species related to but distinct from the existing species	Acidobacteriota	HRBIN11	JAKEFK01	JAKEFK01
+MFD04944.bin.1.307	Vindebyimicrobium	vicinum	neut.	Lineage found nearby  Vindeby	A species related to but distinct from the existing species	Verrucomicrobiota	Verrucomicrobiae	Chthoniobacterales	UBA10450
+MFD04944.bin.1.309	Skrobelevimicrobium	humicum	neut.	Lineage found nearby  Skroebelev	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD04944.bin.1.326	Egensemicrobium	vicinum	neut.	Lineage found nearby  Egense	A species related to but distinct from the existing species	Actinomycetota	UBA4738	UBA4738	JACQTL01
+MFD04944.bin.1.92	Byisoma 	terreus	neut.	Lineage found nearby  Thuro By	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD04944.bin.2.54	Thurobacterium	europaeum	neut.	Lineage found nearby  Thuroe	A species from Europe	Desulfobacterota_B	Binatia	UBA9968	UBA9968
+MFD04944.bin.c.2	Simerbolemicrobium	septentrionale	neut.	Lineage found nearby  Simmerboelle	A species from the north	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD04944.bin.c.3	Svendborgibacterium	terrestre	neut.	Lineage found nearby  Svendborg	A species found in soil	Actinomycetota	Thermoleophilia	Gaiellales	Gaiellaceae
+MFD04967.bin.1.157	Marstalimicrobium	telluricum	neut.	Lineage found nearby  Marstal	A species found in soil	Verrucomicrobiota	Verrucomicrobiae	Limisphaerales	Unclassified
+MFD04967.bin.1.6	Eroskobingisoma 	europaeum	neut.	Lineage found nearby  AEroskobing	A species from Europe	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	2-12-FULL-66-21
+MFD04967.bin.c.4	Eroskoebingimorpha	glebica	fem.	Lineage found nearby  Aeroeskoebing	A species found in soil	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	SCN-69-37
+MFD04967.bin.c.6	Tranderupibacterium	humicum	neut.	Lineage found nearby  Tranderup	A species found in soil	Acidobacteriota	Thermoanaerobaculia	UBA5066	Gp7-AA6
+MFD05377.bin.1.52	Sejerslevibacterium	boreale	neut.	Lineage found nearby  Sejerslev	A species from the north	Acidobacteriota	Terriglobia	Acidoferrales	UBA7541
+MFD05442.bin.1.16	Ljorsleviplasma	ripicum	neut.	Lineage found nearby  Ljoerslev	A species found in the coast	Chloroflexota	Limnocylindria	QHBO01	QHBO01
+MFD05442.bin.1.311	Vilebacterium	humicum	neut.	Lineage found nearby  Vile	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	Solirubrobacteraceae
+MFD05442.bin.1.346	Loderupiplasma	europaeum	neut.	Lineage found nearby  Loedderup	A species from Europe	Actinomycetota	Actinomycetes	Prado026	Unclassified
+MFD05454.bin.1.2	Boremicrobium	glebicum	neut.	Lineage found nearby  Borre	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	Solirubrobacteraceae
+MFD05502.bin.1.3	Endelavemonas	propinqua	fem.	Lineage found nearby  Endelave	A species related to but distinct from the existing species	Fibrobacterota	Fibrobacteria	UBA11236	UBA11236
+MFD05502.bin.1.37	Langabacterium	glebicum	neut.	Lineage found nearby  Langaa	A species found in soil	Chloroflexota	Limnocylindria	Limnocylindrales	CSP1-4
+MFD05512.bin.1.74	Verloseplasma	proximum	neut.	Lineage found nearby  Vaerlose	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	JABCZS01	JABCZS01
+MFD05512.bin.c.16	Verlosesoma 	terrestre	neut.	Lineage found nearby  Vaerloese	A species found in soil	Dependentiae	Babeliae	Babeliales	JANWKD01
+MFD05512.bin.c.3	Farumimorpha	glebica	fem.	Lineage found nearby  Farum	A species found in soil	Patescibacteria	Paceibacteria	UBA6257	2-01-FULL-56-20
+MFD05521.bin.1.148	Ingstrupiplasma	terreus	neut.	Lineage found nearby  Ingstrup	A species found in soil	Actinomycetota	Actinomycetes	Streptosporangiales	Streptosporangiaceae
+MFD05567.bin.1.1	Kerumimorpha	glebica	fem.	Lineage found nearby  Kaerum	A species found in soil	Methylomirabilota	Methylomirabilia	Rokubacteriales	CSP1-6
+MFD05580.bin.1.8	Vindumiplasma	scandium	neut.	Lineage found nearby  Vindum	A species from Scandinavia	Chlamydiota	Chlamydiia	Chlamydiales	Parachlamydiaceae
+MFD05580.bin.1.97	Vinkelibacter	affinis	masch.	Lineage found nearby  Vinkel	A species related to but distinct from the existing species	Dependentiae	Babeliae	Babeliales	Babeliaceae
+MFD05580.bin.c.4	Rindisoma 	nordicum	neut.	Lineage found nearby  Soender Rind	A species from the Nordic region	Pseudomonadota	Alphaproteobacteria	UBA9655	UBA9655
+MFD05684.bin.1.125	Hosoma 	litorale	neut.	Lineage found nearby  Ho	A species found in the coast	Pseudomonadota	Gammaproteobacteria	JASBUN01	JASBUN01
+MFD05684.bin.1.137	Oksbyibacterium	europaeum	neut.	Lineage found nearby  Oksby	A species from Europe	Bacteroidota	Rhodothermia	Balneolales	M1805
+MFD05684.bin.1.14	Bilumimicrobium	oricum	neut.	Lineage found nearby  Billum	A species found in the coast	Pseudomonadota	Alphaproteobacteria	JAPYRI01	JAPYRI01
+MFD05684.bin.1.263	Guldageribacterium	litorale	neut.	Lineage found nearby  Guldager	A species found in the coast	Krumholzibacteriota	Krumholzibacteria	LZORAL124-64-63	LZORAL124-64-63
+MFD05684.bin.1.285	Oksbolibacter	litoralis	masch.	Lineage found nearby  Oksbol	A species found in the coast	Pseudomonadota	Gammaproteobacteria	Xanthomonadales	SZUA-36
+MFD05684.bin.c.4	Trenighedsibacter	litoralis	masch.	Lineage found nearby  Treenigheds	A species found in the coast	Patescibacteria	Saccharimonadia	Saccharimonadales	JACPYF01
+MFD05705.bin.1.164	Alimonas	arida	fem.	Lineage found nearby  Aal	A species found in sand	Eremiobacterota	Eremiobacteria	Eremiobacterales	Eremiobacteraceae
+MFD05705.bin.1.187	Lydumimorpha	humica	fem.	Lineage found nearby  Lydum	A species found in soil	Eremiobacterota	Eremiobacteria	Eremiobacterales	Eremiobacteraceae
+MFD05705.bin.1.57	Nebelimicrobium	propinquum	neut.	Lineage found nearby  Noerre Nebel	A species related to but distinct from the existing species	Goldbacteria	PGYV01	PGYV01	Palsa-1178
+MFD05747.bin.1.131	Holtugibacterium	humicum	neut.	Lineage found nearby  Holtug	A species found in soil	Acidobacteriota	Thermoanaerobaculia	Multivoradales	UBA5704
+MFD05747.bin.1.28	Hedingesoma 	glebicum	neut.	Lineage found nearby  Store Heddinge	A species found in soil	Acidobacteriota	Thermoanaerobaculia	Multivoradales	UBA5704
+MFD05841.bin.1.39	Volstedimonas	vicina	fem.	Lineage found nearby  Volsted	A species related to but distinct from the existing species	Actinomycetota	Acidimicrobiia	Acidimicrobiales	JACDCH01
+MFD05942.bin.1.105	Tistedimonas	terrea	fem.	Lineage found nearby  Kongens Tisted	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD05942.bin.1.20	Grynderupiplasma	propinquum	neut.	Lineage found nearby  Grynderup	A species related to but distinct from the existing species	Actinomycetota	Coriobacteriia	Anaerosomatales	Anaerosomataceae
+MFD05942.bin.1.345	Norageriplasma	europaeum	neut.	Lineage found nearby  Norager	A species from Europe	Actinomycetota	Coriobacteriia	Anaerosomatales	Unclassified
+MFD05942.bin.1.73	Ravnkildemicrobium	terreus	neut.	Lineage found nearby  Ravnkilde	A species found in soil	Gemmatimonadota	Gemmatimonadetes	Gemmatimonadales	GWC2-71-9
+MFD06092.bin.1.176	Vindibacter	glebicus	masch.	Lineage found nearby  Vind	A species found in soil	Chlamydiota	Chlamydiia	Chlamydiales	Rhabdochlamydiaceae
+MFD06092.bin.1.94	Idomimonas	terrea	fem.	Lineage found nearby  Idom	A species found in soil	Dependentiae	Babeliae	Babeliales	Vermiphilaceae
+MFD06435.bin.1.139	Klitmoleribacter	similis	masch.	Lineage found nearby  Klitmoller	A species related to but distinct from the existing species	Bacteroidota	Ignavibacteria	SJA-28	OLB5
+MFD06714.bin.1.37	Dresletebacterium	terrestre	neut.	Lineage found nearby  Dreslette	A species found in soil	Pseudomonadota	Alphaproteobacteria	ATCC43930	Stellaceae
+MFD06742.bin.c.1	Elmelundemonas	tellurica	fem.	Lineage found nearby  Elmelunde	A species found in soil	Planctomycetota	Planctomycetia	Gemmatales	Gemmataceae
+MFD09212.bin.1.217	Vorimicrobium	terreus	neut.	Lineage found nearby  Voer	A species found in soil	Acidobacteriota	Blastocatellia	UBA7656	UBA7656
+MFD09222.bin.c.1	Karupibacterium	scandium	neut.	Lineage found nearby  Karup	A species from Scandinavia	Acidobacteriota	Terriglobia	Acidoferrales	UBA7541
+MFD09267.bin.1.321	Kornumibacterium	propinquum	neut.	Lineage found nearby  Kornum	A species related to but distinct from the existing species	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD09286.bin.1.55	Lodbjergisoma 	terreus	neut.	Lineage found nearby  Lodbjerg	A species found in soil	Eremiobacterota	Eremiobacteria	Baltobacterales	Baltobacteraceae
+MFD09286.bin.c.1	Vestervigisoma 	aridum	neut.	Lineage found nearby  Vestervig	A species found in sand	Bacteroidota	Bacteroidia	Bacteroidales	DTGW01
+MFD09368.bin.1.210	Holbolimonas	tellurica	fem.	Lineage found nearby  Holboel	A species found in soil	Actinomycetota	Actinomycetes	Mycobacteriales	JAFAQI01
+MFD09368.bin.1.23	Rinkenesisoma 	telluricum	neut.	Lineage found nearby  Rinkenaes	A species found in soil	Acidobacteriota	Thermoanaerobaculia	Multivoradales	UBA5704
+MFD09495.bin.1.125	Snogebekimicrobium	europaeum	neut.	Lineage found nearby  Snogebaek	A species from Europe	Bdellovibrionota	FAC87	UBA2466	UBA2466
+MFD09495.bin.1.55	Povlskerimonas	arida	fem.	Lineage found nearby  Povlsker	A species found in sand	Pseudomonadota	Gammaproteobacteria	JAURND01	JAURND01
+MFD09495.bin.c.1	Bodilskerimonas	glebica	fem.	Lineage found nearby  Bodilsker	A species found in soil	Planctomycetota	Planctomycetia	Pirellulales	PALSA-1355
+MFD09603.bin.1.211	Gudhjemisoma 	humicum	neut.	Lineage found nearby  Gudhjem	A species found in soil	Acidobacteriota	Terriglobia	Terriglobales	Acidobacteriaceae
+MFD09603.bin.1.231	Osterlarskerisoma 	simile	neut.	Lineage found nearby  Oesterlarsker	A species related to but distinct from the existing species	Eremiobacterota	Eremiobacteria	Baltobacterales	Baltobacteraceae
+MFD09603.bin.1.312	Romonas	contigua	fem.	Lineage found nearby  Roe	A species related to but distinct from the existing species	Actinomycetota	Acidimicrobiia	Acidimicrobiales	Palsa-688
+MFD09603.bin.1.86	Ostermariemicrobium	terreus	neut.	Lineage found nearby  Oestermarie	A species found in soil	Actinomycetota	Thermoleophilia	Solirubrobacterales	Solirubrobacteraceae
+MFD09603.bin.1.97	Tejnimorpha	tellurica	fem.	Lineage found nearby  Tejn	A species found in soil	Actinomycetota	Acidimicrobiia	Acidimicrobiales	Unclassified
+MFD09603.bin.1.99	Olskerimicrobium	terreus	neut.	Lineage found nearby  Olsker	A species found in soil	Pseudomonadota	Alphaproteobacteria	Acetobacterales	Acetobacteraceae
+MFD09671.bin.1.114	Pederskeriplasma	telluricum	neut.	Lineage found nearby  Pedersker	A species found in soil	Bdellovibrionota	UBA1018	UBA1018	UBA1018
+MFD09671.bin.1.120	Nexobacter	propinquus	masch.	Lineage found nearby  Nexoe	A species related to but distinct from the existing species	Chlamydiota	Chlamydiia	Chlamydiales	Unclassified
+MFD09671.bin.1.19	Nexoplasma	humicum	neut.	Lineage found nearby  Nexo	A species found in soil	Armatimonadota	Armatimonadia	Armatimonadales	Capsulimonadaceae
+MFD09671.bin.1.5	Akeribacter	telluricus	masch.	Lineage found nearby  Aaker	A species found in soil	Acidobacteriota	Terriglobia	Terriglobales	Acidobacteriaceae
+MFD09671.bin.1.56	Akirkebyiplasma	proximum	neut.	Lineage found nearby  Akirkeby	A species related to but distinct from the existing species	Planctomycetota	Planctomycetia	Gemmatales	Gemmataceae
+MFD09779.bin.1.244	Nisumimonas	similis	fem.	Lineage found nearby  Soender Nissum	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	Steroidobacterales	Steroidobacteraceae
+MFD09779.bin.1.273	Nesibacter	sediminis	masch.	Lineage found nearby  Nees	A species found in sediments	Actinomycetota	Actinomycetes	Unclassified	Unclassified
+MFD09779.bin.1.378	Stabyimonas	septentrionalis	fem.	Lineage found nearby  Staby	A species from the north	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD09779.bin.1.47	Bovlingibacter	septentrionalis	masch.	Lineage found nearby  Boevling	A species from the north	Actinomycetota	Humimicrobiia	Humimicrobiales	Humimicrobiaceae
+MFD09779.bin.1.69	Vembimonas	similis	fem.	Lineage found nearby  Vemb	A species related to but distinct from the existing species	Acidobacteriota	Thermoanaerobaculia	Multivoradales	Multivoraceae
+MFD09779.bin.1.7	Vedersoplasma	septentrionale	neut.	Lineage found nearby  Vedersoe	A species from the north	Actinomycetota	Acidimicrobiia	Acidimicrobiales	UBA8139
+MFD09779.bin.1.73	Ulfborgibacterium	vicinum	neut.	Lineage found nearby  Ulfborg	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	Pseudomonadales	JAHEGP01
+MFD09779.bin.1.77	Bekmarksbrobacter	europaeus	masch.	Lineage found nearby  Baekmarksbro	A species from Europe	Eisenbacteria	RBG-16-71-46	Unclassified	Unclassified
+MFD09779.bin.1.82	Madumisoma 	propinquum	neut.	Lineage found nearby  Madum	A species related to but distinct from the existing species	Actinomycetota	Thermoleophilia	Solirubrobacterales	70-9
+MFD09779.bin.1.9	Moborgimorpha	nordica	fem.	Lineage found nearby  Moeborg	A species from the Nordic region	Actinomycetota	Actinomycetes	Jiangellales	Unclassified
+MFD09964.bin.1.195	Domerbyibacterium	scandium	neut.	Lineage found nearby  Dommerby	A species from Scandinavia	Actinomycetota	Acidimicrobiia	Acidimicrobiales	CALAML01
+MFD09964.bin.1.215	Skivesoma 	contiguum	neut.	Lineage found nearby  Skive	A species related to but distinct from the existing species	Chloroflexota	Anaerolineae	Promineifilales	UBA4811
+MFD09964.bin.1.236	Koberupimicrobium	boreale	neut.	Lineage found nearby  Kobberup	A species from the north	Bacteroidota	Ignavibacteria	Ignavibacteriales	Ignavibacteriaceae
+MFD09964.bin.1.27	Hojslevibacterium	boreale	neut.	Lineage found nearby  Hoejslev	A species from the north	Acidobacteriota	Thermoanaerobaculia	Thermoanaerobaculales	Sulfomarinibacteraceae
+MFD09964.bin.1.60	Egerisimonas	sediminis	fem.	Lineage found nearby  Egeris	A species found in sediments	Actinomycetota	Acidimicrobiia	Acidimicrobiales	Unclassified
+MFD09964.bin.1.68	Flyimonas	europaea	fem.	Lineage found nearby  Fly	A species from Europe	Actinomycetota	Acidimicrobiia	Acidimicrobiales	SZUA-35
+MFD09964.bin.1.69	Dolbyimorpha	vicina	fem.	Lineage found nearby  Doelby	A species related to but distinct from the existing species	Pseudomonadota	Gammaproteobacteria	Woeseiales	Woeseiaceae
+MFD09964.bin.1.87	Iglsomicrobium	vicinum	neut.	Lineage found nearby  Iglsoe	A species related to but distinct from the existing species	Patescibacteria	Microgenomatia	UBA1400	Chisholmbacteraceae
+MFD09964.bin.2.144	Lemisoma 	propinquum	neut.	Lineage found nearby  Lem	A species related to but distinct from the existing species	Chloroflexota	Anaerolineae	Anaerolineales	JABWBV01
+MFD10007.bin.1.132	Birkerodisoma 	boreale	neut.	Lineage found nearby  Birkeroed	A species from the north	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	JAKQTR01
+MFD10007.bin.1.176	Ravnsnesibacterium	boreale	neut.	Lineage found nearby  Ravnsnaes	A species from the north	Acidobacteriota	Vicinamibacteria	Vicinamibacterales	Unclassified
+MFD10007.bin.1.230	Horsholmibacterium	boreale	neut.	Lineage found nearby  Horsholm	A species from the north	Actinomycetota	Thermoleophilia	Gaiellales	Gaiellaceae
+MFD10007.bin.c.2	Horsholmibacter	affinis	masch.	Lineage found nearby  Hoersholm	A species related to but distinct from the existing species	Acidobacteriota	Aminicenantia	Aminicenantales	JAFGBC01
+MFD10007.bin.c.6	Holteplasma	simile	neut.	Lineage found nearby  Gammel Holte	A species related to but distinct from the existing species	Halobacteriota	Methanomicrobia	Methanomicrobiales	Methanospirillaceae
+MFD10113.bin.1.179	Agrimonas	tellurica	fem.	Lineage found nearby  Agri	A species found in soil	Bacteroidota	Bacteroidia	Sphingobacteriales	Sphingobacteriaceae

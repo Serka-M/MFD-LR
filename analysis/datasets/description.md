@@ -101,4 +101,18 @@
 | GTDB_MSA | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
 | GTDB_RED | Relative Evolutionary Divergence for a distant match, reported by GTDB-tk |
 
+### Dataset S4 — dataset for proposing novel lineages under SeqCode
+| Category | Description |
+| --- | --- |
+| bin | Genome bin ID |
+| genus_proposed | Proposed genus name for lineage |
+| species_proposed | Proposed species name for lineage  |
+| gender | Grammatical gender of the lineage name |
+| genus_explanation | Explanation of the genus name |
+| species_explanation | Explanation of the species name |
+| GTDB_phylum | Phylum taxononomy of the lineage in GTDB R220 |
+| GTDB_class | Class taxononomy of the lineage in GTDB R220 |
+| GTDB_order | Order taxononomy of the lineage in GTDB R220 |
+| GTDB_family | Family taxononomy of the lineage in GTDB R220 |
+
 [//]: # (Written by Mantas Sereika)
