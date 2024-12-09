@@ -40,7 +40,7 @@
 | minknow_v | Version of MinKNOW used during sequencing |
 | basecaller | Basecaller name |
 | basecaller_v | Basecaller version |
-| ENA_id | Sample ID in [ENA](https://www.ebi.ac.uk/ena/browser) |
+| ENA_ID | Sample ID in [ENA](https://www.ebi.ac.uk/ena/browser) |
 | ENA_raw1 | ENA ID for batch 1 of raw Nanopore signal data |
 | ENA_raw2 | ENA ID for batch 2 of raw Nanopore signal data |
 | ENA_raw3 | ENA ID for batch 3 of raw Nanopore signal data |
@@ -92,21 +92,13 @@
 | MAG_status | Genome bin quality ranking according to [MIMAG standards](https://www.nature.com/articles/nbt.3893) |
 | MAG_status2 | Genome bin ranking from `MAG_status`, where circular MAGs are marked separately |
 | drep_cluster | Genome bin de-replication cluster ID |
-| rep_status | Genome bin status as representative within the de-replicated bins |
-| gtdb_classification | MAG taxonomic classification, reported by GTDB-tk |
-| fastani_ani | Average nucleotide identity for a close match, reported by GTDB-tk |
-| fastani_af | Alignment fraction for close match, reported by GTDB-tk |
-| closest_placement_ani | Top ANI match thats is < 95 %, reported by GTDB-tk |
-| closest_placement_af | Alignment fraction for matches with < 95 % ANI, reported by GTDB-tk |
-| classification_method | MAG taxonomic classification method, reported by GTDB-tk |
-| msa_percent | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
-| red_value | Relative Evolutionary Divergence for a distant match, reported by GTDB-tk |
-| phyl_classification | MAG phylogenetic classification, reported by [custom phylogeny workflow](https://github.com/aaronmussig/mag-phylogeny) (representative bins only) |
-| mfd_sampletype | Sample type |
-| mfd_areatype | Sample area type |
-| mfd_hab1 | Sample habitat descriptor (level 1) |
-| mfd_hab2 | Sample habitat descriptor (level 2) |
-| mfd_hab3 | Sample habitat descriptor (level 3) |
-| ENA_id | ENA ID for the genome bin (representative bins only) |
+| rep_status | Genome bin status as species representative within the de-replicated bins |
+| ENA_ID | ENA ID for the genome bin (representative bins only) |
+| GTDB_taxonomy | MAG taxonomic classification, reported by GTDB-tk |
+| GTDB_REF | Reference genome ID for species level matches |
+| GTDB_ANI | Average nucleotide identity for a top match, reported by GTDB-tk |
+| GTDB_AF | Alignment fraction for tpå match, reported by GTDB-tk |
+| GTDB_MSA | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
+| GTDB_RED | Relative Evolutionary Divergence for a distant match, reported by GTDB-tk |
 
 [//]: # (Written by Mantas Sereika)
