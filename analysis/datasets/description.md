@@ -40,7 +40,6 @@
 | minknow_v | Version of MinKNOW used during sequencing |
 | basecaller | Basecaller name |
 | basecaller_v | Basecaller version |
-| mmlong2_v | Version of mmlong2 used for MAG recovery |
 | ENA_id | Sample ID in [ENA](https://www.ebi.ac.uk/ena/browser) |
 | ENA_raw1 | ENA ID for batch 1 of raw Nanopore signal data |
 | ENA_raw2 | ENA ID for batch 2 of raw Nanopore signal data |
