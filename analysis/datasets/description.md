@@ -49,8 +49,8 @@
 ### Dataset S2 — dataset for shallow metagenomes used for multi-sample binning
 | Category | Description |
 | --- | --- |
-| deep_seq | MFD sample that was deeply sequenced with Nanopore |
-| shallow_seq | MFD sample (shallow metagenome) that was used for multi-sample binning |
+| MFD-LR | MFD sample that was deeply sequenced with Nanopore |
+| MFD-SR | MFD sample (shallow metagenome) that was used for multi-sample binning |
 
 ### Dataset S3 — dataset for per-MAG features
 | Category | Description |
