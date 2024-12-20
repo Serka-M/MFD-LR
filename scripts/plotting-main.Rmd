@@ -35,6 +35,31 @@ mags <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
 ```
 
 
+### Wrangle metadata
+```{r, include=TRUE}
+# Rename outlier groups
+gen$mfd_hab1_ <-  gen$mfd_hab1
+gen$mfd_hab1_ <- ifelse( gen$fieldsample_barcode == "MFD06085", "Other",  gen$mfd_hab1_)
+gen$mfd_hab1_ <- ifelse( gen$fieldsample_barcode == "MFD03250", "Other",  gen$mfd_hab1_)
+gen$mfd_hab1_ <- ifelse( gen$fieldsample_barcode == "MFD09603", "Other",  gen$mfd_hab1_)
+gen$mfd_hab1_ <- ifelse( gen$fieldsample_barcode == "MFD10097", "Other",  gen$mfd_hab1_)
+
+# Fill in missing values
+gen$mfd_hab2 <- ifelse(gen$mfd_hab2 == "", "Unassigned habitat (level 2)", gen$mfd_hab2)
+gen$mfd_hab3 <- ifelse(gen$mfd_hab3 == "", "Unassigned habitat (level 3)", gen$mfd_hab3)
+
+# Get counts per habitat
+hab_count <- aggregate(gen$mfd_hab1_, by=list(Category=gen$mfd_hab1_), drop=FALSE, FUN=length)
+colnames(hab_count) <- c("mfd_hab1_","n")
+hab_count$mfd_hab1_n <- paste0(hab_count$mfd_hab1_," (",hab_count$n,")")
+gen <- merge(gen,hab_count[,c("mfd_hab1_","mfd_hab1_n")],by="mfd_hab1_")
+
+# Update MAG dataframe
+mags[,c("mfd_sampletype","mfd_areatype","mfd_hab1","mfd_hab2","mfd_hab3")] <- NULL
+mags <- merge(mags,gen[,c("fieldsample_barcode","mfd_sampletype","mfd_areatype","mfd_hab1","mfd_hab1_","mfd_hab2","mfd_hab3")],by="fieldsample_barcode")
+```
+
+
 ### Plot presets
 ```{r, include=TRUE}
 colors <- c("#85660D","#FEAF16","#690726","#90AD1C","#1C8356","#4eb3d3",
@@ -45,16 +70,20 @@ labels <- c("Bogs, mires and fens"="#85660D",
             "Dunes"="#690726",
             "Fields"="#90AD1C",
             "Forests"="#1C8356",
-            "Freshwater"="#4eb3d3",
+            "Urban freshwater"="#4eb3d3",
+            "Natural freshwater"="#0080FE",
             "Grassland formations"="#1CBE4F",
             "Natural, unassigned habitat"="#782AB6",
             "Rocky habitats and caves"="#DEA0FD",
             "Saltwater"="#325A9B",
             "Temperate heath and scrub"="#C4451C",
-            "Urban"="#F8A19F",
+            "Greenspaces"="#F8A19F",
             "Soil"="#7c4807",
             "Sediment"="#b3b3b3",
-            "Water"="#0080FE")
+            "Water"="#0080FE",
+            "Other"="#DEA0FD")
+
+labels_n <- gen %>% select(mfd_hab1_, mfd_hab1_n) %>% distinct() %>% deframe()
 
 preset_gen1 <- list(theme_bw(),
                     theme(legend.position = "none",
@@ -91,78 +120,156 @@ preset_gen3 <- list(theme_bw(),
 ```
 
 
+### Function for getting medians and IQR
+```{r, include=TRUE}
+median_w_iqr <- function(x,cat) {
+  df_med <- aggregate(x, by=list(cat), FUN=median, na.rm = T)
+  colnames(df_med) <- c("group","median")
+  
+  df_iqr <- aggregate(x, by=list(cat), FUN=IQR, na.rm = T)
+  colnames(df_iqr) <- c("group","iqr")
+  
+  df_q25 <- aggregate(x, by=list(cat), FUN = function(i,...) quantile(i, probs=0.25, na.rm=T))
+  colnames(df_q25) <- c("group","q25")
+  
+  df_q75 <- aggregate(x, by=list(cat), FUN = function(i,...) quantile(i, probs=0.75, na.rm=T))
+  colnames(df_q75) <- c("group","q75")
+  
+  df <- merge(df_med,df_iqr,by="group")
+  df <- merge(df,df_q25,by="group")
+  df <- merge(df,df_q75,by="group")
+  return (df) }
+```
+
+
+### Function for splitting GTDB ranks
+```{r, include=TRUE}
+gtdb_rank <- function(class,pattern,trim_left,trim_right) {
+  rank <-  str_extract(class,pattern)
+  rank <-  gsub(trim_left, "", rank)
+  rank <-  gsub(trim_right, "", rank)
+  return (rank) }
+```
+
+
+### Sankey for sample MFD metadata
+```{r, include=TRUE}
+# Set colors
+samples_soil <- gen[gen$mfd_sampletype == "Soil",]
+samples_soil_n <- c(unique(samples_soil$mfd_sampletype), unique(samples_soil$mfd_hab1), unique(samples_soil$mfd_hab2), unique(samples_soil$mfd_hab3))
+samples_soil_col <- rev(brewer.greens(length(samples_soil_n)))
+
+samples_other <- gen[! gen$mfd_sampletype == "Soil",]
+samples_other_n <- c(unique(samples_other$mfd_sampletype), unique(samples_other$mfd_hab1),unique(samples_other$mfd_hab2), unique(samples_other$mfd_hab3))
+samples_other_col <- rev(brewer.blues(length(samples_other_n)))
+
+samples <- unique(c(unique(gen$mfd_areatype),samples_soil_n,samples_other_n))
+samples_col <- head(c(c("#f0d851","#ff9900","#fb4f4f","#360000"),samples_soil_col,samples_other_col),length(samples))
+
+# Initial dataframe for ggsankey
+gen_sankey <- gen %>% select(mfd_sampletype,mfd_areatype,mfd_hab1,mfd_hab2,mfd_hab3) %>% make_long(mfd_areatype,mfd_sampletype,mfd_hab1,mfd_hab2,mfd_hab3)
+
+# Add group counts
+gen_sankey_sum <- gen_sankey %>% dplyr::group_by(node) %>% tally()
+gen_sankey_ <- merge(gen_sankey,gen_sankey_sum, by.x = 'node', by.y = 'node', all.x = TRUE)
+
+# Filter
+gen_sankey_  <- gen_sankey_ %>% filter(!is.na(node))
+
+# Order
+gen_sankey_sum <- gen_sankey_sum[order(gen_sankey_sum$n,decreasing=FALSE),]
+gen_sankey_$node <- factor(gen_sankey_$node,levels=rev(samples))
+gen_sankey_$next_node <- factor(gen_sankey_$next_node,levels=rev(samples))
+
+sankey <- ggplot(gen_sankey_, aes(x = x, next_x = next_x, node = node, next_node = next_node,
+                                  fill = factor(node), label = paste0(node," (", n,")"))) +  
+          geom_sankey(flow.alpha = 0.5, node.color = "black", size=0.05, show.legend = FALSE, width = 0.1) +
+          geom_sankey_label(size = 1.2, color = "black", fill= "white",hjust=0, alpha=0.85, width=2) +  theme_bw() +
+          theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(),
+                panel.grid = element_blank(), legend.position = "none",
+                axis.text.x = element_text(margin = margin(t = -10),size = 7), panel.border = element_blank(),
+                plot.margin=grid::unit(c(-2,2,1,-15), "mm")) +
+          scale_fill_manual(values=samples_col,breaks=samples) + 
+          scale_x_discrete(labels=c("mfd_sampletype" = "Sample type", 
+                                    "mfd_areatype" = "Area type", 
+                                    "mfd_hab1" = "Habitat descriptor\n(level 1)",
+                                    "mfd_hab2" = "Habitat descriptor\n(level 2)",
+                                    "mfd_hab3" = "Habitat descriptor\n(level 3)"))
+
+sankey
+ggsave(file="../analysis/figures/FigS1.pdf", height = 180, width = 150, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
 ### Map of sequenced samples
 ```{r, include=TRUE}
 map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") + 
-  geom_point(data = gen, aes(x = longitude, y = latitude, group = NA, color = mfd_hab1), size = 1) +
-  theme(legend.key=element_blank(), legend.position = "bottom",
-        legend.text=element_text(size=7),legend.title = element_text(size=7),
-        legend.key.size = unit(3.5, 'mm'), legend.spacing.x = unit(4, 'mm')) +
-  labs(col="Habitat:") + 
-  scale_color_manual(values=colors) +
-  guides(colour = guide_legend(override.aes = list(size=1.2), ncol=3, title.position = "top")) 
+       geom_point(data = gen, aes(x = longitude, y = latitude, group = NA, color = mfd_hab1_), size = 1) +
+       theme(legend.key=element_blank(), legend.position = c(0.85, 0.75),
+             legend.box.background = element_blank(), legend.background = element_blank(),
+             legend.text=element_text(size=7),legend.title = element_text(size=7),
+             legend.key.size = unit(3.5, 'mm'), legend.spacing.x = unit(1, 'mm')) +
+       labs(col="Habitat:") +  scale_color_manual(values=labels, labels = labels_n) +
+       guides(colour = guide_legend(override.aes = list(size=1.2), ncol=1, title.position = "top")) 
+
+map
 ```
 
 
-### General yield, N50, data efficacy plots
+### General per-sample metrics
 ```{r, include=TRUE}
 gen$name1 <- ""
+margins <- theme(plot.margin = unit(c(-0.75,0.3,0.05,-0.2), 'lines'))
+plot_scale <- scale_y_continuous(expand=c(0,0), limits = c(0,102), breaks = c(0,25,50,75,100))
 
-plot_yield <- ggplot(data=gen, aes(x=name1, y=reads_size_bp/10**9)) + labs(title="", y="Sequenced yield (gbp)", x="") +
-              geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#1b9e77", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+plot_yield <- ggplot(data=gen, aes(x=name1, y=reads_size_bp/10**9)) + labs(title="", y="Sequenced yield (Gbp)", x="") +
+              geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
+              geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 + margins +
+              scale_y_continuous(expand=c(0,0), limits = c(0,210), breaks = c(0,50,100,150,200))
+plot_yield
 
-plot_n50_read <- ggplot(data=gen, aes(x=name1, y=reads_N50_bp/10**3)) + labs(title="", y="Read N50 (kbp)", x="") +
-                 geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#d95f02", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
 
-plot_n50_assembly <- ggplot(data=gen, aes(x=name1, y=contigs_N50_bp/10**3)) + labs(title="", y="Contig N50 (kbp)", x="") +
-                     geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#7570b3", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+plot_n50 <- ggplot(data=gen, aes(x=name1, y=reads_N50_bp/10**3)) + labs(title="", y="Read N50 (kbp)", x="") +
+            geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
+            geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins +
+            scale_y_continuous(expand=c(0,0), limits = c(0,12.5), breaks = c(0,3,6,9,12))
+plot_n50
 
-plot_rate_assembly <- ggplot(data=gen, aes(x=name1, y=assembled)) + labs(title="", y="Sequenced data asssembled (%)", x="") +
-                      geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#e7298a", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
 
-plot_rate_bin <- ggplot(data=gen, aes(x=name1, y=r_abund*assembled/100)) + labs(title="", y="Sequenced data binned (%)", x="") +
-                 geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#66a61e", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+plot_asm <- ggplot(data=gen, aes(x=name1, y=assembled)) + labs(title="", y="Sequenced data asssembled (%)", x="") +
+            geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
+            geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins + plot_scale
+plot_asm
 
-plot_rate_mags <- ggplot(data=gen, aes(x=name1, y=HQ_mags+MQ_mags)) + labs(title="", y="Mags recovered", x="")  +
-                  geom_quasirandom(size = 0.2, width = 0.2, color="gray70") + geom_boxplot(outlier.shape=NA, fill="#8c510a", width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3
+
+plot_bin <- ggplot(data=gen, aes(x=name1, y=r_abund*(assembled/100))) + labs(title="", y="Sequenced data binned (%)", x="") +
+            geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
+            geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins + plot_scale
+plot_bin
+
+
+plot_mags <- ggplot(data=gen, aes(x=name1, y=HQ_mags+MQ_mags)) + labs(title="", y="MAGs recovered", x="")  +
+             geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
+             geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins +
+             scale_y_continuous(expand=c(0,0), limits = c(0,420), breaks = c(0,100,200,300,400))
+plot_mags
 ```
 
 
-### Figure 1
+### Initial Figure 1
 ```{r, include=TRUE}
 plot_leg <- get_legend(map)
-plot_leg <- as_ggplot(plot_leg)
+plot_leg <- as_ggplot(plot_leg) + theme(plot.margin = unit(c(0, 0.5, 1.25, 0.5), "cm"))
 
-fig1_a <- ggarrange(map, plot_leg, nrow=2, ncol=1, legend = "none", common.legend = FALSE, labels = "a", font.label = list(size = 9), heights=c(3,1))
+fig1_a <- ggarrange(map, plot_leg, nrow=2, ncol=1, legend = "none", common.legend = FALSE, labels = "a", font.label = list(size = 9), heights=c(3.5,1))
 
-fig1_bf <- ggarrange(plot_yield, plot_n50_read, plot_n50_assembly, plot_rate_assembly, plot_rate_mags, plot_rate_bin,
-                     nrow=6, ncol=1, legend = "none", common.legend = FALSE, 
-                     labels = c("b","c","d","e","f", "g"), font.label = list(size = 9))
+fig1_bf <- ggarrange(plot_yield, plot_n50, plot_asm, plot_bin, plot_mags,
+                     nrow=5, ncol=1, legend = "none", common.legend = FALSE,
+                     labels = c("b","c","d","e","f"), font.label = list(size = 9))
 
-fig1 <- ggarrange(fig1_a, fig1_bf, nrow=1, ncol=2, legend = "none", common.legend = FALSE, widths=c(2,1))
+fig1 <- ggarrange(map, fig1_bf, nrow=1, ncol=2, common.legend = FALSE, widths=c(2,1), align = c("v"), labels = c("a"), font.label = list(size = 9))
+fig1
 
-ggsave(file="../analysis/figures/Fig1.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+ggsave(file="../analysis/figures/Fig1_pre.pdf", height = 100, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
-
-
-### Supplementary Figure 1
-```{r, include=TRUE}
-plot_gb <- ggplot(data=gen, aes(x=mfd_hab1, y=reads_size_bp/10**9, color=mfd_hab1)) + labs(title="", y="Sequenced yield (gbp)", x="") +
-           geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
-
-plot_read_n50 <- ggplot(data=gen, aes(x=mfd_hab1, y=reads_N50_bp/10**3, color=mfd_hab1)) + labs(title="", y="Read N50 (kbp)", x="") +
-                 geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
-
-plot_asm <- ggplot(data=gen, aes(x=mfd_hab1, y=assembled, color=mfd_hab1)) + labs(title="", y="Data assembled (%)", x="") + 
-            geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
-
-plot_con_n50 <- ggplot(data=gen, aes(x=mfd_hab1, y=contigs_N50_bp/10**3, color=mfd_hab1)) + labs(title="", y="Contig N50 (kbp)", x="") + 
-                geom_violin(lwd=0.25,linetype="dashed", fill=NA) + geom_quasirandom(size = 0.5, width = 0.2) + preset_gen1
-  
-plots_FS1 <- ggarrange(plot_gb, plot_asm, plot_read_n50, plot_con_n50, nrow=2, ncol=2, align = c("v"),
-                       legend = "none", common.legend = FALSE, labels = c("a","b", "c", "d"), font.label = list(size = 9))
-
-ggsave(file="../analysis/figures/FigS1.pdf", height = 150, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
-```
-
 
