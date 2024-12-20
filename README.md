@@ -8,6 +8,7 @@ Repository for scripts and resources used for the recovery of long-read metageno
 * Automated MAG phylogeny workflow used in the project is available [here](https://github.com/aaronmussig/mag-phylogeny)
 * De-replicated MAGs, sequenced reads and raw Nanopore data can be downloaded from [ENA](https://www.ebi.ac.uk/ena/browser/view/PRJEB58634)
 * For convenience, different genome sets are available for download from [Zenodo](https://zenodo.org/)
+* The main datasets and their documentation is available [here](https://github.com/Serka-M/mfd_mags/tree/main/analysis/datasets)
 
 ## Repo structure
 
