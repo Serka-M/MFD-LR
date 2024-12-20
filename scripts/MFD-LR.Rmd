@@ -1,7 +1,7 @@
 ---
-title: "R code for plotting main figures"
-author: ""
-date: ""
+title: "R code for plotting MFD-LR MAG catalog stats"
+author: "Mantas Sereika"
+date: "2024"
 output:
   html_document: default
   pdf_document: default
