@@ -1,12 +1,13 @@
 ## Intro
 
-Repository for scripts and resources used for the recovery of long-read metagenome assembled genomes (MAGs) for the [Microflora Danica](https://www.en.bio.aau.dk/research/projects/microflora-danica) (MFD) project.
+Repository for scripts and resources used for the recovery of long-read metagenome assembled genomes (MAGs) for the [Microflora Danica](https://www.en.bio.aau.dk/research/projects/microflora-danica) (MFD) project
 
 ## Overview
-* MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline.
-* Yield-normalized comparisons between habitats were achieved [mmcomp](https://github.com/Serka-M/mmcomp).
-* Automated MAG phylogeny workflow used in the project is available [here](https://github.com/aaronmussig/mag-phylogeny).
-* De-replicated MAGs, sequenced reads and raw Nanopore data can be downloaded from [ENA](https://www.ebi.ac.uk/ena/browser/view/PRJEB58634).
+* MAGs from Nanopore long-read sequencing data were recovered using the [mmlong2](https://github.com/Serka-M/mmlong2) bioinformatics pipeline
+* Yield-normalized comparisons between different soil habitats were performed with [mmcomp](https://github.com/Serka-M/mmcomp)
+* Automated MAG phylogeny workflow used in the project is available [here](https://github.com/aaronmussig/mag-phylogeny)
+* De-replicated MAGs, sequenced reads and raw Nanopore data can be downloaded from [ENA](https://www.ebi.ac.uk/ena/browser/view/PRJEB58634)
+* For convenience, different genome sets are avaialable for donwolad from [Zenodo](https://zenodo.org/)
 
 ## Repo structure
 
