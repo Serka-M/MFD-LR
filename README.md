@@ -17,11 +17,11 @@ The repo is structured in a way that the folders and the subfolders store the co
 | Folder | Content |
 | --- | --- |
 | project_repo | The main repo of the (sub)project, in this case the [alab_repo_template](https://github.com/cmc-aau/alab_repo_template). |
-| ├── data/ | The input for the project. |
-| ├── scripts/ | The code used to analyse the data. |
-| ├── analysis/ | The results produced by the scripts (processed datasets, figures, etc.). |
-| ├── envs/ | The environments loaded to analyse the data. |
-| ├── README.md | The explanation of the project, workflow and results, written in a [flavored markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github) |
-| └── LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
+| ├ data/ | The input for the project. |
+| ├ scripts/ | The code used to analyse the data. |
+| ├ analysis/ | The results produced by the scripts (processed datasets, figures, etc.). |
+| ├ envs/ | The environments loaded to analyse the data. |
+| ├ README.md | The explanation of the project, workflow and results, written in a [flavored markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github) |
+| └ LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
 
 
