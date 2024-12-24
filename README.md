@@ -18,9 +18,6 @@ The repo is structured in a way that the folders and the subfolders store the co
 | --- | --- |
 | project_repo | The main repo of the (sub)project, in this case the [alab_repo_template](https://github.com/cmc-aau/alab_repo_template). |
 | ├── data/ | The input for the project. |
-| │   ├── links/ | The [symbolic links](https://manpages.ubuntu.com/manpages/bionic/man8/sln.8.html) pointing to the raw (or consolidated) A lab data, which are stored separately. This ensures that the original data are protected form users' errors and avoids unnecessary data duplication. |
-| │   ├── downloads/ | The raw data downloaded for this project. Futher subfolders might be necessary to keep this section tidy. |
-| │   └── databases/ | Databases used for the (sub)project. If the databases are already present outside of this repo you can create symbolic links here to point to them, otherwise download the databases here. |
 | ├── scripts/ | The code used to analyse the data. |
 | ├── analysis/ | The results produced by the scripts (processed datasets, figures, etc.). |
 | ├── envs/ | The environments loaded to analyse the data. |

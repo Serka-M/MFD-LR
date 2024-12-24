@@ -211,8 +211,6 @@ map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") +
              legend.key.size = unit(3.5, 'mm'), legend.spacing.x = unit(1, 'mm')) +
        labs(col="Habitat:") +  scale_color_manual(values=labels, labels = labels_n) +
        guides(colour = guide_legend(override.aes = list(size=1.2), ncol=1, title.position = "top")) 
-
-map
 ```
 
 
@@ -226,33 +224,24 @@ plot_yield <- ggplot(data=gen, aes(x=name1, y=reads_size_bp/10**9)) + labs(title
               geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
               geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 + margins +
               scale_y_continuous(expand=c(0,0), limits = c(0,210), breaks = c(0,50,100,150,200))
-plot_yield
-
 
 plot_n50 <- ggplot(data=gen, aes(x=name1, y=reads_N50_bp/10**3)) + labs(title="", y="Read N50 (kbp)", x="") +
             geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
             geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins +
             scale_y_continuous(expand=c(0,0), limits = c(0,12.5), breaks = c(0,3,6,9,12))
-plot_n50
-
 
 plot_asm <- ggplot(data=gen, aes(x=name1, y=assembled)) + labs(title="", y="Sequenced data asssembled (%)", x="") +
             geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
             geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins + plot_scale
-plot_asm
-
 
 plot_bin <- ggplot(data=gen, aes(x=name1, y=r_abund*(assembled/100))) + labs(title="", y="Sequenced data binned (%)", x="") +
             geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
             geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins + plot_scale
-plot_bin
-
 
 plot_mags <- ggplot(data=gen, aes(x=name1, y=HQ_mags+MQ_mags)) + labs(title="", y="MAGs recovered", x="")  +
              geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)) + scale_color_manual(values=labels) +
              geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2) + preset_gen3 +  margins +
              scale_y_continuous(expand=c(0,0), limits = c(0,420), breaks = c(0,100,200,300,400))
-plot_mags
 ```
 
 
@@ -272,4 +261,116 @@ fig1
 
 ggsave(file="../analysis/figures/Fig1_pre.pdf", height = 100, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
+
+
+### General per-sample metrics by habitat
+```{r, include=TRUE}
+plot_gb <- ggplot(data=gen, aes(x=mfd_hab1_, y=reads_size_bp/10**9, color=mfd_hab1_)) + 
+           labs(title="", y="Sequenced yield (Gbp)", x="") +
+           geom_violin(lwd=0.25,linetype="dashed", fill=NA) + 
+           geom_quasirandom(size = 0.65, width = 0.2) + preset_gen1
+
+plot_asm <- ggplot(data=gen, aes(x=mfd_hab1_, y=assembled, color=mfd_hab1_)) + 
+            labs(title="", y="Data assembled (%)", x="") + 
+            geom_violin(scale="width", width=0.3, lwd=0.25,linetype="dashed", fill=NA) + 
+            geom_quasirandom(size = 0.65, width = 0.2) + preset_gen1
+
+plot_count <- ggplot(data=gen, aes(x=mfd_hab1_, y=(HQ_mags+MQ_mags), color=mfd_hab1_)) + 
+              labs(title="", y="MAGs recovered (HQ and MQ)", x="") +
+              geom_violin(lwd=0.25,linetype="dashed", fill=NA) + 
+              geom_quasirandom(size = 0.65, width = 0.2) + preset_gen1 +
+              scale_y_continuous(expand=c(0,0), limits = c(0,470),breaks=c(0,100,200,300,400)) 
+
+plot_bind <- ggplot(data=gen, aes(x=mfd_hab1_, y=round(r_abund*assembled/100,0), color=mfd_hab1_)) + 
+             labs(title="", y="Data binned in MAGs (%)", x="") +
+             geom_violin(lwd=0.25,linetype="dashed", fill=NA) +
+             geom_quasirandom(size = 0.65, width = 0.2) + preset_gen1 +
+             scale_y_continuous(expand=c(0,0), limits = c(0,70),breaks=c(0,20,40,60)) 
+
+plots_mag_hab <- ggarrange(plot_gb, plot_asm, plot_count, plot_bind, nrow=2, ncol=2, align = c("v"),
+                           legend = "none", common.legend = FALSE, labels = c("a","b", "c", "d"), font.label = list(size = 9))
+plots_mag_hab  
+
+ggsave(file="../analysis/figures/FigS3.pdf", height = 150, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
+### Add homopolymer counts to MAG dataframe
+```{r, include=TRUE}
+hp <- read.delim("../data/MFD-LR/hp.txt", sep=" ", header=F)
+colnames(hp) <- c("bin","homopol","count")
+hp$bin <- gsub(".fa", "", hp$bin)
+
+hp$nuc <- str_extract(hp$homopol, "^.{1}")
+hp$homopol = substring(hp$homopol, 2)
+hp$homopol = as.integer(hp$homopol)
+
+hp_long <- hp[(hp$homopol >= 7), ]
+hp_long_sum <- aggregate(hp_long$count, by=list(hp_long$bin), FUN=sum, drop=FALSE)
+colnames(hp_long_sum) <- c("bin","hp_long")
+
+mags <- merge(mags, hp_long_sum, by="bin", all=TRUE)
+mags$hp_long[is.na(mags$hp_long)] <- 0
+```
+
+
+### Wrangle MAG dataframe
+```{r, include=TRUE}
+mags$domain <- gtdb_rank(mags$GTDB_taxonomy,"d__[a-zA-Z0-9 -_]+;p__","d__",";p__")
+mags$phylum <- gtdb_rank(mags$GTDB_taxonomy,";p__[a-zA-Z0-9 -_]+;c__",";p__",";c__")
+mags$class <- gtdb_rank(mags$GTDB_taxonomy,";c__[a-zA-Z0-9 -_]+;o__",";c__",";o__")
+mags$order <- gtdb_rank(mags$GTDB_taxonomy,";o__[a-zA-Z0-9 -_]+;f__",";o__",";f__")
+mags$family <- gtdb_rank(mags$GTDB_taxonomy,";f__[a-zA-Z0-9 -_]+;g__",";f__",";g__")
+mags$genus <- gtdb_rank(mags$GTDB_taxonomy,";g__[a-zA-Z0-9 -_]+;s__",";g__",";s__")
+mags$species <- gtdb_rank(mags$GTDB_taxonomy,";s__[a-zA-Z0-9 -_]+",";s__","")
+
+mags$phylum[is.na(mags$phylum)] <- paste0("Unclassified")
+mags$class[is.na(mags$class)] <- paste0("Unclassified")
+mags$order[is.na(mags$order)] <- paste0("Unclassified")
+mags$family[is.na(mags$family)] <- paste0("Unclassified")
+mags$genus[is.na(mags$genus)] <- paste0("Unclassified")
+mags$species[is.na(mags$species)] <- paste0("Unclassified")
+
+mags <- mags[order(mags$domain,decreasing=TRUE),]
+mags <- mags[order(mags$MAG_status2,decreasing=TRUE),]
+```
+
+
+### Plot dereplicated MAG metrics
+```{r, include=TRUE}
+preset_drep <- list(geom_point(alpha=0.5, size=0.8, stroke=0.15, pch=21),
+                    scale_fill_manual(name = "MAG quality:", values = c("cMAG" = "#045a8d","HQ"="#a6dba0","MQ" = "#fee090")),
+                    scale_color_manual(name = "Domain:", values=c("Bacteria"="gray90", "Archaea"="#99000d")),
+                    guides(colour = guide_legend(override.aes = list(size=2, stroke=0.75, alpha=0.75)), fill = guide_legend(override.aes = list(size=2))))
+
+plot_cm2 <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=Completeness_CheckM2,y=Contamination_CheckM2,fill=MAG_status2, col=domain)) + 
+            scale_x_continuous(breaks=c(50,60,70,80,90,100), expand=c(0,0), limits = c(49,101)) +
+            scale_y_continuous(breaks=c(0,2,4,6,8,10), expand=c(0,0), limits = c(-0.25,10.25)) +
+            labs(x="Completeness (%)",y="Contamination (%)") + preset_drep + preset_gen2
+
+plot_n50_cov  <- ggplot(data=mags[mags$rep_status == TRUE,],aes(x=cov,y=Contig_N50/10**3,col=domain, fill=MAG_status2)) +
+                 scale_x_continuous(trans="log2", breaks=c(10,40,160,640), expand=c(0,0), limits = c(2.5,1350)) +
+                 scale_y_continuous(trans="log2") + labs(x="MAG coverage",y="Contig N50 (kbp)") + preset_drep + preset_gen2
+
+plot_cd_cov <- ggplot(data=mags[mags$rep_status == TRUE,],aes(x=cov,y=Coding_Density*100,col=domain, fill=MAG_status2)) +   
+               scale_x_continuous(trans="log2", breaks=c(10,40,160,640), expand=c(0,0), limits = c(2.5,1350)) +
+               labs(x="MAG coverage",y="Coding density (%)") + preset_drep + preset_gen2
+
+plot_cd_gc <- ggplot(data=mags[mags$rep_status == TRUE,],aes(x=GC_Content,y=Coding_Density*100,col=domain, fill=MAG_status2)) +
+              labs(x="GC content (%)",y="Coding density (%)") + preset_drep +preset_gen2
+
+plot_cd_hp <- ggplot(data=mags[mags$rep_status == TRUE,],aes(x=hp_long/(Genome_Size/10**5) ,y=Coding_Density*100,col=domain, fill=MAG_status2)) + 
+              scale_x_continuous(trans="log2") + labs(x="Long homopolymers (>6) per 100 kbp",y="Coding density (%)") + preset_drep + preset_gen2
+
+plot_gc_hp <- ggplot(data=mags[mags$rep_status == TRUE,],aes(x=hp_long/(Genome_Size/10**5) ,y=GC_Content,col=domain, fill=MAG_status2)) +
+              scale_x_continuous(trans="log2") + labs(x="Long homopolymers (>6) per 100 kbp",y="GC content (%)") + preset_drep + preset_gen2
+
+plot_mag_drep <- ggarrange(plot_cm2,plot_n50_cov,plot_cd_cov,plot_cd_gc,plot_cd_hp,plot_gc_hp, nrow=3, ncol=2, 
+                           legend = "bottom", common.legend = TRUE, labels = c("a","b","c","d","e","f"), font.label = list(size = 9))
+
+ggsave(file="../analysis/figures/FigS5.pdf", height = 200, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
+
 
