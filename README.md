@@ -1,6 +1,6 @@
 ## Intro
 
-Repository for scripts and resources used for the recovery of long-read metagenome assembled genomes (MAGs) for the [Microflora Danica](https://github.com/cmc-aau/mfd_wiki/wiki) project
+Repository for scripts and resources used for the recovery and analysis of metagenome assembled genomes (MAGs) from the [Microflora Danica](https://github.com/cmc-aau/mfd_wiki/wiki) deep, long-read sequencing project (MFD-LR)
 
 ## Overview
 * MAGs from Nanopore long-read sequencing data were recovered using [mmlong2](https://github.com/Serka-M/mmlong2)
