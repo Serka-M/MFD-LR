@@ -496,3 +496,60 @@ fig2
 ggsave(file="../analysis/figures/Fig2.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
+
+### Plot species-level rarefaction curve, by habitat
+```{r, include=TRUE}
+drep_rf_hab <- aggregate(mags[mags$mfd_hab1_ != "Other",]$drep_cluster,
+                         by=list(mags[mags$mfd_hab1_ != "Other",]$drep_cluster,
+                                 mags[mags$mfd_hab1_ != "Other",]$mfd_hab1_), FUN=length)
+
+drep_rf_hab_tmp <- split(drep_rf_hab$x, drep_rf_hab$Group.2)
+drep_rf_hab_ <- iNEXT(drep_rf_hab_tmp, q=0, datatype="abundance")
+
+drep_rf_hab_plot <- ggiNEXT(drep_rf_hab_, color.var="Assemblage") + theme_bw(base_size = 5) + 
+                    labs(x="MAGs",y="Different microbial species", linetype="", fill="", color="") +
+                    theme(legend.position = "bottom", strip.text = element_text(size=7), legend.spacing = unit(0.1, "mm"),
+                          axis.title.y = element_text(size = 7), axis.title.x = element_text(size = 7),
+                          axis.text.y = element_text(size = 6), axis.text.x = element_text(size = 6),
+                          legend.text=element_text(size=7),legend.title = element_text(size=7),
+                          legend.box.margin = margin(0, 0, 0, 0), legend.margin = margin(0, 0, 0, 0), 
+                          panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3)) + 
+                    scale_color_manual(values=labels) + scale_fill_manual(values=labels) +
+                    scale_shape_manual(values=c(19,19,19,19,19,19,19,19,19,19,19,19)) +
+                    guides(color=guide_legend(override.aes = list(linewidth=NA, fill=NA, size=1.5)), shape="none",linetype = "none", fill = "none") +
+                    theme(plot.margin = unit(c(2, 4, 0, 2), "mm"), legend.key.height=unit(0.4, 'cm'), legend.key.width=unit(0.25, 'cm'))
+
+# Add customizations
+drep_rf_hab_plot2 <- ggplot_build(drep_rf_hab_plot)
+drep_rf_hab_plot2$data[[1]]$size <- 2           # Point size
+drep_rf_hab_plot2$data[[2]]$linewidth <- 0.4    # Line size
+drep_rf_hab_plot2 <- ggplot_gtable(drep_rf_hab_plot2)
+grid.draw(drep_rf_hab_plot2)
+
+drep_rf_hab_plot3 <- grid.arrange(drep_rf_hab_plot2)
+
+ggsave(drep_rf_hab_plot3, file="../analysis/figures/FigS6.pdf", height = 120, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
+### Plot most abundant species clusters
+```{r, include=TRUE}
+drep_rf_n <- aggregate(mags$drep_cluster, by=list(mags$drep_cluster), FUN=length)
+colnames(drep_rf_n) <- c("drep_cluster","drep_cluster_n")
+mags_drep <- merge(mags[mags$rep_status == TRUE,], drep_rf_n, by="drep_cluster")
+
+mags_drep_n <- mags_drep[, c("drep_cluster_n", "phylum", "family", "genus", "drep_cluster")]
+mags_drep_n2 <- mags_drep_n[order(mags_drep_n$drep_cluster_n,decreasing=TRUE),]
+mags_drep_n2 <- as.data.frame(head(mags_drep_n2,50))
+mags_drep_n2$id <- paste(mags_drep_n2$genus,mags_drep_n2$drep_cluster,sep=" genus, cluster ")
+
+plot_drep_n <- ggplot(data=mags_drep_n2, aes(x=factor(id,level=rev(id)), y=drep_cluster_n, color=phylum)) + 
+               labs(title="", y="MAGs per cluster", x="", color="Phyla:") + 
+               geom_segment(aes(xend=id), yend=0, size=0.25, color="gray70") + geom_point() + 
+               scale_y_continuous(expand=c(0,0), limits=c(0,45), breaks = c(0, 10, 20, 30, 40)) +
+               preset_gen2 + theme(legend.position = "right") + scale_color_brewer(palette = "Dark2") + coord_flip() 
+
+plot_drep_n
+ggsave(file="../analysis/figures/FigS7.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
