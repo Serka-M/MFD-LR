@@ -363,5 +363,136 @@ ggsave(file="../analysis/figures/FigS5.pdf", height = 200, width = 180, useDingb
 ```
 
 
+### Set sankey plot for MAG recovery
+```{r, include=TRUE}
+mags$sankey1 <- ifelse(mags$MAG_status2 == "cMAG", "Circular",
+                       ifelse(mags$Total_Contigs == 1, "Single-contig",
+                              ifelse(mags$Total_Contigs <= 10,"10 or less contigs",
+                                     ifelse(mags$Total_Contigs <= 25,"25 or less contigs",
+                                            ifelse(mags$Total_Contigs <= 50,"50 or less contigs","More than 50 contigs")))))
 
+mags$sankey2 <- paste("",mags$MAG_status, sep="")
+mags$sankey3 <- ifelse(mags$rep_status == TRUE, paste("Dereplicated\n",mags$MAG_status,sep=""), NA)
+
+mags$gtdb_status <- ifelse(mags$phylum == "Unclassified", "Unassigned phyla", 
+                           ifelse(mags$class == "Unclassified", "Unassigned class",
+                                  ifelse(mags$order == "Unclassified", "Unassigned order",
+                                         ifelse(mags$family == "Unclassified", "Unassigned family",
+                                                ifelse(mags$genus == "Unclassified", "Unassigned genus",
+                                                       ifelse(mags$species == "Unclassified", "Unassigned species", "Known species"))))))
+
+mags$sankey4 <- ifelse(mags$rep_status == TRUE, mags$gtdb_status, NA)
+mags$sankey4 <- ifelse(mags$sankey4 == "Unassigned species", "Unassigned\nspecies", mags$sankey4)
+```
+
+
+### Sankey plot for MAG stats
+```{r, include=TRUE}
+# Initial df for ggsankey
+mags_sankey <- mags %>% select(sankey1,sankey2,sankey3,sankey4) %>% make_long(sankey1,sankey2,sankey3,sankey4)
+
+# Add group counts
+mags_sankey_sum <- mags_sankey %>% dplyr::group_by(node) %>% tally()
+mags_sankey_ <- merge(mags_sankey,mags_sankey_sum, by.x = 'node', by.y = 'node', all.x = TRUE)
+
+# Filter
+mags_sankey_  <- mags_sankey_ %>% filter(!is.na(node))
+
+# Ordering
+mags_sankey_$node <- factor(mags_sankey_$node,levels =
+                              c("More than 50 contigs","50 or less contigs","25 or less contigs","10 or less contigs",
+                                "Single-contig", "Circular",
+                                "MQ","HQ","cMAG",
+                                "Redundant","Dereplicated\nMQ","Dereplicated\nHQ","Dereplicated\ncMAG",
+                                "Omitted", "Known species","Unassigned\nspecies", "Unassigned genus",
+                                "Unassigned family","Unassigned order","Unassigned class"))
+
+mags_sankey_$next_node <- factor(mags_sankey_$next_node,levels =
+                              c("More than 50 contigs","50 or less contigs","25 or less contigs","10 or less contigs",
+                                "Single-contig", "Circular",
+                                "MQ","HQ","cMAG",
+                                "Redundant","Dereplicated\nMQ","Dereplicated\nHQ","Dereplicated\ncMAG",
+                                "Omitted", "Known species","Unassigned\nspecies", "Unassigned genus",
+                                "Unassigned family","Unassigned order","Unassigned class"))
+
+sankey <- ggplot(mags_sankey_, aes(x = x, next_x = next_x, node = node, next_node = next_node, fill = factor(node), label = paste0(node," (", n,")"))) +  
+          geom_sankey(flow.alpha = 0.5, node.color = "black", size=0.2, show.legend = FALSE, width = 0.1) +
+          geom_sankey_label(size = 1.75, color = "black", fill= "white",hjust=0, alpha=0.85, width=2.25) +  theme_bw() +
+          theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(),
+                panel.grid = element_blank(), legend.position = "none", panel.border = element_blank(),
+                axis.text.x = element_text(margin = margin(t = -10),size = 7), plot.margin=grid::unit(c(0,0,0,-18), "mm")) +
+          scale_fill_viridis_d(option = "inferno", direction=-1) +
+          scale_x_discrete(labels=c("sankey1" = "MAG\ncontiguity", "sankey2" = "Quality ranking\n(all MAGs)",
+                                    "sankey3" = "Quality ranking\n(dereplicated)", "sankey4" = "Taxonomy\nranking"))
+
+sankey
+```
+
+
+### Plot general MAG stats:
+```{r, include=TRUE}
+preset_mags <- list(geom_boxplot(width=0.75, alpha = 0.75, lwd=0.2, outlier.size=0.1), scale_x_discrete(limits=rev),
+                    preset_gen3,theme(plot.margin = unit(c(-2, 0, 0, -2), "mm")),
+                    scale_fill_manual(name = "MAG quality:", values = c("cMAG" = "#045a8d","HQ"="#1b9e77","MQ" = "#d95f02")))
+
+plot_mag_n50 <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Contig_N50/10**3, fill=MAG_status)) +
+                preset_mags + labs(title="", y="Contig N50 (kbp)", x="") + scale_y_continuous(trans="log2") 
+
+plot_mag_cov <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=as.numeric(cov), fill=MAG_status)) + 
+                preset_mags + labs(title="", y="MAG coverage", x="") + scale_y_continuous(trans="log2") 
+
+plot_mag_cd <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Coding_Density*100, fill=MAG_status)) + 
+               preset_mags + labs(title="", y="Coding density (%)", x="") 
+ 
+plot_mag_size <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Genome_Size/10**6, fill=MAG_status)) + 
+                 preset_mags + labs(title="", y="MAG size (Mbp)", x="")
+```
+
+
+### Plot species-level rarefaction curve
+```{r, include=TRUE}
+drep_rf <- aggregate(mags$drep_cluster, by=list(mags$drep_cluster), FUN=length)
+
+drep_rf_ <- iNEXT(drep_rf[,c("x")], q=0, datatype="abundance")
+
+drep_rf_plot <- ggiNEXT(drep_rf_) + theme_bw(base_size = 5) + 
+                labs(x="MAGs",y="Different microbial species", linetype="") +
+                guides(linetype = guide_legend(override.aes = list(size = 1))) +
+                theme(legend.position = "none", axis.title.y = element_text(size = 7), axis.title.x = element_text(size = 7),
+                      axis.text.y = element_text(size = 6), axis.text.x = element_text(size = 6),
+                      panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3),
+                      plot.margin=grid::unit(c(1,5,1,5), "mm")) +
+                scale_x_continuous(expand=c(0,0), limits=c(0,42500), breaks = c(0, 10000, 20000, 30000, 40000)) + 
+                scale_y_continuous(expand=c(0,0), limits=c(0,42500), breaks = c(0, 10000, 20000, 30000, 40000)) +
+                scale_fill_manual(values=c("#034e7b")) + scale_colour_manual(values=c("#034e7b"))
+
+# Add customizations
+drep_rf2 <- ggplot_build(drep_rf_plot)
+drep_rf2$data[[1]]$size <- 3           # Point size
+drep_rf2$data[[2]]$linewidth <- 0.8    # Line size
+drep_rf2 <- ggplot_gtable(drep_rf2)
+grid.draw(drep_rf2)
+```
+
+
+### Make Figure 2
+```{r, include=TRUE}
+core_gen <- readRDS("../data/MFD-LR/core_genera.rds") + labs(fill="MIMAG ranking:") + scale_x_discrete(guide = guide_axis(angle = 30)) + 
+            theme(plot.margin = unit(c(2, 2, -3, 5), "mm"), legend.text=element_text(size=7), legend.title = element_text(size=7),
+                  legend.box.spacing = unit(0, "mm"), legend.position = "bottom")
+
+fig2_ab <- ggarrange(sankey, as.ggplot(drep_rf2), nrow=1, ncol=2, legend = "none", align = "h",
+                     common.legend = FALSE, labels = c("a","b"), font.label = list(size = 9), widths=c(1,1))
+
+fig2_cf <- ggarrange(plot_mag_size, plot_mag_cov, plot_mag_n50, plot_mag_cd, nrow=2, ncol=2, legend = "none", align = "hv",
+                     common.legend = FALSE, labels = c("c","d","e","f"), font.label = list(size = 9)) 
+
+fig2_cfg <- ggarrange(fig2_cf, core_gen, common.legend = FALSE, nrow=1, ncol=2, align = "v", labels = c(NA,"g"), font.label = list(size = 9), widths=c(1.15,1)) +
+            theme(plot.margin = unit(c(0, 0, 5, -11), "mm"))
+
+fig2 <- ggarrange(fig2_ab,fig2_cfg, nrow=2, ncol=1, legend = "none", align = "h", common.legend = FALSE, heights=c(1.25,1), widths=c(1,1))
+fig2
+
+ggsave(file="../analysis/figures/Fig2.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
 
