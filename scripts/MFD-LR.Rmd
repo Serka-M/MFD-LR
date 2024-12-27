@@ -553,3 +553,81 @@ plot_drep_n
 ggsave(file="../analysis/figures/FigS7.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
+
+### Plot species-level rarefaction curve, by most common phyla
+```{r, include=TRUE}
+mags_filt <- mags[mags$phylum == "Actinomycetota" | mags$phylum == "Pseudomonadota" | 
+                  mags$phylum == "Acidobacteriota" | mags$phylum == "Chloroflexota",]
+
+drep_rf_phyl <- aggregate(mags_filt$drep_cluster, by=list(mags_filt$drep_cluster,mags_filt$phylum), FUN=length)
+
+drep_rf_phyl_tmp <- split(drep_rf_phyl$x, drep_rf_phyl$Group.2)
+drep_rf_phyl_ <- iNEXT(drep_rf_phyl_tmp, q=0, datatype="abundance")
+
+drep_rf_phyl_plot <- ggiNEXT(drep_rf_phyl_, color.var="Assemblage") + theme_bw(base_size = 5) + 
+                     labs(x="MAGs",y="Different microbial species", linetype="") +
+                     guides(linetype = guide_legend(override.aes = list(size = 1))) +
+                     theme(legend.position = "none",strip.text = element_text(size=7),
+                           axis.title.y = element_text(size = 7), axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6), axis.text.x = element_text(size = 6),
+                           panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3))  +
+                     scale_shape_manual(values=c(19,19,19,19)) + 
+                     scale_color_manual(values=c("#7fc97f","#beaed4","#fdc086","#f0027f")) +
+                     scale_fill_manual(values=c("#7fc97f","#beaed4","#fdc086","#f0027f")) + 
+                     facet_rep_wrap(~Assemblage, ncol = 2, scales="free", repeat.tick.labels = TRUE) 
+
+# Add customizations
+drep_rf_phyl_plot2 <- ggplot_build(drep_rf_phyl_plot)
+drep_rf_phyl_plot2$data[[1]]$size <- 3           # Point size
+drep_rf_phyl_plot2$data[[2]]$linewidth <- 0.8    # Line size
+drep_rf_phyl_plot2 <- ggplot_gtable(drep_rf_phyl_plot2)
+grid.draw(drep_rf_phyl_plot2)
+
+ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS10.pdf", height = 145, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
+### Plot phylum-level (top 20) heatmap by habitat
+```{r, include=TRUE}
+# Count across all MAGs
+sum_phylum <- as.data.frame(table(mags$phylum))
+sum_phylum$Prop <- round(sum_phylum$Freq/sum(sum_phylum$Freq)*100,3)
+
+phylum_ <- sum_phylum
+phylum_ <- phylum_[order(phylum_$Freq,decreasing=TRUE),]
+phylum_ <- as.data.frame(head(phylum_,20))
+
+mags$phylum_ <- ifelse(mags$phylum %in% phylum_$Var1, mags$phylum, "Other phyla")
+
+phylum_count_all <- aggregate(mags$phylum_, by=list(mags$phylum_,mags$mfd_hab1_), FUN=length, drop=FALSE)
+phylum_count_all$x[is.na(phylum_count_all$x)] <- 0
+
+phylum_count_hab <- aggregate(mags$mfd_hab1_, by=list(mags$mfd_hab1_), FUN=length)
+colnames(phylum_count_hab) <- c("Group.2","mags_hab")
+
+phylum_count_all <- merge(phylum_count_all,phylum_count_hab, by="Group.2")
+phylum_count_all$frac <- round(phylum_count_all$x / phylum_count_all$mags_hab * 100,2)
+
+# Count across dereplicated MAGs
+level_phyla <- aggregate(mags[mags$rep_status == TRUE,]$phylum_, by=list(mags[mags$rep_status == TRUE,]$phylum_), FUN=length)
+level_phyla <- level_phyla[order(level_phyla$x,decreasing=FALSE),]
+level_phyla$mags_hab <- sum(level_phyla$x)
+level_phyla$frac <- round(level_phyla$x / level_phyla$mags_hab * 100,2)
+level_phyla$Group.2 <- "All habitats (dereplicated)"
+level_phyla <- level_phyla %>% relocate(Group.2)
+phylum_count_all2 <- rbind(phylum_count_all,level_phyla)
+
+# Plot
+phylum_count_all2$frac2 <- paste("(",phylum_count_all2$frac," %)", sep="")
+
+plot_phylum <- ggplot(data = phylum_count_all2, mapping = aes(x = Group.2, y = factor(Group.1,level=level_phyla$Group.1), fill = frac)) +
+               geom_tile(width=1) + scale_x_discrete(guide = guide_axis(angle = 45)) + labs(title="", y="", x="", fill="Fraction of MAGs (%):") +
+               geom_text(aes(label = x), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1) +
+               scale_fill_gradient2(midpoint = 0.05, limits=c(0.01,50), breaks=c(0.01,0.1,1,10), low = "gray95", mid= "#fed976", high = "#800026", 
+                                    trans="log10", labels=c("0.01","0.1","1","10"))  +
+               guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)) + preset_gen2
+
+plot_phylum
+ggsave(file="../analysis/figures/FigS11.pdf", height = 180, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
