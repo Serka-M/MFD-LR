@@ -1,0 +1,114 @@
+---
+title: "R code for plotting mmcomp output"
+author: "Mantas Sereika"
+date: "2024"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+###  Load dependencies
+```{r, include=TRUE, message=FALSE}
+library(stringr)
+library(stringi)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(grid)
+library(gridExtra)
+library(tools)
+library(scales)
+```
+
+
+### Set presets
+```{r, include=TRUE}
+coastal <- c("MFD02416","MFD05684","MFD01721")
+agriculture <- c("MFD00392","MFD05176","MFD08497")
+
+preset_gen <- list(theme_bw(),
+                    theme(legend.position = "bottom",
+                          legend.text=element_text(size=7),
+                          legend.title = element_text(size=7),
+                           axis.title.y = element_text(size = 7), 
+                           axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6),
+                           axis.text.x = element_text(size = 6),
+                           panel.grid.minor = element_line(size = 0.15),
+                           panel.grid.major = element_line(size = 0.3)),
+                    scale_color_manual(values=c("Agriculture"="#cc4c02","Coastal"="#0868ac")))
+
+preset_gen2 <- list(preset_gen2, geom_line(alpha=0.5,size=0.3), geom_point(size=1.25))
+```
+
+
+### Load data
+```{r, include=TRUE}
+mags <- read.delim("../data/mmcomp/mmlong2_mags.tsv", sep="\t", header=T)
+asm <- read.delim("../data/mmcomp/assembly.tsv", sep="\t", header=T)
+map <- read.delim("../data/mmcomp/cramino.tsv", sep="\t", header=T)
+kaiju_r <- read.delim("../data/mmcomp/kaiju_reads.tsv", sep="\t", header=T)
+kaiju_c <- read.delim("../data/mmcomp/kaiju_contigs.tsv", sep="\t", header=T)
+```
+
+
+### Aggregate general stats
+```{r, include=TRUE}
+mags_1 <- aggregate(mags$bin, by=list(Category=mags$wf_name), drop=FALSE, FUN=length)
+colnames(mags_1) <- c("sample", "mags_all")
+
+df_main <- mags_1
+df_main <- merge(df_main,asm,by="sample")
+df_main <- merge(df_main,map,by="sample")
+df_main <- merge(df_main,kaiju_r,by="sample")
+df_main <- merge(df_main,kaiju_c,by="sample")
+
+df_main$split <- df_main$sample
+df_main <- separate(data = df_main, col = split, sep = "_", into = c("fieldsample_barcode", "yield_gb"))
+
+df_main$yield_gb_ <- as.integer(df_main$yield_gb)
+df_main$yield_gb <- factor(df_main$yield_gb,levels = c("20","40","60","80","100"))
+
+df_main$hab <- ifelse(df_main$fieldsample_barcode %in% coastal, "Coastal", 
+                      ifelse(df_main$fieldsample_barcode %in% agriculture, "Agriculture", "Error"))
+```
+
+
+### Plot recovered MAG counts
+```{r, include=TRUE}
+plot_mags_n <- ggplot(data=df_main, aes(x=yield_gb, y=mags_all, color=hab, group=fieldsample_barcode)) + 
+               labs(x="Read yield (Gbp)", y="MAGs recovered (HQ and MQ)", color="Habitat:") +
+               preset_gen2 + scale_y_continuous(limits=c(0,550), expand=c(0,0))
+plot_mags_n
+
+plot_mags_asm <- ggplot(data=df_main, aes(x=yield_gb, y=map_yield_gb/yield_gb_*100, color=hab, group=fieldsample_barcode)) + 
+                 labs(x="Read yield (Gbp)", y="Data assembled (%)", color="Habitat:") +
+                 preset_gen2 + scale_y_continuous(limits=c(0,102), expand=c(0,0))
+plot_mags_asm 
+```
+
+
+### Plot read and assembly prokaryotic fraction by kaiju
+```{r, include=TRUE}
+plot_kaiju_r <- ggplot(data=df_main, aes(x=yield_gb, y=(1-kaiju_read_bp/(yield_gb_*10**9))*100, color=hab, group=fieldsample_barcode)) + 
+                labs(x="Read yield (Gbp)", y="Prokaryotic fraction in reads (%)", color="Habitat:") +
+                preset_gen2 + scale_y_continuous(expand=c(0,0),limits = c(75,101), breaks = c(75,80,85,90,95,100))
+plot_kaiju_r
+
+plot_kaiju_c <- ggplot(data=df_main, aes(x=yield_gb, y=(1-kaiju_contig_bp/contig_bp)*100, color=hab, group=fieldsample_barcode)) + 
+                labs(x="Read yield (Gbp)", y="Prokaryotic fraction in contigs (%)", color="Habitat:") +
+                preset_gen2 +scale_y_continuous(expand=c(0,0),limits = c(75,101), breaks = c(75,80,85,90,95,100))
+plot_kaiju_c
+```
+
+
+### Plot read and assembly prokaryotic fraction by kaiju
+```{r, include=TRUE}
+plot_melon_r <- ggplot(data=df_main, aes(x=yield_gb, y=melon_read_otu_uniq, color=mfd_hab1, group=fieldsample_barcode)) + 
+              labs(x="Read yield (Gbp)", y="No. of observed species (Melon)", color="Habitat:") +
+              geom_line(alpha=0.5,size=0.3) + geom_point(size=1.25) + preset_gen2 + plot_scale
+
+
+```
