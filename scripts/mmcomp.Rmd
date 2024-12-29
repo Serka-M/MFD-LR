@@ -51,6 +51,8 @@ asm <- read.delim("../data/mmcomp/assembly.tsv", sep="\t", header=T)
 map <- read.delim("../data/mmcomp/cramino.tsv", sep="\t", header=T)
 kaiju_r <- read.delim("../data/mmcomp/kaiju_reads.tsv", sep="\t", header=T)
 kaiju_c <- read.delim("../data/mmcomp/kaiju_contigs.tsv", sep="\t", header=T)
+melon_r <- read.delim("../data/mmcomp/melon_reads.tsv", sep="\t", header=T)
+melon_c <- read.delim("../data/mmcomp/melon_contigs.tsv", sep="\t", header=T)
 ```
 
 
@@ -64,6 +66,8 @@ df_main <- merge(df_main,asm,by="sample")
 df_main <- merge(df_main,map,by="sample")
 df_main <- merge(df_main,kaiju_r,by="sample")
 df_main <- merge(df_main,kaiju_c,by="sample")
+df_main <- merge(df_main,melon_r,by="sample")
+df_main <- merge(df_main,melon_c,by="sample")
 
 df_main$split <- df_main$sample
 df_main <- separate(data = df_main, col = split, sep = "_", into = c("fieldsample_barcode", "yield_gb"))
@@ -104,11 +108,27 @@ plot_kaiju_c
 ```
 
 
-### Plot read and assembly prokaryotic fraction by kaiju
+### Plot observed species in read and contigs by Melon
 ```{r, include=TRUE}
-plot_melon_r <- ggplot(data=df_main, aes(x=yield_gb, y=melon_read_otu_uniq, color=mfd_hab1, group=fieldsample_barcode)) + 
-              labs(x="Read yield (Gbp)", y="No. of observed species (Melon)", color="Habitat:") +
-              geom_line(alpha=0.5,size=0.3) + geom_point(size=1.25) + preset_gen2 + plot_scale
+plot_melon_r <- ggplot(data=df_main, aes(x=yield_gb, y=melon_read_otus, color=hab, group=fieldsample_barcode)) + 
+                labs(x="Read yield (Gbp)", y="Prokaryotic species in reads (count)", color="Habitat:") +
+                preset_gen2 + scale_y_continuous(expand=c(0,0), limits = c(0,10100), breaks = c(0,2500,5000,7500,10000))
+plot_melon_r
 
-
+plot_melon_c <- ggplot(data=df_main, aes(x=yield_gb, y=melon_contig_otus, color=hab, group=fieldsample_barcode)) + 
+                labs(x="Read yield (Gbp)", y="Prokaryotic species in contigs (count)", color="Habitat:") +
+                preset_gen2 + scale_y_continuous(expand=c(0,0), limits = c(0,1100), breaks = c(0,250,500,750,1000))
+plot_melon_c
 ```
+
+
+### Plot species distributions in 100 Gbp reads
+```{r, include=TRUE}
+melon_otu <- read.delim("../data/mmcomp/melon_otu_reads_100gb.tsv", sep="\t", header=T)
+
+plot_melon_abund <- ggplot(data=melon_otu, aes(x=rel_abund, weight=rel_abund, group=fieldsample_barcode, color=hab)) + 
+                    geom_density(size=0.25, alpha=0.75, bw = 2, trim = TRUE) + labs(x="Relative abundance (%)",y="Density", color="Habitat:") +
+                    scale_x_continuous(trans="log2",labels=label_number(accuracy = 0.001), breaks=c(0.002,0.016,0.128,1.024)) + preset_gen
+plot_melon_abund
+```
+
