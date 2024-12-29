@@ -76,7 +76,7 @@ df_main$hab <- ifelse(df_main$fieldsample_barcode %in% coastal, "Coastal",
 ```
 
 
-### Plot recovered MAG counts
+### Plot general assembly and binning metrics
 ```{r, include=TRUE}
 plot_mags_n <- ggplot(data=df_main, aes(x=yield_gb, y=mags_all, color=hab, group=fieldsample_barcode)) + 
                labs(x="Read yield (Gbp)", y="MAGs recovered (HQ and MQ)", color="Habitat:") +
