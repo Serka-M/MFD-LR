@@ -40,7 +40,7 @@ preset_gen <- list(theme_bw(),
                            panel.grid.major = element_line(size = 0.3)),
                     scale_color_manual(values=c("Agriculture"="#cc4c02","Coastal"="#0868ac")))
 
-preset_gen2 <- list(preset_gen2, geom_line(alpha=0.5,size=0.3), geom_point(size=1.25))
+preset_gen2 <- list(preset_gen, geom_line(alpha=0.5, size=0.3), geom_point(size=1.25))
 ```
 
 
@@ -49,6 +49,7 @@ preset_gen2 <- list(preset_gen2, geom_line(alpha=0.5,size=0.3), geom_point(size=
 mags <- read.delim("../data/mmcomp/mmlong2_mags.tsv", sep="\t", header=T)
 asm <- read.delim("../data/mmcomp/assembly.tsv", sep="\t", header=T)
 map <- read.delim("../data/mmcomp/cramino.tsv", sep="\t", header=T)
+kmer <- read.delim("../data/mmcomp/jellyfish_sum.tsv", sep="\t", header=T)
 kaiju_r <- read.delim("../data/mmcomp/kaiju_reads.tsv", sep="\t", header=T)
 kaiju_c <- read.delim("../data/mmcomp/kaiju_contigs.tsv", sep="\t", header=T)
 melon_r <- read.delim("../data/mmcomp/melon_reads.tsv", sep="\t", header=T)
@@ -64,6 +65,7 @@ colnames(mags_1) <- c("sample", "mags_all")
 df_main <- mags_1
 df_main <- merge(df_main,asm,by="sample")
 df_main <- merge(df_main,map,by="sample")
+df_main <- merge(df_main,kmer,by="sample")
 df_main <- merge(df_main,kaiju_r,by="sample")
 df_main <- merge(df_main,kaiju_c,by="sample")
 df_main <- merge(df_main,melon_r,by="sample")
@@ -85,26 +87,45 @@ df_main$hab <- ifelse(df_main$fieldsample_barcode %in% coastal, "Coastal",
 plot_mags_n <- ggplot(data=df_main, aes(x=yield_gb, y=mags_all, color=hab, group=fieldsample_barcode)) + 
                labs(x="Read yield (Gbp)", y="MAGs recovered (HQ and MQ)", color="Habitat:") +
                preset_gen2 + scale_y_continuous(limits=c(0,550), expand=c(0,0))
-plot_mags_n
 
-plot_mags_asm <- ggplot(data=df_main, aes(x=yield_gb, y=map_yield_gb/yield_gb_*100, color=hab, group=fieldsample_barcode)) + 
-                 labs(x="Read yield (Gbp)", y="Data assembled (%)", color="Habitat:") +
-                 preset_gen2 + scale_y_continuous(limits=c(0,102), expand=c(0,0))
-plot_mags_asm 
+plot_asm <- ggplot(data=df_main, aes(x=yield_gb, y=map_yield_gb/yield_gb_*100, color=hab, group=fieldsample_barcode)) + 
+            labs(x="Read yield (Gbp)", y="Data assembled (%)", color="Habitat:") +
+            preset_gen2 + scale_y_continuous(limits=c(0,102), expand=c(0,0))
+
+plot_kmer <- ggplot(data=df_main, aes(x=yield_gb, y=(kmer_total-kmer_dist)/kmer_total*100, color=hab, group=fieldsample_barcode)) + 
+             labs(x="Read yield (Gbp)", y="Redundant k-mers (%)", color="Habitat:") +
+             preset_gen2 + scale_y_continuous(limits=c(0,75), expand=c(0,0))
+plot_kmer
 ```
 
 
-### Plot read and assembly prokaryotic fraction by kaiju
+### Plot kmer profiles in 100 Gbp reads
+```{r, include=TRUE}
+kmers <- read.delim("../data/mmcomp/jellyfish_hist.txt", sep=" ", header=T)
+
+kmers$split <- kmers$sample
+kmers <- separate(data = kmers, col = split, sep = "_", into = c("fieldsample_barcode", "yield_gb"))
+kmers <- kmers[kmers$yield_gb == "100",]
+kmers <- kmers[kmers$kmer_freq < 10000,]
+
+kmers$hab <- ifelse(kmers$fieldsample_barcode %in% coastal, "Coastal", 
+                    ifelse(kmers$fieldsample_barcode %in% agriculture, "Agriculture", "Error"))
+
+plot_kmers_spect <- ggplot(data=kmers, aes(x=kmer_freq, y=kmer_count,color=hab, group=fieldsample_barcode)) +
+                    geom_line(size=0.1, alpha=0.75) + scale_y_continuous(trans="log10") + scale_x_continuous(trans="log10") + 
+                    labs(y="K-mer count (unique)",x="K-mer frequency", color="Habitat:") + preset_gen
+```
+
+
+### Plot read and assembly prokaryotic fraction by Kaiju
 ```{r, include=TRUE}
 plot_kaiju_r <- ggplot(data=df_main, aes(x=yield_gb, y=(1-kaiju_read_bp/(yield_gb_*10**9))*100, color=hab, group=fieldsample_barcode)) + 
                 labs(x="Read yield (Gbp)", y="Prokaryotic fraction in reads (%)", color="Habitat:") +
                 preset_gen2 + scale_y_continuous(expand=c(0,0),limits = c(75,101), breaks = c(75,80,85,90,95,100))
-plot_kaiju_r
 
 plot_kaiju_c <- ggplot(data=df_main, aes(x=yield_gb, y=(1-kaiju_contig_bp/contig_bp)*100, color=hab, group=fieldsample_barcode)) + 
                 labs(x="Read yield (Gbp)", y="Prokaryotic fraction in contigs (%)", color="Habitat:") +
                 preset_gen2 +scale_y_continuous(expand=c(0,0),limits = c(75,101), breaks = c(75,80,85,90,95,100))
-plot_kaiju_c
 ```
 
 
@@ -113,12 +134,10 @@ plot_kaiju_c
 plot_melon_r <- ggplot(data=df_main, aes(x=yield_gb, y=melon_read_otus, color=hab, group=fieldsample_barcode)) + 
                 labs(x="Read yield (Gbp)", y="Prokaryotic species in reads (count)", color="Habitat:") +
                 preset_gen2 + scale_y_continuous(expand=c(0,0), limits = c(0,10100), breaks = c(0,2500,5000,7500,10000))
-plot_melon_r
 
 plot_melon_c <- ggplot(data=df_main, aes(x=yield_gb, y=melon_contig_otus, color=hab, group=fieldsample_barcode)) + 
                 labs(x="Read yield (Gbp)", y="Prokaryotic species in contigs (count)", color="Habitat:") +
                 preset_gen2 + scale_y_continuous(expand=c(0,0), limits = c(0,1100), breaks = c(0,250,500,750,1000))
-plot_melon_c
 ```
 
 
@@ -129,6 +148,31 @@ melon_otu <- read.delim("../data/mmcomp/melon_otu_reads_100gb.tsv", sep="\t", he
 plot_melon_abund <- ggplot(data=melon_otu, aes(x=rel_abund, weight=rel_abund, group=fieldsample_barcode, color=hab)) + 
                     geom_density(size=0.25, alpha=0.75, bw = 2, trim = TRUE) + labs(x="Relative abundance (%)",y="Density", color="Habitat:") +
                     scale_x_continuous(trans="log2",labels=label_number(accuracy = 0.001), breaks=c(0.002,0.016,0.128,1.024)) + preset_gen
-plot_melon_abund
+```
+
+
+### Plot MAG variant rates
+```{r, include=TRUE}
+longshot <- read.delim("../data/mmcomp/longshot_mags.tsv", sep="\t", header=T)
+
+mags_var <- merge(mags,longshot,by="bin")
+mags_var$var_perc <- round(mags_var$longshot_var/mags_var$Genome_Size*100,2)
+mags_var_med <- aggregate(mags_var$var_perc, by=list(Category=mags_var$wf_name), drop=FALSE, FUN=median)
+colnames(mags_var_med) <- c("sample", "mag_var_med")
+df_main_var <- merge(df_main,mags_var_med,by="sample")
+
+plot_var_mag <- ggplot(data=df_main_var, aes(x=yield_gb, y=mag_var_med, color=hab, group=fieldsample_barcode)) + 
+                labs(x="Read yield (Gbp)", y="Median MAG polymorphic rate (%)", color="Habitat:") +
+                preset_gen2 + scale_y_continuous(expand=c(0,0), limits = c(0,1.75), breaks = c(0,0.5,1,1.5))
+```
+
+
+### Combine plots
+```{r, include=TRUE}
+plot_fig <- ggarrange(plot_mags_n,plot_kaiju_r,plot_melon_r, plot_melon_c, plot_kmer, plot_kmers_spect, plot_asm, plot_var_mag, plot_melon_abund, nrow=3, ncol=3,
+                      legend = "bottom", common.legend = TRUE, align = c("hv"), labels = c("a","b","c","d","e","f","g","h","i"), font.label = list(size = 9))
+
+plot_fig
+ggsave(file="../analysis/figures/FigS4.pdf", height = 180, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
