@@ -1,0 +1,142 @@
+---
+title: "R code for plotting data from the main MFD project"
+author: "Mantas Sereika"
+date: "2024"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+### Load dependencies
+```{r, include=TRUE, message=FALSE}
+library(stringr)
+library(stringi)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(grid)
+library(gridExtra)
+library(tools)
+library(scales)
+```
+
+
+### Load data
+```{r, include=TRUE}
+mags <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
+mags_16s_lr <- read.delim("../data/MFD-SR/MFG_MFD-LR.tsv", sep="\t", header=F)
+mags_16s_sr <- read.delim("../data/MFD-SR/MFG_MFD-SR.tsv", sep="\t", header=F)
+
+core_type <- read.delim("../data/MFD-SR/2024-03-07_core-genera-type.csv", sep=",", header=T)
+core_area <- read.delim("../data/MFD-SR/2024-03-07_core-genera-area.csv", sep=",", header=T)
+core_hab1 <- read.delim("../data/MFD-SR/2024-03-07_core-genera-mfdo1.csv", sep=",", header=T)
+core_hab2 <- read.delim("../data/MFD-SR/2024-03-07_core-genera-mfdo2.csv", sep=",", header=T)
+core_hab3 <- read.delim("../data/MFD-SR/2024-03-07_core-genera-mfdo3.csv", sep=",", header=T)
+```
+
+
+### Plot presets
+```{r, include=TRUE}
+preset_gen <- list(theme_bw(),
+                    theme(legend.position = "bottom",
+                          legend.text=element_text(size=7),
+                          legend.title = element_text(size=7),
+                           axis.title.y = element_text(size = 7), 
+                           axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6),
+                           axis.text.x = element_text(size = 6),
+                           panel.grid.minor = element_line(size = 0.15),
+                           panel.grid.major = element_line(size = 0.3)))
+```
+
+
+### Wrangle MAG 16S taxonomy data
+```{r, include=TRUE}
+# MFD-LR
+mags_16s_lr$bin <- sapply(strsplit(mags_16s_lr$V1, "_"), `[`, 1)
+
+mags_16s_lr <- separate(data = mags_16s_lr, col = V2, sep = ",", into = c("ASV_domain", "phylum","class","order","family","genus","species"))
+mags_16s_lr <- separate(data = mags_16s_lr, col = ASV_domain, sep = ";tax=d:",into = c("ASV", "domain"))
+
+mags_16s_lr$genus <- gsub("g:","",mags_16s_lr$genus)
+mags_16s_lr$genus <- ifelse(mags_16s_lr$V3 >= 94.5, mags_16s_lr$genus, "Novel genus")
+
+mags_16s_lr_hq <- mags_16s_lr[mags_16s_lr$bin %in% mags[mags$MAG_status == "HQ",]$bin,]
+
+# MFD-SR
+mags_16s_sr$bin <- sapply(strsplit(mags_16s_sr$V1, "_16S_"), `[`, 1)
+mags_16s_sr$genus <- gsub("g:","",sapply(strsplit(mags_16s_sr$V2, ","), `[`, 6))
+mags_16s_sr$genus <- ifelse(mags_16s_sr$V3 >= 94.5, mags_16s_sr$genus, "Novel genus")
+```
+
+
+### Core genera coverage by MAGs
+```{r, include=TRUE}
+core_cov <- function(df,mags_hq,mags_mq,mags_sr) {
+  df$coverage <- ifelse(df$Genus %in% mags_hq$genus, "HQ MAG",
+                        ifelse(df$Genus %in% mags_mq$genus, "MQ MAG",
+                               ifelse(df$Genus %in% mags_sr$genus,"SR MAG","No MAG")))
+  return (df) }
+
+core_type <- core_cov(core_type,mags_16s_lr_hq,mags_16s_lr,mags_16s_sr)
+core_area <- core_cov(core_area,mags_16s_lr_hq,mags_16s_lr,mags_16s_sr)
+core_hab1 <- core_cov(core_hab1,mags_16s_lr_hq,mags_16s_lr,mags_16s_sr)
+core_hab2 <- core_cov(core_hab2,mags_16s_lr_hq,mags_16s_lr,mags_16s_sr)
+core_hab3 <- core_cov(core_hab3,mags_16s_lr_hq,mags_16s_lr,mags_16s_sr)
+```
+
+
+### Overall coverage of core genera
+```{r, include=TRUE}
+core_agr <- function(df,type) {
+  df_uniq <- df[!duplicated(df$Genus),]
+  df_uniq_agr <- aggregate(df_uniq$Genus, by=list(df_uniq$coverage), FUN=length)
+  colnames(df_uniq_agr) <- c("coverage","genera") 
+  df_uniq_agr$group <- type
+  return (df_uniq_agr) }
+
+agr_type <- core_agr(core_type,"Sample type")
+agr_area <- core_agr(core_area,"Area type")
+agr_hab1 <- core_agr(core_hab1,"Habitat (level 1)")
+agr_hab2 <- core_agr(core_hab2,"Habitat (level 2)")
+agr_hab3 <- core_agr(core_hab3,"Habitat (level 3)")
+
+agr_core <- rbind(agr_type,agr_area,agr_hab1,agr_hab2,agr_hab3)
+
+agr_core_sum <- aggregate(agr_core$genera, by=list(agr_core$group), FUN=sum)
+colnames(agr_core_sum) <- c("group","group_total")
+agr_core <- merge(agr_core,agr_core_sum,by="group")
+agr_core$genera_perc <- round(agr_core$genera/agr_core$group_total*100,2)
+
+agr_core$coverage <- factor(agr_core$coverage,levels = rev(c("HQ MAG","MQ MAG","SR MAG","No MAG")))
+
+agr_core$group <- factor(agr_core$group, levels = c("Sample type","Area type","Habitat (level 1)", "Habitat (level 2)", "Habitat (level 3)"))
+```
+
+
+### Plot overall coverage by all MFD MAGs
+```{r, include=TRUE}
+plot_cov_all <- ggplot(agr_core[! agr_core$coverage == "No MAG",], aes(y=genera_perc, x=group, fill=coverage)) + 
+                geom_bar(position="stack", stat="identity") + preset_gen + 
+                geom_text(aes(label = genera), size=2, position=position_stack(vjust = 0.5)) +
+                scale_y_continuous(breaks=c(0,20,40,60,80,100), expand=c(0,0), limits = c(0,105)) +
+                labs(x="", y="Coverage of core genera (%)", fill="Coverage type:") +
+                scale_fill_manual(values=c("HQ MAG"="#1b9e77", "MQ MAG"="#d95f02", "SR MAG"="#fee090"), guide = guide_legend(reverse = TRUE)) 
+plot_cov_all
+```
+
+
+### Plot overall coverage by long-read MAGs
+```{r, include=TRUE}
+plot_cov_lr <- ggplot(agr_core[! (agr_core$coverage == "No MAG" | agr_core$coverage == "SR MAG"),], aes(y=genera_perc, x=group, fill=coverage)) + 
+               geom_bar(position="stack", stat="identity") + preset_gen + 
+               geom_text(aes(label = genera), size=2, position=position_stack(vjust = 0.5)) +
+               scale_y_continuous(breaks=c(0,20,40,60,80,100), expand=c(0,0), limits = c(0,105)) +
+               labs(x="", y="Coverage of core genera (%)", fill="Coverage type:") +
+               scale_fill_manual(values=c("HQ MAG"="#1b9e77", "MQ MAG"="#d95f02"), guide = guide_legend(reverse = TRUE)) 
+plot_cov_lr
+#saveRDS(plot_cov_lr,"../data/MFD-LR/core_genera.rds")
+```
+

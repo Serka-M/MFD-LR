@@ -1,0 +1,733 @@
+Genus,n_observations,n_abundant,mean_abundance,Genus_type,complex1,group_size,Core,prevalence,fidelity
+Bacillus,182,177,2.01290540611898,Core,"Sediment, Natural, Freshwater",189,95,0.962962962962963,13
+Clostridium_sensu_stricto_1,170,152,0.94836781463528,Core,"Sediment, Natural, Freshwater",189,95,0.899470899470899,5
+Clostridium_sensu_stricto_13,142,121,0.926189948146036,Core,"Sediment, Natural, Freshwater",189,95,0.751322751322751,5
+Mycobacterium,187,175,0.774641193802871,Core,"Sediment, Natural, Freshwater",189,95,0.989417989417989,15
+MFD_g_2945,180,174,0.700186927731838,Core,"Sediment, Natural, Freshwater",189,95,0.952380952380952,3
+Nocardioides,155,133,0.663223816916432,Core,"Sediment, Natural, Freshwater",189,95,0.82010582010582,11
+Flavobacterium,144,110,0.661111639155551,Core,"Sediment, Natural, Freshwater",189,95,0.761904761904762,5
+Luteolibacter,163,131,0.657943372514231,Core,"Sediment, Natural, Freshwater",189,95,0.862433862433863,4
+MFD_g_782,180,174,0.65055075035115,Core,"Sediment, Natural, Freshwater",189,95,0.952380952380952,7
+Hyphomicrobium,179,159,0.598802395209581,Core,"Sediment, Natural, Freshwater",189,95,0.947089947089947,5
+Gaiella,160,142,0.547054040068012,Core,"Sediment, Natural, Freshwater",189,95,0.846560846560847,7
+Desulfobacca,170,143,0.510618973692826,Core,"Sediment, Natural, Freshwater",189,95,0.899470899470899,3
+MFD_g_4212,171,152,0.490553284964463,Core,"Sediment, Natural, Freshwater",189,95,0.904761904761905,3
+MFD_g_561,155,129,0.485800885002482,Core,"Sediment, Natural, Freshwater",189,95,0.82010582010582,2
+Spirochaeta,154,122,0.47259977399698,Core,"Sediment, Natural, Freshwater",189,95,0.814814814814815,3
+Anaeromyxobacter,145,118,0.422963596616292,Core,"Sediment, Natural, Freshwater",189,95,0.767195767195767,2
+Crenothrix,140,108,0.41029053005101,Core,"Sediment, Natural, Freshwater",189,95,0.740740740740741,2
+Pir4_lineage,166,134,0.405010085648808,Core,"Sediment, Natural, Freshwater",189,95,0.878306878306878,10
+Nitrospira,143,121,0.396033330165067,Core,"Sediment, Natural, Freshwater",189,95,0.756613756613757,5
+MFD_g_2480,165,132,0.377551774757364,Core,"Sediment, Natural, Freshwater",189,95,0.873015873015873,3
+MFD_g_4614,128,101,0.374911552556263,Core,"Sediment, Natural, Freshwater",189,95,0.677248677248677,1
+MFD_g_5535,175,146,0.362766530431201,Core,"Sediment, Natural, Freshwater",189,95,0.925925925925926,7
+MFD_g_2750,163,134,0.359070219349661,Core,"Sediment, Natural, Freshwater",189,95,0.862433862433863,2
+Haliangium,164,129,0.340060619501737,Core,"Sediment, Natural, Freshwater",189,95,0.867724867724868,12
+Ellin6067,156,125,0.338476486181077,Core,"Sediment, Natural, Freshwater",189,95,0.825396825396825,5
+Methanosaeta,133,98,0.332139952898436,Core,"Sediment, Natural, Freshwater",189,95,0.703703703703704,2
+Syntrophorhabdus,145,111,0.328971686257115,Core,"Sediment, Natural, Freshwater",189,95,0.767195767195767,2
+MFD_g_657,128,100,0.317354708572274,Core,"Sediment, Natural, Freshwater",189,95,0.677248677248677,2
+Ilumatobacter,136,104,0.307849908648312,Core,"Sediment, Natural, Freshwater",189,95,0.71957671957672,7
+MFD_g_40582,148,106,0.305209686447212,Core,"Sediment, Natural, Freshwater",189,95,0.783068783068783,2
+MFD_g_6,149,110,0.29940119760479,Core,"Sediment, Natural, Freshwater",189,95,0.788359788359788,8
+MFD_g_8542,145,116,0.29781706428413,Core,"Sediment, Natural, Freshwater",189,95,0.767195767195767,2
+MFD_g_8204,152,110,0.291480531001489,Core,"Sediment, Natural, Freshwater",189,95,0.804232804232804,6
+MFD_g_2744,131,100,0.290424442121049,Core,"Sediment, Natural, Freshwater",189,95,0.693121693121693,4
+CL500-29_marine_group,139,104,0.276695286675327,Core,"Sediment, Natural, Freshwater",189,95,0.735449735449735,6
+Subgroup_10,150,107,0.263494175669824,Core,"Sediment, Natural, Freshwater",189,95,0.793650793650794,7
+Anaerolinea,147,106,0.262966131229604,Core,"Sediment, Natural, Freshwater",189,95,0.777777777777778,2
+Pirellula,150,112,0.261910042349164,Core,"Sediment, Natural, Freshwater",189,95,0.793650793650794,7
+Paenibacillus,148,110,0.257685686827403,Core,"Sediment, Natural, Freshwater",189,95,0.783068783068783,10
+Conexibacter,153,112,0.246596753582782,Core,"Sediment, Natural, Freshwater",189,95,0.80952380952381,10
+Pedomicrobium,126,96,0.241316309180581,Core,"Sediment, Natural, Freshwater",189,95,0.666666666666667,3
+Syntrophus,133,96,0.213329953848916,Core,"Sediment, Natural, Freshwater",189,95,0.703703703703704,2
+Woeseia,41,41,2.19804293851322,Core,"Sediment, Natural, Saltwater",41,21,1,2
+Sva0081_sediment_group,41,39,1.8645635558152,Core,"Sediment, Natural, Saltwater",41,21,1,3
+Subgroup_10,38,37,1.60167469938172,Core,"Sediment, Natural, Saltwater",41,21,0.926829268292683,7
+Subgroup_23,37,35,1.36556155980721,Core,"Sediment, Natural, Saltwater",41,21,0.902439024390244,2
+Ilumatobacter,41,40,1.32661506255781,Core,"Sediment, Natural, Saltwater",41,21,1,7
+MFD_g_251212,40,38,1.23168297551239,Core,"Sediment, Natural, Saltwater",41,21,0.975609756097561,1
+MFD_g_3995,40,37,1.00530646025023,Core,"Sediment, Natural, Saltwater",41,21,0.975609756097561,2
+Muriicola,33,33,0.968794119078916,Core,"Sediment, Natural, Saltwater",41,21,0.804878048780488,1
+Maribacter,37,33,0.859257095564968,Core,"Sediment, Natural, Saltwater",41,21,0.902439024390244,2
+Blastopirellula,41,40,0.805705661847038,Core,"Sediment, Natural, Saltwater",41,21,1,1
+MFD_g_12100,39,33,0.693734482255002,Core,"Sediment, Natural, Saltwater",41,21,0.951219512195122,1
+Maritimimonas,35,28,0.683997857942651,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,1
+MFD_g_3142,34,30,0.654787985005599,Core,"Sediment, Natural, Saltwater",41,21,0.829268292682927,2
+Rhodopirellula,40,39,0.652353828927511,Core,"Sediment, Natural, Saltwater",41,21,0.975609756097561,2
+Ca_Thiobios,35,34,0.647485516771336,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,1
+Cyanobium_PCC-6307,29,24,0.630446424224722,Core,"Sediment, Natural, Saltwater",41,21,0.707317073170732,2
+MFD_g_10515,32,29,0.520909400710774,Core,"Sediment, Natural, Saltwater",41,21,0.780487804878049,1
+Klebsiella,40,38,0.520909400710773,Core,"Sediment, Natural, Saltwater",41,21,0.975609756097561,2
+Desulfosarcina,34,27,0.484397059539458,Core,"Sediment, Natural, Saltwater",41,21,0.829268292682927,1
+Arcticiflavibacter,34,30,0.484397059539458,Core,"Sediment, Natural, Saltwater",41,21,0.829268292682927,1
+Urania-1B-19_marine_sediment_group,38,32,0.467357966992844,Core,"Sediment, Natural, Saltwater",41,21,0.926829268292683,1
+Sva0996_marine_group,36,32,0.464923810914756,Core,"Sediment, Natural, Saltwater",41,21,0.878048780487805,2
+MFD_g_1342,31,24,0.457621342680493,Core,"Sediment, Natural, Saltwater",41,21,0.75609756097561,2
+MFD_g_34995,30,26,0.45031887444623,Core,"Sediment, Natural, Saltwater",41,21,0.731707317073171,1
+Lewinella,37,30,0.447884718368142,Core,"Sediment, Natural, Saltwater",41,21,0.902439024390244,2
+Lutibacter,34,27,0.421109001509177,Core,"Sediment, Natural, Saltwater",41,21,0.829268292682927,1
+Halioglobus,35,27,0.421109001509177,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,1
+MFD_g_9796,34,31,0.408938221118738,Core,"Sediment, Natural, Saltwater",41,21,0.829268292682927,1
+MFD_g_938,29,21,0.369991723869335,Core,"Sediment, Natural, Saltwater",41,21,0.707317073170732,1
+Thiogranum,35,29,0.369991723869334,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,1
+Lutimonas,28,25,0.367557567791247,Core,"Sediment, Natural, Saltwater",41,21,0.682926829268293,1
+MFD_g_15278,32,27,0.365123411713159,Core,"Sediment, Natural, Saltwater",41,21,0.780487804878049,1
+Ulvibacter,36,26,0.35295263132272,Core,"Sediment, Natural, Saltwater",41,21,0.878048780487805,1
+Granulosicoccus,31,21,0.340781850932282,Core,"Sediment, Natural, Saltwater",41,21,0.75609756097561,2
+Defluviicoccus,29,23,0.299401197604791,Core,"Sediment, Natural, Saltwater",41,21,0.707317073170732,1
+Roseibacillus,36,29,0.296967041526703,Core,"Sediment, Natural, Saltwater",41,21,0.878048780487805,2
+Portibacter,33,26,0.294532885448615,Core,"Sediment, Natural, Saltwater",41,21,0.804878048780488,1
+Winogradskyella,31,23,0.275059636823913,Core,"Sediment, Natural, Saltwater",41,21,0.75609756097561,2
+SEEP-SRB1,28,21,0.272625480745826,Core,"Sediment, Natural, Saltwater",41,21,0.682926829268293,2
+MFD_g_13382,38,25,0.258020544277299,Core,"Sediment, Natural, Saltwater",41,21,0.926829268292683,1
+MFD_g_15309,35,29,0.258020544277299,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,1
+OM60NOR5_clade,37,25,0.255586388199211,Core,"Sediment, Natural, Saltwater",41,21,0.902439024390244,2
+MFD_g_3425,35,28,0.253152232121124,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,2
+R76-B128,30,26,0.253152232121124,Core,"Sediment, Natural, Saltwater",41,21,0.731707317073171,1
+Anderseniella,37,29,0.250718076043036,Core,"Sediment, Natural, Saltwater",41,21,0.902439024390244,1
+MFD_g_2744,33,27,0.231244827418334,Core,"Sediment, Natural, Saltwater",41,21,0.804878048780488,4
+Rubripirellula,33,26,0.228810671340246,Core,"Sediment, Natural, Saltwater",41,21,0.804878048780488,1
+OM27_clade,35,21,0.226376515262159,Core,"Sediment, Natural, Saltwater",41,21,0.853658536585366,1
+Pirellula,33,21,0.223942359184071,Core,"Sediment, Natural, Saltwater",41,21,0.804878048780488,7
+IheB3-7,31,22,0.199600798403194,Core,"Sediment, Natural, Saltwater",41,21,0.75609756097561,1
+MFD_g_8708,30,22,0.189864174090843,Core,"Sediment, Natural, Saltwater",41,21,0.731707317073171,1
+Pir4_lineage,33,24,0.189864174090843,Core,"Sediment, Natural, Saltwater",41,21,0.804878048780488,10
+Paenisporosarcina,19,18,3.3682634730539,Core,"Sediment, Subterranean, Saltwater",36,18,0.527777777777778,1
+SEEP-SRB1,34,34,2.94965624306942,Core,"Sediment, Subterranean, Saltwater",36,18,0.944444444444444,2
+MFD_g_2740,35,34,2.84985584386782,Core,"Sediment, Subterranean, Saltwater",36,18,0.972222222222222,1
+Subgroup_23,36,34,1.53858948769128,Core,"Sediment, Subterranean, Saltwater",36,18,1,2
+MFD_g_4585,34,29,1.21701042359725,Core,"Sediment, Subterranean, Saltwater",36,18,0.944444444444444,1
+Subgroup_10,33,32,1.02849855843868,Core,"Sediment, Subterranean, Saltwater",36,18,0.916666666666667,7
+MFD_g_2519,35,30,0.94810379241517,Core,"Sediment, Subterranean, Saltwater",36,18,0.972222222222222,1
+MFD_g_412,32,28,0.912064759370149,Core,"Sediment, Subterranean, Saltwater",36,18,0.888888888888889,1
+Sulfurovum,27,26,0.862164559769351,Core,"Sediment, Subterranean, Saltwater",36,18,0.75,1
+Pir4_lineage,35,34,0.812264360168553,Core,"Sediment, Subterranean, Saltwater",36,18,0.972222222222222,10
+MFD_g_2285,25,20,0.74573076070082,Core,"Sediment, Subterranean, Saltwater",36,18,0.694444444444445,1
+Mycobacterium,33,33,0.74018629407851,Core,"Sediment, Subterranean, Saltwater",36,18,0.916666666666667,15
+MFD_g_1316,31,25,0.737414060767355,Core,"Sediment, Subterranean, Saltwater",36,18,0.861111111111111,1
+Desulfatiglans,30,29,0.715236194278111,Core,"Sediment, Subterranean, Saltwater",36,18,0.833333333333333,1
+MFD_g_1435,33,29,0.687513861166556,Core,"Sediment, Subterranean, Saltwater",36,18,0.916666666666667,1
+MFD_g_235141,27,22,0.637613661565758,Core,"Sediment, Subterranean, Saltwater",36,18,0.75,1
+MFD_g_1342,31,29,0.59325792858727,Core,"Sediment, Subterranean, Saltwater",36,18,0.861111111111111,2
+Sva0081_sediment_group,33,29,0.576624528720337,Core,"Sediment, Subterranean, Saltwater",36,18,0.916666666666667,3
+MFD_g_841,32,25,0.537813262364161,Core,"Sediment, Subterranean, Saltwater",36,18,0.888888888888889,2
+Clostridium_sensu_stricto_13,25,23,0.521179862497228,Core,"Sediment, Subterranean, Saltwater",36,18,0.694444444444445,5
+MFD_g_9463,30,27,0.493457529385674,Core,"Sediment, Subterranean, Saltwater",36,18,0.833333333333333,1
+MFD_g_3142,31,29,0.479596362829896,Core,"Sediment, Subterranean, Saltwater",36,18,0.861111111111111,2
+MFD_g_2744,33,30,0.47127966289643,Core,"Sediment, Subterranean, Saltwater",36,18,0.916666666666667,4
+MFD_g_3425,33,25,0.438012863162564,Core,"Sediment, Subterranean, Saltwater",36,18,0.916666666666667,2
+Spirochaeta,27,24,0.435240629851409,Core,"Sediment, Subterranean, Saltwater",36,18,0.75,3
+MFD_g_4140,30,26,0.424151696606787,Core,"Sediment, Subterranean, Saltwater",36,18,0.833333333333333,1
+MFD_g_6603,27,24,0.413062763362164,Core,"Sediment, Subterranean, Saltwater",36,18,0.75,1
+MFD_g_1112,27,24,0.407518296739854,Core,"Sediment, Subterranean, Saltwater",36,18,0.75,1
+MFD_g_4912,26,26,0.390884896872921,Core,"Sediment, Subterranean, Saltwater",36,18,0.722222222222222,1
+MFD_g_1191,28,24,0.379795963628299,Core,"Sediment, Subterranean, Saltwater",36,18,0.777777777777778,1
+MFD_g_3995,30,23,0.368707030383677,Core,"Sediment, Subterranean, Saltwater",36,18,0.833333333333333,2
+Romboutsia,24,22,0.365934797072522,Core,"Sediment, Subterranean, Saltwater",36,18,0.666666666666667,3
+MFD_g_36297,29,24,0.357618097139055,Core,"Sediment, Subterranean, Saltwater",36,18,0.805555555555556,1
+MFD_g_3347,28,25,0.3548458638279,Core,"Sediment, Subterranean, Saltwater",36,18,0.777777777777778,1
+MFD_g_4664,26,21,0.349301397205589,Core,"Sediment, Subterranean, Saltwater",36,18,0.722222222222222,1
+Woeseia,31,24,0.340984697272123,Core,"Sediment, Subterranean, Saltwater",36,18,0.861111111111111,2
+MFD_g_2391,28,20,0.340984697272122,Core,"Sediment, Subterranean, Saltwater",36,18,0.777777777777778,1
+MFD_g_6,29,20,0.32435129740519,Core,"Sediment, Subterranean, Saltwater",36,18,0.805555555555556,8
+Pelolinea,26,21,0.318806830782879,Core,"Sediment, Subterranean, Saltwater",36,18,0.722222222222222,1
+Ilumatobacter,28,23,0.302173430915946,Core,"Sediment, Subterranean, Saltwater",36,18,0.777777777777778,7
+MFD_g_13573,26,25,0.285540031049013,Core,"Sediment, Subterranean, Saltwater",36,18,0.722222222222222,1
+MFD_g_812630,23,20,0.279995564426702,Core,"Sediment, Subterranean, Saltwater",36,18,0.638888888888889,1
+MFD_g_10875,26,20,0.271678864493236,Core,"Sediment, Subterranean, Saltwater",36,18,0.722222222222222,1
+MFD_g_5611,32,22,0.252273231315147,Core,"Sediment, Subterranean, Saltwater",36,18,0.888888888888889,1
+MFD_g_5665,28,22,0.249500998003992,Core,"Sediment, Subterranean, Saltwater",36,18,0.777777777777778,1
+MFD_g_1043006,32,19,0.213461964958971,Core,"Sediment, Subterranean, Saltwater",36,18,0.888888888888889,1
+MFD_g_8577,23,19,0.202373031714349,Core,"Sediment, Subterranean, Saltwater",36,18,0.638888888888889,1
+MFD_g_60466,26,18,0.202373031714349,Core,"Sediment, Subterranean, Saltwater",36,18,0.722222222222222,1
+Bacillus,187,173,2.12424891150342,Core,"Sediment, Urban, Freshwater",193,97,0.968911917098446,13
+Clostridium_sensu_stricto_1,179,169,1.70488039465111,Core,"Sediment, Urban, Freshwater",193,97,0.927461139896373,5
+MFD_g_2945,186,177,0.85166454655456,Core,"Sediment, Urban, Freshwater",193,97,0.963730569948187,3
+Clostridium_sensu_stricto_13,172,147,0.785475680762827,Core,"Sediment, Urban, Freshwater",193,97,0.89119170984456,5
+Mycobacterium,184,162,0.668093864085301,Core,"Sediment, Urban, Freshwater",193,97,0.953367875647668,15
+Desulfobacca,163,146,0.66602546202931,Core,"Sediment, Urban, Freshwater",193,97,0.844559585492228,3
+Luteolibacter,169,146,0.593114289555604,Core,"Sediment, Urban, Freshwater",193,97,0.875647668393782,4
+MFD_g_782,185,174,0.592080088527608,Core,"Sediment, Urban, Freshwater",193,97,0.958549222797927,7
+Methanosaeta,155,140,0.570878967453694,Core,"Sediment, Urban, Freshwater",193,97,0.803108808290156,2
+MFD_g_657,152,128,0.516583413483913,Core,"Sediment, Urban, Freshwater",193,97,0.787564766839378,2
+Spirochaeta,160,133,0.507792704745949,Core,"Sediment, Urban, Freshwater",193,97,0.829015544041451,3
+Nocardioides,152,125,0.502104599091972,Core,"Sediment, Urban, Freshwater",193,97,0.787564766839378,11
+MFD_g_561,158,133,0.485040282130041,Core,"Sediment, Urban, Freshwater",193,97,0.818652849740933,2
+Anaeromyxobacter,157,125,0.466941764140114,Core,"Sediment, Urban, Freshwater",193,97,0.813471502590674,2
+MFD_g_4212,170,152,0.458151055402149,Core,"Sediment, Urban, Freshwater",193,97,0.880829015544041,3
+Syntrophorhabdus,167,144,0.451428748720176,Core,"Sediment, Urban, Freshwater",193,97,0.865284974093264,2
+Anaerolinea,165,147,0.430227627646262,Core,"Sediment, Urban, Freshwater",193,97,0.854922279792746,2
+MFD_g_1100,156,124,0.429710527132264,Core,"Sediment, Urban, Freshwater",193,97,0.808290155440415,1
+Gaiella,147,118,0.427642125076272,Core,"Sediment, Urban, Freshwater",193,97,0.761658031088083,7
+Methanosarcina,161,135,0.424539521992285,Core,"Sediment, Urban, Freshwater",193,97,0.83419689119171,1
+Haliangium,163,139,0.375414973162483,Core,"Sediment, Urban, Freshwater",193,97,0.844559585492228,12
+Methanoregula,146,125,0.37386367162049,Core,"Sediment, Urban, Freshwater",193,97,0.756476683937824,1
+Romboutsia,128,99,0.368692666480511,Core,"Sediment, Urban, Freshwater",193,97,0.663212435233161,3
+Methanobacterium,157,128,0.354213852088569,Core,"Sediment, Urban, Freshwater",193,97,0.813471502590674,1
+Hyphomicrobium,175,144,0.353179651060573,Core,"Sediment, Urban, Freshwater",193,97,0.906735751295337,5
+MFD_g_2750,162,141,0.34904284694859,Core,"Sediment, Urban, Freshwater",193,97,0.839378238341969,2
+Pir4_lineage,166,117,0.331461429472661,Core,"Sediment, Urban, Freshwater",193,97,0.860103626943005,10
+MFD_g_2480,157,123,0.32680752484668,Core,"Sediment, Urban, Freshwater",193,97,0.813471502590674,3
+Paenibacillus,159,121,0.323187821248694,Core,"Sediment, Urban, Freshwater",193,97,0.823834196891192,10
+Sva0081_sediment_group,151,119,0.306123504286763,Core,"Sediment, Urban, Freshwater",193,97,0.782383419689119,3
+MFD_g_8542,147,108,0.292678890922818,Core,"Sediment, Urban, Freshwater",193,97,0.761658031088083,2
+Leptolinea,155,123,0.291127589380824,Core,"Sediment, Urban, Freshwater",193,97,0.803108808290156,1
+MFD_g_6,148,107,0.288542086810834,Core,"Sediment, Urban, Freshwater",193,97,0.766839378238342,8
+Crenothrix,135,99,0.278200076530876,Core,"Sediment, Urban, Freshwater",193,97,0.699481865284974,2
+MFD_g_40582,150,114,0.273029071390897,Core,"Sediment, Urban, Freshwater",193,97,0.77720207253886,2
+MFD_g_758,162,116,0.270960669334905,Core,"Sediment, Urban, Freshwater",193,97,0.839378238341969,1
+MFD_g_2744,142,104,0.26992646830691,Core,"Sediment, Urban, Freshwater",193,97,0.735751295336788,4
+MFD_g_5535,155,114,0.25751605597096,Core,"Sediment, Urban, Freshwater",193,97,0.803108808290156,7
+MFD_g_7353,129,99,0.253379251858976,Core,"Sediment, Urban, Freshwater",193,97,0.66839378238342,1
+Pirellula,157,107,0.251310849802985,Core,"Sediment, Urban, Freshwater",193,97,0.813471502590674,7
+MFD_g_4101,150,111,0.226490025131085,Core,"Sediment, Urban, Freshwater",193,97,0.77720207253886,1
+ADurb.Bin063-1,156,107,0.214079612795135,Core,"Sediment, Urban, Freshwater",193,97,0.808290155440415,1
+Syntrophus,148,104,0.208391507141158,Core,"Sediment, Urban, Freshwater",193,97,0.766839378238342,2
+MFD_g_1394,142,107,0.206840205599164,Core,"Sediment, Urban, Freshwater",193,97,0.735751295336788,1
+Phormidesmis_ANT.LACV5.1,19,15,2.55141890132778,Core,"Sediment, Urban, Saltwater",23,12,0.826086956521739,1
+Maribacter,23,22,2.217304521392,Core,"Sediment, Urban, Saltwater",23,12,1,2
+Pseudoalteromonas,17,14,2.1999479302265,Core,"Sediment, Urban, Saltwater",23,12,0.739130434782609,1
+Shewanella,16,14,1.26269200728977,Core,"Sediment, Urban, Saltwater",23,12,0.695652173913044,1
+Vibrio,14,12,0.9763082530591,Core,"Sediment, Urban, Saltwater",23,12,0.608695652173913,1
+Lewinella,22,20,0.746333420116289,Core,"Sediment, Urban, Saltwater",23,12,0.956521739130435,2
+Psychromonas,13,12,0.676907055454309,Core,"Sediment, Urban, Saltwater",23,12,0.565217391304348,1
+Ilumatobacter,18,15,0.65521131649744,Core,"Sediment, Urban, Saltwater",23,12,0.782608695652174,7
+Luteolibacter,19,16,0.577106656252712,Core,"Sediment, Urban, Saltwater",23,12,0.826086956521739,4
+SM1A02,16,14,0.577106656252712,Core,"Sediment, Urban, Saltwater",23,12,0.695652173913044,2
+Erythrobacter,19,17,0.568428360669965,Core,"Sediment, Urban, Saltwater",23,12,0.826086956521739,1
+Nonlabens,15,13,0.451271370302872,Core,"Sediment, Urban, Saltwater",23,12,0.652173913043478,1
+Pleurocapsa_PCC-7319,17,14,0.35581011889265,Core,"Sediment, Urban, Saltwater",23,12,0.739130434782609,1
+Altererythrobacter,18,14,0.347131823309902,Core,"Sediment, Urban, Saltwater",23,12,0.782608695652174,1
+Granulosicoccus,16,14,0.329775232144407,Core,"Sediment, Urban, Saltwater",23,12,0.695652173913044,2
+Pir4_lineage,15,12,0.286383754230669,Core,"Sediment, Urban, Saltwater",23,12,0.652173913043478,10
+Klebsiella,16,14,0.277705458647922,Core,"Sediment, Urban, Saltwater",23,12,0.695652173913044,2
+Rhodopirellula,16,15,0.273366310856548,Core,"Sediment, Urban, Saltwater",23,12,0.695652173913044,2
+Phycisphaera,18,13,0.212618241777315,Core,"Sediment, Urban, Saltwater",23,12,0.782608695652174,1
+Bacillus,377,377,6.21568534019494,Core,"Soil, Agriculture, Fields",377,189,1,13
+Nocardioides,368,364,2.6305479227222,Core,"Soil, Agriculture, Fields",377,189,0.976127320954907,11
+Gaiella,364,359,1.98065407646246,Core,"Soil, Agriculture, Fields",377,189,0.96551724137931,7
+Mycobacterium,377,373,1.81043748047671,Core,"Soil, Agriculture, Fields",377,189,1,15
+Ca_Udaeobacter,372,366,1.64127977466817,Core,"Soil, Agriculture, Fields",377,189,0.986737400530504,7
+Streptomyces,373,367,1.53989104020077,Core,"Soil, Agriculture, Fields",377,189,0.989389920424403,8
+Paenibacillus,373,365,1.38132223616428,Core,"Soil, Agriculture, Fields",377,189,0.989389920424403,10
+Sporosarcina,351,306,0.976032020838959,Core,"Soil, Agriculture, Fields",377,189,0.931034482758621,2
+Conexibacter,372,366,0.838376297802274,Core,"Soil, Agriculture, Fields",377,189,0.986737400530504,10
+Haliangium,376,374,0.822228222599894,Core,"Soil, Agriculture, Fields",377,189,0.997347480106101,12
+Solirubrobacter,356,346,0.782784563498997,Core,"Soil, Agriculture, Fields",377,189,0.944297082228117,4
+Sphingomonas,352,335,0.782519840954696,Core,"Soil, Agriculture, Fields",377,189,0.93368700265252,2
+MFD_g_8204,372,365,0.735663950613362,Core,"Soil, Agriculture, Fields",377,189,0.986737400530504,6
+Pseudonocardia,364,357,0.730104777183035,Core,"Soil, Agriculture, Fields",377,189,0.96551724137931,5
+Gemmatimonas,370,357,0.710250586360436,Core,"Soil, Agriculture, Fields",377,189,0.981432360742706,4
+Ca_Solibacter,354,313,0.599067117753882,Core,"Soil, Agriculture, Fields",377,189,0.938992042440318,8
+Acidothermus,273,195,0.587948770893227,Core,"Soil, Agriculture, Fields",377,189,0.724137931034483,8
+MFD_g_198,320,275,0.543475383450606,Core,"Soil, Agriculture, Fields",377,189,0.848806366047745,1
+MFD_g_144,368,341,0.533151204222854,Core,"Soil, Agriculture, Fields",377,189,0.976127320954907,7
+MFD_g_264,329,288,0.532092314045649,Core,"Soil, Agriculture, Fields",377,189,0.872679045092838,4
+MFD_g_2431,354,324,0.517532574109076,Core,"Soil, Agriculture, Fields",377,189,0.938992042440318,2
+MFD_g_8,359,337,0.503502279261106,Core,"Soil, Agriculture, Fields",377,189,0.952254641909814,8
+MFD_g_4907,342,297,0.456116943831171,Core,"Soil, Agriculture, Fields",377,189,0.907161803713528,2
+MFD_g_650,336,289,0.454528608565363,Core,"Soil, Agriculture, Fields",377,189,0.891246684350133,3
+MFD_g_782,360,327,0.452940273299555,Core,"Soil, Agriculture, Fields",377,189,0.954907161803714,7
+Bryobacter,364,332,0.437321643185777,Core,"Soil, Agriculture, Fields",377,189,0.96551724137931,9
+Clostridium_sensu_stricto_1,319,260,0.432291914844052,Core,"Soil, Agriculture, Fields",377,189,0.846153846153846,5
+Bradyrhizobium,356,320,0.421438290527698,Core,"Soil, Agriculture, Fields",377,189,0.944297082228117,8
+Ca_Alysiosphaera,348,301,0.411378833844248,Core,"Soil, Agriculture, Fields",377,189,0.923076923076923,3
+MFD_g_340,330,279,0.393112978287457,Core,"Soil, Agriculture, Fields",377,189,0.875331564986737,2
+Nakamurella,337,285,0.376964903085077,Core,"Soil, Agriculture, Fields",377,189,0.893899204244032,3
+MFD_g_5535,353,314,0.360552105338395,Core,"Soil, Agriculture, Fields",377,189,0.936339522546419,7
+MFD_g_161,286,236,0.357110712262478,Core,"Soil, Agriculture, Fields",377,189,0.758620689655172,1
+Nitrospira,353,301,0.349963203566342,Core,"Soil, Agriculture, Fields",377,189,0.936339522546419,5
+MFD_g_512,319,278,0.346257087946124,Core,"Soil, Agriculture, Fields",377,189,0.846153846153846,1
+MFD_g_812,361,319,0.344668752680316,Core,"Soil, Agriculture, Fields",377,189,0.957559681697613,4
+RB41,327,276,0.344404030136014,Core,"Soil, Agriculture, Fields",377,189,0.86737400530504,1
+MFD_g_6,343,274,0.329314845110839,Core,"Soil, Agriculture, Fields",377,189,0.909814323607427,8
+MFD_g_9823,319,256,0.328255954933634,Core,"Soil, Agriculture, Fields",377,189,0.846153846153846,3
+Blastococcus,336,271,0.318461220794485,Core,"Soil, Agriculture, Fields",377,189,0.891246684350133,1
+Microlunatus,297,233,0.312372602275555,Core,"Soil, Agriculture, Fields",377,189,0.787798408488064,2
+MFD_g_5777,315,259,0.303636758313612,Core,"Soil, Agriculture, Fields",377,189,0.835543766578249,2
+MFD_g_1634,310,241,0.295695081984572,Core,"Soil, Agriculture, Fields",377,189,0.822281167108753,2
+Massilia,288,191,0.294371469263065,Core,"Soil, Agriculture, Fields",377,189,0.763925729442971,1
+Jatrophihabitans,317,237,0.288547573288436,Core,"Soil, Agriculture, Fields",377,189,0.840848806366048,6
+Microvirga,309,243,0.288018128199834,Core,"Soil, Agriculture, Fields",377,189,0.819628647214854,2
+Pir4_lineage,343,269,0.284841457668218,Core,"Soil, Agriculture, Fields",377,189,0.909814323607427,10
+MFD_g_875,299,230,0.274252555896165,Core,"Soil, Agriculture, Fields",377,189,0.793103448275862,3
+Subgroup_10,329,260,0.263928376668414,Core,"Soil, Agriculture, Fields",377,189,0.872679045092838,7
+MFD_g_1794,296,240,0.262604763946907,Core,"Soil, Agriculture, Fields",377,189,0.785145888594165,2
+MFD_g_11470,282,199,0.250692249453348,Core,"Soil, Agriculture, Fields",377,189,0.748010610079576,3
+Acidibacter,320,226,0.247515578921732,Core,"Soil, Agriculture, Fields",377,189,0.848806366047745,7
+Oryzihumus,302,217,0.246456688744527,Core,"Soil, Agriculture, Fields",377,189,0.80106100795756,1
+Pedomicrobium,320,224,0.240103347681295,Core,"Soil, Agriculture, Fields",377,189,0.848806366047745,3
+Lysinibacillus,309,221,0.238250289871186,Core,"Soil, Agriculture, Fields",377,189,0.819628647214854,1
+Tumebacillus,294,200,0.233220561529461,Core,"Soil, Agriculture, Fields",377,189,0.779840848806366,1
+Pajaroellobacter,332,237,0.226337775377627,Core,"Soil, Agriculture, Fields",377,189,0.880636604774536,8
+Hyphomicrobium,313,220,0.220778601947299,Core,"Soil, Agriculture, Fields",377,189,0.830238726790451,5
+Clostridium_sensu_stricto_13,302,199,0.218396099048587,Core,"Soil, Agriculture, Fields",377,189,0.80106100795756,5
+MFD_g_1517,306,222,0.212042757985356,Core,"Soil, Agriculture, Fields",377,189,0.811671087533157,1
+Marmoricola,294,205,0.212042757985356,Core,"Soil, Agriculture, Fields",377,189,0.779840848806366,2
+Iamia,288,214,0.211778035441054,Core,"Soil, Agriculture, Fields",377,189,0.763925729442971,4
+Reyranella,310,216,0.207807197276534,Core,"Soil, Agriculture, Fields",377,189,0.822281167108753,5
+Gemmata,310,216,0.199336075858892,Core,"Soil, Agriculture, Fields",377,189,0.822281167108753,2
+MFD_g_13520,285,189,0.195629960238674,Core,"Soil, Agriculture, Fields",377,189,0.755968169761273,5
+Chthoniobacter,303,208,0.192188567162757,Core,"Soil, Agriculture, Fields",377,189,0.803713527851459,7
+CL500-29_marine_group,301,194,0.182393833023608,Core,"Soil, Agriculture, Fields",377,189,0.798408488063661,6
+Acidothermus,95,77,1.63492459525394,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.659722222222222,8
+Bacillus,126,112,1.47690729651808,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.875,13
+Roseiarcus,92,77,1.38334442226658,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.638888888888889,6
+Ca_Solibacter,132,117,1.1705755156354,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.916666666666667,8
+Mycobacterium,139,133,1.09849744954535,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.965277777777778,15
+Gaiella,106,102,0.903748059436683,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.736111111111111,7
+Haliangium,135,130,0.715236194278111,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.9375,12
+Nocardioides,112,100,0.645930361499224,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.777777777777778,11
+MFD_g_8204,115,108,0.603653803504103,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.798611111111111,6
+Bryobacter,136,113,0.575931470392549,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.944444444444444,9
+Pir4_lineage,111,103,0.55652583721446,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.770833333333333,10
+Clostridium_sensu_stricto_1,105,74,0.548902195608783,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.729166666666667,5
+Conexibacter,134,121,0.547516078953205,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.930555555555556,10
+Ca_Udaeobacter,103,88,0.527417387447328,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.715277777777778,7
+Clostridium_sensu_stricto_13,120,94,0.527417387447328,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.833333333333333,5
+MFD_g_5535,118,110,0.523952095808383,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.819444444444445,7
+Desulfobacca,112,95,0.488606121091151,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.777777777777778,3
+Pseudolabrys,105,83,0.435240629851409,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.729166666666667,2
+Ca_Xiphinematobacter,102,87,0.429003104901309,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.708333333333333,4
+MFD_g_782,115,103,0.425537813262364,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.798611111111111,7
+MFD_g_875,94,85,0.40959747172322,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.652777777777778,3
+MFD_g_8,133,108,0.408904413395431,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.923611111111111,8
+MFD_g_4212,100,88,0.39781548015081,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.694444444444445,3
+mle1-7,107,92,0.371479263694833,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.743055555555556,1
+MFD_g_6,109,99,0.363855622089155,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.756944444444445,8
+Aquisphaera,107,74,0.357618097139055,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.743055555555556,6
+Hyphomicrobium,121,101,0.347915280550011,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.840277777777778,5
+Pajaroellobacter,125,98,0.334054113994234,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.868055555555556,8
+MFD_g_2945,111,89,0.332667997338656,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.770833333333333,3
+Paenibacillus,120,94,0.306331780882679,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.833333333333333,10
+MFD_g_2480,103,90,0.300094255932579,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.715277777777778,3
+MFD_g_812,111,92,0.300094255932579,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.770833333333333,4
+Rhodomicrobium,98,75,0.288312264360169,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.680555555555556,1
+Bradyrhizobium,124,82,0.28761920603238,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.861111111111111,8
+MFD_g_1860,84,72,0.260589931248614,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.583333333333333,1
+MFD_g_650,88,74,0.254352406298514,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.611111111111111,3
+Bauldia,102,82,0.254352406298514,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.708333333333333,2
+MFD_g_678,108,83,0.242570414726103,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.75,2
+Reyranella,99,77,0.233560656464848,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.6875,5
+Pirellula,98,72,0.233560656464848,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.680555555555556,7
+MFD_g_13520,101,78,0.217620314925704,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.701388888888889,5
+CL500-29_marine_group,93,73,0.210689731647815,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.645833333333333,6
+Ellin6067,104,78,0.209996673320027,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.722222222222222,5
+MFD_g_191,91,73,0.205838323353293,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.631944444444445,2
+MFD_g_6265,96,78,0.200986915058771,Core,"Soil, Natural, Bogs, mires and fens",144,72,0.666666666666667,2
+Nocardioides,84,79,4.05665940845581,Core,"Soil, Natural, Coastal",88,44,0.954545454545455,11
+Bacillus,76,68,3.09608056614045,Core,"Soil, Natural, Coastal",88,44,0.863636363636364,13
+Pseudomonas,58,49,1.59340410088913,Core,"Soil, Natural, Coastal",88,44,0.659090909090909,2
+Mycobacterium,86,86,1.38586463436763,Core,"Soil, Natural, Coastal",88,44,0.977272727272727,15
+Streptomyces,74,65,1.3370985302123,Core,"Soil, Natural, Coastal",88,44,0.840909090909091,8
+MFD_g_144,77,67,1.06945200508075,Core,"Soil, Natural, Coastal",88,44,0.875,7
+Flavobacterium,63,51,0.900471783705317,Core,"Soil, Natural, Coastal",88,44,0.715909090909091,5
+Pir4_lineage,82,75,0.883460352023227,Core,"Soil, Natural, Coastal",88,44,0.931818181818182,10
+Ilumatobacter,73,62,0.614679731446199,Core,"Soil, Natural, Coastal",88,44,0.829545454545455,7
+Solirubrobacter,57,49,0.5897296316458,Core,"Soil, Natural, Coastal",88,44,0.647727272727273,4
+Ca_Udaeobacter,56,50,0.533024859372165,Core,"Soil, Natural, Coastal",88,44,0.636363636363636,7
+MFD_g_9823,63,57,0.519415714026493,Core,"Soil, Natural, Coastal",88,44,0.715909090909091,3
+Bauldia,76,63,0.50580656868082,Core,"Soil, Natural, Coastal",88,44,0.863636363636364,2
+Gaiella,63,54,0.484258755216839,Core,"Soil, Natural, Coastal",88,44,0.715909090909091,7
+Subgroup_10,78,67,0.480856468880421,Core,"Soil, Natural, Coastal",88,44,0.886363636363636,7
+Haliangium,74,65,0.462710941752858,Core,"Soil, Natural, Coastal",88,44,0.840909090909091,12
+Pseudonocardia,59,49,0.436626746506986,Core,"Soil, Natural, Coastal",88,44,0.670454545454545,5
+MFD_g_264,57,44,0.426419887497732,Core,"Soil, Natural, Coastal",88,44,0.647727272727273,4
+Pseudolabrys,63,49,0.38332426056977,Core,"Soil, Natural, Coastal",88,44,0.715909090909091,2
+Iamia,63,49,0.37084921066957,Core,"Soil, Natural, Coastal",88,44,0.715909090909091,4
+Ca_Alysiosphaera,66,47,0.351569588096535,Core,"Soil, Natural, Coastal",88,44,0.75,3
+MFD_g_841,65,49,0.293730720377427,Core,"Soil, Natural, Coastal",88,44,0.738636363636364,2
+MFD_g_782,64,51,0.2823897659227,Core,"Soil, Natural, Coastal",88,44,0.727272727272727,7
+Paenibacillus,67,44,0.276719288695337,Core,"Soil, Natural, Coastal",88,44,0.761363636363636,10
+MFD_g_5535,62,44,0.250635093449465,Core,"Soil, Natural, Coastal",88,44,0.704545454545455,7
+MFD_g_13520,57,46,0.238160043549265,Core,"Soil, Natural, Coastal",88,44,0.647727272727273,5
+Pirellula,64,44,0.224550898203593,Core,"Soil, Natural, Coastal",88,44,0.727272727272727,7
+MFD_g_6,62,45,0.209807657412448,Core,"Soil, Natural, Coastal",88,44,0.704545454545455,8
+Acidothermus,73,65,11.3873518785214,Core,"Soil, Natural, Dunes",79,40,0.924050632911392,8
+Mycobacterium,79,78,3.66734884661058,Core,"Soil, Natural, Dunes",79,40,1,15
+Roseiarcus,63,58,2.98011571793123,Core,"Soil, Natural, Dunes",79,40,0.79746835443038,6
+Conexibacter,78,75,2.20445185578211,Core,"Soil, Natural, Dunes",79,40,0.987341772151899,10
+Nocardioides,47,44,2.0541196088835,Core,"Soil, Natural, Dunes",79,40,0.59493670886076,11
+Streptomyces,73,64,1.56143409383764,Core,"Soil, Natural, Dunes",79,40,0.924050632911392,8
+MFD_g_261,55,52,1.39088910786023,Core,"Soil, Natural, Dunes",79,40,0.69620253164557,4
+Burkholderia-Caballeronia-Paraburkholderia,68,58,1.15338942368428,Core,"Soil, Natural, Dunes",79,40,0.860759493670886,5
+MFD_g_195,53,48,1.11549053791152,Core,"Soil, Natural, Dunes",79,40,0.670886075949367,4
+Ca_Solibacter,76,73,1.04600924732813,Core,"Soil, Natural, Dunes",79,40,0.962025316455696,8
+Bryobacter,75,70,0.859041410849188,Core,"Soil, Natural, Dunes",79,40,0.949367088607595,9
+Bacillus,61,48,0.812299451729453,Core,"Soil, Natural, Dunes",79,40,0.772151898734177,13
+Acidipila-Silvibacterium,60,53,0.804719674574901,Core,"Soil, Natural, Dunes",79,40,0.759493670886076,4
+Acidibacter,76,73,0.718815533489983,Core,"Soil, Natural, Dunes",79,40,0.962025316455696,7
+MFD_g_1315,61,56,0.70870916395058,Core,"Soil, Natural, Dunes",79,40,0.772151898734177,5
+MFD_g_144,60,52,0.694812905833902,Core,"Soil, Natural, Dunes",79,40,0.759493670886076,7
+Haliangium,70,63,0.665757093408121,Core,"Soil, Natural, Dunes",79,40,0.886075949367089,12
+Jatrophihabitans,66,57,0.648070946714167,Core,"Soil, Natural, Dunes",79,40,0.835443037974684,6
+MFD_g_437,55,48,0.632911392405064,Core,"Soil, Natural, Dunes",79,40,0.69620253164557,4
+MFD_g_245,59,55,0.621541726673236,Core,"Soil, Natural, Dunes",79,40,0.746835443037975,3
+Aquisphaera,60,51,0.603855579979282,Core,"Soil, Natural, Dunes",79,40,0.759493670886076,6
+MFD_g_68,46,40,0.555850324667122,Core,"Soil, Natural, Dunes",79,40,0.582278481012658,3
+Ca_Udaeobacter,54,43,0.547007251320145,Core,"Soil, Natural, Dunes",79,40,0.683544303797468,7
+Bradyrhizobium,72,65,0.520478031279214,Core,"Soil, Natural, Dunes",79,40,0.911392405063291,8
+Occallatibacter,58,50,0.499001996007984,Core,"Soil, Natural, Dunes",79,40,0.734177215189873,4
+Pajaroellobacter,72,63,0.437100482579146,Core,"Soil, Natural, Dunes",79,40,0.911392405063291,8
+Pseudonocardia,51,41,0.406781373960939,Core,"Soil, Natural, Dunes",79,40,0.645569620253165,5
+Granulicella,55,49,0.382778746304859,Core,"Soil, Natural, Dunes",79,40,0.69620253164557,4
+MFD_g_1152,69,52,0.329720306222997,Core,"Soil, Natural, Dunes",79,40,0.873417721518987,4
+Chthoniobacter,70,56,0.32087723287602,Core,"Soil, Natural, Dunes",79,40,0.886075949367089,7
+Paenibacillus,68,54,0.300664493797216,Core,"Soil, Natural, Dunes",79,40,0.860759493670886,10
+MFD_g_647,49,41,0.298137901412365,Core,"Soil, Natural, Dunes",79,40,0.620253164556962,4
+MFD_g_8,65,49,0.294348012835089,Core,"Soil, Natural, Dunes",79,40,0.822784810126582,8
+Reyranella,52,44,0.270345385179009,Core,"Soil, Natural, Dunes",79,40,0.658227848101266,5
+MFD_g_224,59,43,0.257712423254756,Core,"Soil, Natural, Dunes",79,40,0.746835443037975,5
+Legionella,65,49,0.256449127062331,Core,"Soil, Natural, Dunes",79,40,0.822784810126582,4
+Puia,55,40,0.248869349907779,Core,"Soil, Natural, Dunes",79,40,0.69620253164557,3
+Acidothermus,204,198,12.7207848454035,Core,"Soil, Natural, Forests",212,106,0.962264150943396,8
+Roseiarcus,193,183,2.92245697284676,Core,"Soil, Natural, Forests",212,106,0.910377358490566,6
+Mycobacterium,212,212,2.8377207848454,Core,"Soil, Natural, Forests",212,106,1,15
+MFD_g_195,169,160,1.73238428802772,Core,"Soil, Natural, Forests",212,106,0.797169811320755,4
+Conexibacter,208,202,1.72391066922758,Core,"Soil, Natural, Forests",212,106,0.981132075471698,10
+MFD_g_261,164,155,1.39014423982224,Core,"Soil, Natural, Forests",212,106,0.773584905660377,4
+Acidibacter,200,192,1.22302564681957,Core,"Soil, Natural, Forests",212,106,0.943396226415094,7
+Burkholderia-Caballeronia-Paraburkholderia,176,158,1.19054344141905,Core,"Soil, Natural, Forests",212,106,0.830188679245283,5
+Ca_Solibacter,208,198,0.98623507701578,Core,"Soil, Natural, Forests",212,106,0.981132075471698,8
+Bryobacter,204,190,0.94433773961511,Core,"Soil, Natural, Forests",212,106,0.962264150943396,9
+MFD_g_1315,177,165,0.897732836214364,Core,"Soil, Natural, Forests",212,106,0.834905660377359,5
+MFD_g_437,153,143,0.863838361013822,Core,"Soil, Natural, Forests",212,106,0.721698113207547,4
+Occallatibacter,164,149,0.836063721613378,Core,"Soil, Natural, Forests",212,106,0.773584905660377,4
+MFD_g_245,172,160,0.785692765412572,Core,"Soil, Natural, Forests",212,106,0.811320754716981,3
+Bacillus,164,135,0.780043686212481,Core,"Soil, Natural, Forests",212,106,0.773584905660377,13
+Acidipila-Silvibacterium,167,156,0.770157797612323,Core,"Soil, Natural, Forests",212,106,0.787735849056604,4
+MFD_g_68,145,127,0.724494407411592,Core,"Soil, Natural, Forests",212,106,0.683962264150943,3
+Granulicella,171,154,0.595507099009528,Core,"Soil, Natural, Forests",212,106,0.806603773584906,4
+MFD_g_8,198,181,0.542311603208677,Core,"Soil, Natural, Forests",212,106,0.933962264150943,8
+Bradyrhizobium,198,179,0.525364365608406,Core,"Soil, Natural, Forests",212,106,0.933962264150943,8
+Haliangium,172,144,0.456633902007306,Core,"Soil, Natural, Forests",212,106,0.811320754716981,12
+MFD_g_144,169,126,0.442040447407073,Core,"Soil, Natural, Forests",212,106,0.797169811320755,7
+Aquisphaera,189,158,0.441098934207058,Core,"Soil, Natural, Forests",212,106,0.891509433962264,6
+MFD_g_1152,191,160,0.403438406206455,Core,"Soil, Natural, Forests",212,106,0.900943396226415,4
+Pajaroellobacter,200,165,0.387432681806199,Core,"Soil, Natural, Forests",212,106,0.943396226415094,8
+Streptomyces,154,119,0.384608142206154,Core,"Soil, Natural, Forests",212,106,0.726415094339623,8
+MFD_g_647,151,130,0.362953338605807,Core,"Soil, Natural, Forests",212,106,0.712264150943396,4
+Paenibacillus,196,162,0.347889127405566,Core,"Soil, Natural, Forests",212,106,0.924528301886792,10
+Jatrophihabitans,163,118,0.287632282604602,Core,"Soil, Natural, Forests",212,106,0.768867924528302,6
+Ca_Koribacter,149,108,0.261740669604188,Core,"Soil, Natural, Forests",212,106,0.702830188679245,3
+MFD_g_224,161,128,0.260328399804165,Core,"Soil, Natural, Forests",212,106,0.759433962264151,5
+Actinospica,135,109,0.257033103604113,Core,"Soil, Natural, Forests",212,106,0.636792452830189,2
+Puia,170,134,0.257033103604113,Core,"Soil, Natural, Forests",212,106,0.80188679245283,3
+Legionella,180,126,0.228316951003653,Core,"Soil, Natural, Forests",212,106,0.849056603773585,4
+Chthoniobacter,158,111,0.198188528603171,Core,"Soil, Natural, Forests",212,106,0.745283018867925,7
+Acidothermus,203,184,5.46847481507573,Core,"Soil, Natural, Grassland formations",238,119,0.852941176470588,8
+Bacillus,235,227,3.61210352404435,Core,"Soil, Natural, Grassland formations",238,119,0.987394957983193,13
+Mycobacterium,237,236,2.11006558311948,Core,"Soil, Natural, Grassland formations",238,119,0.995798319327731,15
+Conexibacter,232,222,1.8987235612808,Core,"Soil, Natural, Grassland formations",238,119,0.974789915966386,10
+Ca_Udaeobacter,223,211,1.8530166557641,Core,"Soil, Natural, Grassland formations",238,119,0.936974789915966,7
+Nocardioides,207,189,1.51042452909307,Core,"Soil, Natural, Grassland formations",238,119,0.869747899159664,11
+Roseiarcus,175,162,1.107448967611,Core,"Soil, Natural, Grassland formations",238,119,0.735294117647059,6
+Ca_Solibacter,227,209,1.04119492108221,Core,"Soil, Natural, Grassland formations",238,119,0.953781512605042,8
+Haliangium,235,230,0.872624498901357,Core,"Soil, Natural, Grassland formations",238,119,0.987394957983193,12
+Streptomyces,227,218,0.852916016706084,Core,"Soil, Natural, Grassland formations",238,119,0.953781512605042,8
+MFD_g_8,229,218,0.82817558160989,Core,"Soil, Natural, Grassland formations",238,119,0.96218487394958,8
+Gaiella,163,138,0.792951911303444,Core,"Soil, Natural, Grassland formations",238,119,0.684873949579832,7
+Bradyrhizobium,226,212,0.785823311360473,Core,"Soil, Natural, Grassland formations",238,119,0.949579831932773,8
+MFD_g_144,215,199,0.696086817960718,Core,"Soil, Natural, Grassland formations",238,119,0.903361344537815,7
+Bryobacter,233,217,0.670507724047703,Core,"Soil, Natural, Grassland formations",238,119,0.978991596638655,9
+MFD_g_8204,222,205,0.660024488837451,Core,"Soil, Natural, Grassland formations",238,119,0.932773109243698,6
+Solirubrobacter,177,146,0.614736912729164,Core,"Soil, Natural, Grassland formations",238,119,0.743697478991597,4
+Sporosarcina,183,151,0.610543618645063,Core,"Soil, Natural, Grassland formations",238,119,0.76890756302521,2
+Jatrophihabitans,192,149,0.488099431389322,Core,"Soil, Natural, Grassland formations",238,119,0.80672268907563,6
+Acidibacter,217,191,0.47677753736225,Core,"Soil, Natural, Grassland formations",238,119,0.911764705882353,7
+Pseudonocardia,190,155,0.440295878830574,Core,"Soil, Natural, Grassland formations",238,119,0.798319327731092,5
+Ca_Xiphinematobacter,202,172,0.422684043677351,Core,"Soil, Natural, Grassland formations",238,119,0.848739495798319,4
+MFD_g_827,149,130,0.422264714268941,Core,"Soil, Natural, Grassland formations",238,119,0.626050420168067,2
+Paenibacillus,224,195,0.4163941025512,Core,"Soil, Natural, Grassland formations",238,119,0.941176470588235,10
+Pir4_lineage,191,167,0.405910867340948,Core,"Soil, Natural, Grassland formations",238,119,0.802521008403361,10
+Burkholderia-Caballeronia-Paraburkholderia,151,120,0.386621714554085,Core,"Soil, Natural, Grassland formations",238,119,0.634453781512605,5
+Aquisphaera,197,157,0.383267079286805,Core,"Soil, Natural, Grassland formations",238,119,0.827731092436975,6
+MFD_g_264,157,137,0.379912444019524,Core,"Soil, Natural, Grassland formations",238,119,0.659663865546219,4
+Gemmatimonas,201,162,0.369429208809272,Core,"Soil, Natural, Grassland formations",238,119,0.84453781512605,4
+Reyranella,213,184,0.368590549992452,Core,"Soil, Natural, Grassland formations",238,119,0.894957983193277,5
+MFD_g_1315,155,132,0.366493902950402,Core,"Soil, Natural, Grassland formations",238,119,0.651260504201681,5
+MFD_g_812,208,182,0.35642999714856,Core,"Soil, Natural, Grassland formations",238,119,0.873949579831933,4
+Pajaroellobacter,204,162,0.348462738388769,Core,"Soil, Natural, Grassland formations",238,119,0.857142857142857,8
+MFD_g_6,162,136,0.320786997433704,Core,"Soil, Natural, Grassland formations",238,119,0.680672268907563,8
+MFD_g_340,149,129,0.292272597661819,Core,"Soil, Natural, Grassland formations",238,119,0.626050420168067,2
+MFD_g_782,156,134,0.276757409550647,Core,"Soil, Natural, Grassland formations",238,119,0.65546218487395,7
+MFD_g_5535,179,141,0.270886797832906,Core,"Soil, Natural, Grassland formations",238,119,0.752100840336134,7
+Nakamurella,179,132,0.265854844931985,Core,"Soil, Natural, Grassland formations",238,119,0.752100840336134,3
+MFD_g_224,161,122,0.232727821667589,Core,"Soil, Natural, Grassland formations",238,119,0.676470588235294,5
+MFD_g_1152,159,120,0.220567268823697,Core,"Soil, Natural, Grassland formations",238,119,0.668067226890756,4
+Chthoniobacter,197,140,0.213019339472316,Core,"Soil, Natural, Grassland formations",238,119,0.827731092436975,7
+MFD_g_13520,178,122,0.209664704205035,Core,"Soil, Natural, Grassland formations",238,119,0.747899159663866,5
+Ellin6067,178,121,0.205471410120935,Core,"Soil, Natural, Grassland formations",238,119,0.747899159663866,5
+MFD_g_6265,175,119,0.188698233784532,Core,"Soil, Natural, Grassland formations",238,119,0.735294117647059,2
+Acidothermus,5,5,18.2801064537592,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,8
+Conexibacter,6,6,6.90286094477712,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,10
+Mycobacterium,6,6,5.95475715236194,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,15
+Crossiella,4,3,1.81304058549568,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,1
+Roseiarcus,5,5,1.48037258815702,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,6
+Burkholderia-Caballeronia-Paraburkholderia,4,4,1.44710578842315,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,5
+Bryobacter,6,6,1.33067198935462,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,9
+Bacillus,6,4,1.31403858948769,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,13
+Jatrophihabitans,5,4,1.26413838988689,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,6
+MFD_g_437,5,5,0.931470392548238,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,4
+Ca_Solibacter,6,5,0.881570192947438,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,8
+Acidipila-Silvibacterium,5,5,0.864936793080509,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,4
+Nocardioides,4,4,0.748502994011976,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,11
+MFD_g_261,4,4,0.731869594145043,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,4
+MFD_g_1315,5,5,0.615435795076514,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,5
+Acidicaldus,4,3,0.565535595475716,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,2
+Streptomyces,6,5,0.565535595475715,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,8
+Haliangium,5,5,0.548902195608783,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,12
+Acidibacter,6,5,0.515635395874917,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,7
+MFD_g_144,6,5,0.482368596141051,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,7
+Ca_Udaeobacter,4,3,0.449101796407186,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,7
+Ca_Koribacter,3,3,0.449101796407186,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.5,3
+MFD_g_195,3,3,0.449101796407186,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.5,4
+Aquisphaera,5,4,0.41583499667332,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,6
+Granulicella,5,4,0.399201596806387,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,4
+MFD_g_710,4,4,0.382568196939454,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,2
+MFD_g_8,5,5,0.349301397205589,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,8
+Occallatibacter,4,4,0.349301397205589,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,4
+Actinospica,4,3,0.316034597471723,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,2
+Chthoniobacter,4,3,0.282767797737858,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,7
+MFD_g_224,4,3,0.266134397870925,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,5
+Bradyrhizobium,5,5,0.249500998003992,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.833333333333333,8
+MFD_g_1634,4,4,0.249500998003992,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,2
+MFD_g_275,4,3,0.216234198270127,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,1
+Pajaroellobacter,6,3,0.216234198270126,Core,"Soil, Natural, Rocky habitats and caves",6,3,1,8
+MFD_g_647,4,4,0.199600798403194,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,4
+MFD_g_5981,4,4,0.182967398536261,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,2
+MFD_g_443,3,3,0.166333998669328,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.5,1
+MFD_g_31963,4,3,0.166333998669328,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,1
+MFD_g_827,3,3,0.149700598802395,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.5,2
+MFD_g_3632,4,3,0.149700598802395,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,2
+Gemmatimonas,4,3,0.11643379906853,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.666666666666667,4
+MFD_g_60423,3,3,0.11643379906853,Core,"Soil, Natural, Rocky habitats and caves",6,3,0.5,1
+Acidothermus,92,89,17.1689230235182,Core,"Soil, Natural, Temperate heath and scrub",92,46,1,8
+Roseiarcus,88,86,4.09724030200469,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.956521739130435,6
+Mycobacterium,92,92,2.94628135034279,Core,"Soil, Natural, Temperate heath and scrub",92,46,1,15
+MFD_g_195,86,82,2.27154386878417,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.934782608695652,4
+Conexibacter,91,90,2.26069599930574,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.989130434782609,10
+MFD_g_261,81,79,1.9027163065174,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.880434782608696,4
+Ca_Solibacter,91,90,1.21170702074113,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.989130434782609,8
+Bryobacter,88,87,1.17916341230582,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.956521739130435,9
+MFD_g_710,67,52,1.16397639503602,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.728260869565217,2
+Burkholderia-Caballeronia-Paraburkholderia,74,68,1.12492406491365,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.804347826086957,5
+Bacillus,73,59,1.04573461772108,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.793478260869565,13
+MFD_g_68,73,66,1.02946281350343,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.793478260869565,3
+MFD_g_1315,86,83,1.00776707454656,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.934782608695652,5
+MFD_g_437,81,71,0.989325696433221,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.880434782608696,4
+Acidipila-Silvibacterium,82,77,0.953527727154387,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.891304347826087,4
+Occallatibacter,75,72,0.941595070728109,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.815217391304348,4
+Aquisphaera,87,81,0.880847001648877,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.945652173913043,6
+MFD_g_245,83,80,0.823353293413174,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.902173913043478,3
+Acidibacter,91,87,0.748502994011977,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.989130434782609,7
+Ca_Koribacter,74,63,0.582530590991929,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.804347826086957,3
+Pajaroellobacter,89,82,0.538054326130348,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.967391304347826,8
+MFD_g_647,77,70,0.493578061268767,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.836956521739131,4
+Granulicella,75,70,0.451271370302873,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.815217391304348,4
+Ca_Xiphinematobacter,58,46,0.437169139980908,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.630434782608696,4
+MFD_g_8,89,77,0.433914779137377,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.967391304347826,8
+Bradyrhizobium,77,63,0.404625531545605,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.836956521739131,8
+MFD_g_3632,74,67,0.384014579536579,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.804347826086957,2
+MFD_g_5981,68,54,0.363403627527554,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.739130434782609,2
+MFD_g_224,78,60,0.33086001909225,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.847826086956522,5
+Haliangium,60,46,0.2896381150742,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.652173913043478,12
+MFD_g_1741,66,52,0.279875032543608,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.717391304347826,1
+Acidicaldus,63,53,0.272281523908704,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.684782608695652,2
+Paenibacillus,67,53,0.25817929358674,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.728260869565217,10
+Chthoniobacter,76,54,0.250585784951836,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.826086956521739,7
+MFD_g_1152,68,56,0.219126963464376,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.739130434782609,4
+Legionella,81,54,0.218042176516532,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.880434782608696,4
+Puia,70,50,0.210448667881628,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.760869565217391,3
+MFD_g_1660,64,50,0.196346437559663,Core,"Soil, Natural, Temperate heath and scrub",92,46,0.695652173913044,1
+Nocardioides,264,262,3.02852940735071,Core,"Soil, Urban, Greenspaces",266,133,0.992481203007519,11
+Mycobacterium,266,265,2.40383893866403,Core,"Soil, Urban, Greenspaces",266,133,1,15
+Acidothermus,195,148,1.7626401332673,Core,"Soil, Urban, Greenspaces",266,133,0.733082706766917,8
+Gaiella,252,250,1.62944787117494,Core,"Soil, Urban, Greenspaces",266,133,0.947368421052632,7
+Ca_Udaeobacter,261,259,1.52964747197335,Core,"Soil, Urban, Greenspaces",266,133,0.981203007518797,7
+Streptomyces,263,260,1.36043702069545,Core,"Soil, Urban, Greenspaces",266,133,0.988721804511278,8
+Bacillus,264,255,1.11318715951556,Core,"Soil, Urban, Greenspaces",266,133,0.992481203007519,13
+Solirubrobacter,255,246,1.10380742274849,Core,"Soil, Urban, Greenspaces",266,133,0.958646616541353,4
+MFD_g_144,261,250,1.02389206549307,Core,"Soil, Urban, Greenspaces",266,133,0.981203007518797,7
+Conexibacter,259,245,0.946227845061756,Core,"Soil, Urban, Greenspaces",266,133,0.973684210526316,10
+Haliangium,264,262,0.906832950640074,Core,"Soil, Urban, Greenspaces",266,133,0.992481203007519,12
+MFD_g_8204,262,258,0.857683129980641,Core,"Soil, Urban, Greenspaces",266,133,0.984962406015038,6
+MFD_g_8,264,259,0.843425930094698,Core,"Soil, Urban, Greenspaces",266,133,0.992481203007519,8
+MFD_g_650,239,218,0.684720783995918,Core,"Soil, Urban, Greenspaces",266,133,0.898496240601504,3
+MFD_g_1081,236,205,0.645325889574235,Core,"Soil, Urban, Greenspaces",266,133,0.887218045112782,1
+Bradyrhizobium,260,246,0.610058079330062,Core,"Soil, Urban, Greenspaces",266,133,0.977443609022556,8
+Pir4_lineage,255,239,0.57629102696862,Core,"Soil, Urban, Greenspaces",266,133,0.958646616541353,10
+Pseudonocardia,252,233,0.575540648027254,Core,"Soil, Urban, Greenspaces",266,133,0.947368421052632,5
+Ca_Solibacter,228,188,0.555655606081071,Core,"Soil, Urban, Greenspaces",266,133,0.857142857142857,8
+Nakamurella,247,223,0.53464499572284,Core,"Soil, Urban, Greenspaces",266,133,0.928571428571429,3
+Ca_Alysiosphaera,239,208,0.503879459126859,Core,"Soil, Urban, Greenspaces",266,133,0.898496240601504,3
+Microbacterium,234,200,0.502753890714811,Core,"Soil, Urban, Greenspaces",266,133,0.879699248120301,1
+MFD_g_2431,238,215,0.467486080470638,Core,"Soil, Urban, Greenspaces",266,133,0.894736842105263,2
+Gemmatimonas,246,210,0.46636051205859,Core,"Soil, Urban, Greenspaces",266,133,0.924812030075188,4
+MFD_g_11470,217,182,0.465610133117224,Core,"Soil, Urban, Greenspaces",266,133,0.81578947368421,3
+Microlunatus,237,203,0.461107859469032,Core,"Soil, Urban, Greenspaces",266,133,0.890977443609023,2
+MFD_g_782,248,231,0.45810634370357,Core,"Soil, Urban, Greenspaces",266,133,0.932330827067669,7
+Iamia,238,204,0.448726606936503,Core,"Soil, Urban, Greenspaces",266,133,0.894736842105263,4
+MFD_g_6,244,222,0.436345354403974,Core,"Soil, Urban, Greenspaces",266,133,0.917293233082707,8
+MFD_g_264,223,189,0.423964101871445,Core,"Soil, Urban, Greenspaces",266,133,0.838345864661654,4
+Reyranella,257,238,0.405579817807993,Core,"Soil, Urban, Greenspaces",266,133,0.966165413533835,5
+Acidibacter,254,225,0.404079059925262,Core,"Soil, Urban, Greenspaces",266,133,0.954887218045113,7
+Bryobacter,254,218,0.398826407335705,Core,"Soil, Urban, Greenspaces",266,133,0.954887218045113,9
+MFD_g_5535,251,229,0.375189470682695,Core,"Soil, Urban, Greenspaces",266,133,0.943609022556391,7
+Ca_Xiphinematobacter,223,183,0.374063902270647,Core,"Soil, Urban, Greenspaces",266,133,0.838345864661654,4
+Marmoricola,239,197,0.363558597091531,Core,"Soil, Urban, Greenspaces",266,133,0.898496240601504,2
+MFD_g_812,246,214,0.358681133972656,Core,"Soil, Urban, Greenspaces",266,133,0.924812030075188,4
+Paenibacillus,252,207,0.355679618207195,Core,"Soil, Urban, Greenspaces",266,133,0.947368421052632,10
+Flavobacterium,230,186,0.34667507091081,Core,"Soil, Urban, Greenspaces",266,133,0.864661654135338,5
+Ilumatobacter,212,188,0.346299881440127,Core,"Soil, Urban, Greenspaces",266,133,0.796992481203008,7
+MFD_g_875,213,177,0.344048744616031,Core,"Soil, Urban, Greenspaces",266,133,0.800751879699248,3
+Jatrophihabitans,186,134,0.330917113142137,Core,"Soil, Urban, Greenspaces",266,133,0.699248120300752,6
+Microvirga,204,163,0.325289271081896,Core,"Soil, Urban, Greenspaces",266,133,0.766917293233083,2
+Pedomicrobium,225,177,0.320411807963021,Core,"Soil, Urban, Greenspaces",266,133,0.845864661654135,3
+MFD_g_9823,179,154,0.305404229135714,Core,"Soil, Urban, Greenspaces",266,133,0.672932330827068,3
+Subgroup_10,230,176,0.29940119760479,Core,"Soil, Urban, Greenspaces",266,133,0.864661654135338,7
+Sphingomonas,223,182,0.299026008134108,Core,"Soil, Urban, Greenspaces",266,133,0.838345864661654,2
+Chthoniobacter,239,195,0.288520702954992,Core,"Soil, Urban, Greenspaces",266,133,0.898496240601504,7
+CL500-29_marine_group,235,193,0.28814551348431,Core,"Soil, Urban, Greenspaces",266,133,0.883458646616541,6
+Nitrospira,222,176,0.276514639893146,Core,"Soil, Urban, Greenspaces",266,133,0.834586466165414,5
+MFD_g_4485,210,169,0.271637176774271,Core,"Soil, Urban, Greenspaces",266,133,0.789473684210526,1
+Pirellula,227,170,0.270886797832906,Core,"Soil, Urban, Greenspaces",266,133,0.853383458646617,7
+MFD_g_13520,221,176,0.269761229420858,Core,"Soil, Urban, Greenspaces",266,133,0.830827067669173,5
+MFD_g_4907,205,150,0.267885282067444,Core,"Soil, Urban, Greenspaces",266,133,0.770676691729323,2
+Ellin6067,236,181,0.265634145243348,Core,"Soil, Urban, Greenspaces",266,133,0.887218045112782,5
+Gemmata,226,171,0.239370882295559,Core,"Soil, Urban, Greenspaces",266,133,0.849624060150376,2
+MFD_g_1742,212,156,0.237494934942146,Core,"Soil, Urban, Greenspaces",266,133,0.796992481203008,1
+MFD_g_678,230,165,0.237494934942146,Core,"Soil, Urban, Greenspaces",266,133,0.864661654135338,2
+MFD_g_191,202,154,0.237119745471463,Core,"Soil, Urban, Greenspaces",266,133,0.759398496240602,2
+MFD_g_1794,190,144,0.222112166644155,Core,"Soil, Urban, Greenspaces",266,133,0.714285714285714,2
+Pajaroellobacter,231,150,0.207854966758213,Core,"Soil, Urban, Greenspaces",266,133,0.868421052631579,8
+MFD_g_5777,177,135,0.196224093167049,Core,"Soil, Urban, Greenspaces",266,133,0.665413533834586,2
+Ferruginibacter,206,137,0.193972956342953,Core,"Soil, Urban, Greenspaces",266,133,0.774436090225564,2
+Flavobacterium,8,7,3.46806387225548,Core,"Water, Natural, Saltwater",8,4,1,5
+NS3a_marine_group,7,7,1.98353293413174,Core,"Water, Natural, Saltwater",8,4,0.875,1
+Ca_Aquiluna,7,5,1.53443113772455,Core,"Water, Natural, Saltwater",8,4,0.875,1
+MFD_g_952,7,6,1.52195608782435,Core,"Water, Natural, Saltwater",8,4,0.875,1
+hgcI_clade,6,5,1.38473053892216,Core,"Water, Natural, Saltwater",8,4,0.75,1
+MFD_g_24207,5,5,1.34730538922156,Core,"Water, Natural, Saltwater",8,4,0.625,1
+Mycobacterium,8,5,1.22255489021956,Core,"Water, Natural, Saltwater",8,4,1,15
+CL500-29_marine_group,8,7,1.08532934131737,Core,"Water, Natural, Saltwater",8,4,1,6
+Clade_Ia,7,7,1.06037924151697,Core,"Water, Natural, Saltwater",8,4,0.875,1
+Fluviicola,8,6,1.06037924151697,Core,"Water, Natural, Saltwater",8,4,1,1
+NS5_marine_group,7,7,1.03542914171657,Core,"Water, Natural, Saltwater",8,4,0.875,1
+Polaribacter,6,5,0.960578842315369,Core,"Water, Natural, Saltwater",8,4,0.75,1
+Roseibacillus,4,4,0.773453093812376,Core,"Water, Natural, Saltwater",8,4,0.5,2
+OM60NOR5_clade,7,6,0.686127744510978,Core,"Water, Natural, Saltwater",8,4,0.875,2
+Formosa,5,4,0.63622754491018,Core,"Water, Natural, Saltwater",8,4,0.625,1
+Cyanobium_PCC-6307,6,5,0.62375249500998,Core,"Water, Natural, Saltwater",8,4,0.75,2
+RS62_marine_group,6,5,0.474051896207585,Core,"Water, Natural, Saltwater",8,4,0.75,1
+Algoriphagus,5,5,0.461576846307385,Core,"Water, Natural, Saltwater",8,4,0.625,1
+Luteolibacter,6,5,0.461576846307385,Core,"Water, Natural, Saltwater",8,4,0.75,4
+Pseudomonas,5,4,0.411676646706587,Core,"Water, Natural, Saltwater",8,4,0.625,2
+MFD_g_1015,5,5,0.386726546906187,Core,"Water, Natural, Saltwater",8,4,0.625,1
+Ilumatobacter,4,4,0.336826347305389,Core,"Water, Natural, Saltwater",8,4,0.5,7
+Aquibacter,4,4,0.32435129740519,Core,"Water, Natural, Saltwater",8,4,0.5,1
+Winogradskyella,4,4,0.32435129740519,Core,"Water, Natural, Saltwater",8,4,0.5,2
+Pseudohongiella,6,6,0.31187624750499,Core,"Water, Natural, Saltwater",8,4,0.75,1
+OM43_clade,5,4,0.237025948103793,Core,"Water, Natural, Saltwater",8,4,0.625,1
+MFD_g_65516,5,4,0.199600798403194,Core,"Water, Natural, Saltwater",8,4,0.625,1
+Bacillus,6,5,0.199600798403194,Core,"Water, Natural, Saltwater",8,4,0.75,13
+MFD_g_873469,6,4,0.199600798403194,Core,"Water, Natural, Saltwater",8,4,0.75,2
+Planktomarina,5,4,0.174650698602794,Core,"Water, Natural, Saltwater",8,4,0.625,1
+Sva0996_marine_group,5,4,0.162175648702595,Core,"Water, Natural, Saltwater",8,4,0.625,2
+Caldicoprobacter,17,16,4.28666476570668,Core,"Water, Urban, Biogas",21,11,0.80952380952381,1
+Lentimicrobium,21,21,2.83243037734056,Core,"Water, Urban, Biogas",21,11,1,1
+Clostridium_sensu_stricto_1,20,20,2.05303678357571,Core,"Water, Urban, Biogas",21,11,0.952380952380952,5
+Halocella,12,11,1.6348255869214,Core,"Water, Urban, Biogas",21,11,0.571428571428571,1
+Syntrophomonas,21,21,1.29740518962076,Core,"Water, Urban, Biogas",21,11,1,1
+Methanoculleus,17,14,1.26413838988689,Core,"Water, Urban, Biogas",21,11,0.80952380952381,1
+Defluviitoga,14,14,1.12156639102747,Core,"Water, Urban, Biogas",21,11,0.666666666666667,1
+MFD_g_873469,20,19,1.11681399106549,Core,"Water, Urban, Biogas",21,11,0.952380952380952,2
+MFD_g_51204,14,12,1.03127079174983,Core,"Water, Urban, Biogas",21,11,0.666666666666667,1
+Syntrophaceticus,12,11,0.907708392738333,Core,"Water, Urban, Biogas",21,11,0.571428571428571,1
+Ruminiclostridium,19,17,0.893451192852391,Core,"Water, Urban, Biogas",21,11,0.904761904761905,1
+Acetomicrobium,17,15,0.88869879289041,Core,"Water, Urban, Biogas",21,11,0.80952380952381,1
+Lachnospiraceae_NK3A20_group,14,13,0.817412793460698,Core,"Water, Urban, Biogas",21,11,0.666666666666667,1
+HN-HF0106,20,16,0.784145993726833,Core,"Water, Urban, Biogas",21,11,0.952380952380952,1
+Proteiniphilum,20,17,0.717612394259101,Core,"Water, Urban, Biogas",21,11,0.952380952380952,1
+MFD_g_4610,16,13,0.674840794601274,Core,"Water, Urban, Biogas",21,11,0.761904761904762,1
+Corynebacterium,17,15,0.65107879479137,Core,"Water, Urban, Biogas",21,11,0.80952380952381,1
+Tissierella,11,11,0.570287995437696,Core,"Water, Urban, Biogas",21,11,0.523809523809524,1
+MFD_g_8211,13,11,0.551278395589773,Core,"Water, Urban, Biogas",21,11,0.619047619047619,1
+Romboutsia,19,17,0.460982796312138,Core,"Water, Urban, Biogas",21,11,0.904761904761905,3
+Christensenellaceae_R-7_group,16,12,0.451477996388176,Core,"Water, Urban, Biogas",21,11,0.761904761904762,2
+Sedimentibacter,14,12,0.427715996578272,Core,"Water, Urban, Biogas",21,11,0.666666666666667,1
+Ca_Caldatribacterium,16,12,0.399201596806387,Core,"Water, Urban, Biogas",21,11,0.761904761904762,1
+MFD_g_27295,14,13,0.365934797072522,Core,"Water, Urban, Biogas",21,11,0.666666666666667,1
+Sphaerochaeta,11,11,0.308905997528752,Core,"Water, Urban, Biogas",21,11,0.523809523809524,1
+Turicibacter,16,13,0.29940119760479,Core,"Water, Urban, Biogas",21,11,0.761904761904762,1
+Pelotomaculum,17,12,0.29464879764281,Core,"Water, Urban, Biogas",21,11,0.80952380952381,1
+Dethiobacter,15,13,0.270886797832906,Core,"Water, Urban, Biogas",21,11,0.714285714285714,1
+MFD_g_765,13,11,0.213857998289136,Core,"Water, Urban, Biogas",21,11,0.619047619047619,1
+MFD_g_117765,14,11,0.209105598327155,Core,"Water, Urban, Biogas",21,11,0.666666666666667,1
+MFD_g_115104,12,11,0.199600798403194,Core,"Water, Urban, Biogas",21,11,0.571428571428571,1
+Treponema,17,11,0.199600798403194,Core,"Water, Urban, Biogas",21,11,0.80952380952381,1
+Ruminofilibacter,15,11,0.18059119855527,Core,"Water, Urban, Biogas",21,11,0.714285714285714,1
+Mycobacterium,11,11,1.71421862158037,Core,"Water, Urban, Drinking water",17,9,0.647058823529412,15
+Bacillus,10,9,1.5322296583304,Core,"Water, Urban, Drinking water",17,9,0.588235294117647,13
+Nocardioides,10,10,0.921686039685335,Core,"Water, Urban, Drinking water",17,9,0.588235294117647,11
+Nitrospira,13,11,0.65750851238699,Core,"Water, Urban, Drinking water",17,9,0.764705882352941,5
+Streptomyces,12,9,0.457907713983797,Core,"Water, Urban, Drinking water",17,9,0.705882352941177,8
+MFD_g_11470,13,12,0.387460373370905,Core,"Water, Urban, Drinking water",17,9,0.764705882352941,3
+MFD_g_8204,11,10,0.369848538217683,Core,"Water, Urban, Drinking water",17,9,0.647058823529412,6
+Bryobacter,10,9,0.281789362451567,Core,"Water, Urban, Drinking water",17,9,0.588235294117647,9
+Legionella,10,9,0.264177527298345,Core,"Water, Urban, Drinking water",17,9,0.588235294117647,4
+MFD_g_284,41,37,1.57253061444678,Core,"Water, Urban, Wastewater",74,37,0.554054054054054,1
+Tetrasphaera,69,62,1.39450828073583,Core,"Water, Urban, Wastewater",74,37,0.932432432432432,1
+Flavobacterium,72,68,1.0735286184388,Core,"Water, Urban, Wastewater",74,37,0.972972972972973,5
+Ca_Competibacter,62,47,1.03846361331391,Core,"Water, Urban, Wastewater",74,37,0.837837837837838,1
+MFD_g_212,69,64,0.99260937584291,Core,"Water, Urban, Wastewater",74,37,0.932432432432432,1
+Terrimonas,70,69,0.921130711549873,Core,"Water, Urban, Wastewater",74,37,0.945945945945946,1
+Ferruginibacter,70,68,0.886065706424988,Core,"Water, Urban, Wastewater",74,37,0.945945945945946,2
+Subgroup_10,67,62,0.846954739170308,Core,"Water, Urban, Wastewater",74,37,0.905405405405405,7
+MFD_g_1292,66,63,0.844257431083779,Core,"Water, Urban, Wastewater",74,37,0.891891891891892,1
+Ca_Microthrix,64,57,0.810541080002158,Core,"Water, Urban, Wastewater",74,37,0.864864864864865,1
+MFD_g_408,63,57,0.735016453579328,Core,"Water, Urban, Wastewater",74,37,0.851351351351351,1
+MFD_g_4556,55,51,0.726924529319739,Core,"Water, Urban, Wastewater",74,37,0.743243243243243,1
+Nitrospira,60,56,0.725575875276474,Core,"Water, Urban, Wastewater",74,37,0.810810810810811,5
+CL500-29_marine_group,70,69,0.687813562065059,Core,"Water, Urban, Wastewater",74,37,0.945945945945946,6
+Thiothrix,60,50,0.641959324594055,Core,"Water, Urban, Wastewater",74,37,0.810810810810811,1
+Haliangium,68,60,0.600151049252846,Core,"Water, Urban, Wastewater",74,37,0.918918918918919,12
+Propioniciclava,70,61,0.555645465825107,Core,"Water, Urban, Wastewater",74,37,0.945945945945946,1
+Hyphomicrobium,68,63,0.542158925392458,Core,"Water, Urban, Wastewater",74,37,0.918918918918919,5
+Bifidobacterium,67,53,0.540810271349193,Core,"Water, Urban, Wastewater",74,37,0.905405405405405,1
+Trichococcus,69,59,0.513837190483897,Core,"Water, Urban, Wastewater",74,37,0.932432432432432,1
+BD1-7_clade,57,51,0.496304687921454,Core,"Water, Urban, Wastewater",74,37,0.77027027027027,1
+OLB8,53,44,0.474726223229217,Core,"Water, Urban, Wastewater",74,37,0.716216216216216,1
+MFD_g_593,62,58,0.473377569185952,Core,"Water, Urban, Wastewater",74,37,0.837837837837838,1
+Micropruina,55,44,0.472028915142688,Core,"Water, Urban, Wastewater",74,37,0.743243243243243,1
+Rhodoferax,70,59,0.450450450450451,Core,"Water, Urban, Wastewater",74,37,0.945945945945946,1
+MFD_g_7704,67,53,0.436963910017802,Core,"Water, Urban, Wastewater",74,37,0.905405405405405,1
+MFD_g_221,62,56,0.431569293844743,Core,"Water, Urban, Wastewater",74,37,0.837837837837838,1
+Iamia,60,54,0.401898904892917,Core,"Water, Urban, Wastewater",74,37,0.810810810810811,4
+Novosphingobium,68,57,0.393806980633328,Core,"Water, Urban, Wastewater",74,37,0.918918918918919,1
+Acinetobacter,66,51,0.381669094243945,Core,"Water, Urban, Wastewater",74,37,0.891891891891892,1
+Nannocystis,58,48,0.381669094243945,Core,"Water, Urban, Wastewater",74,37,0.783783783783784,1
+MFD_g_8145,51,43,0.358741975508443,Core,"Water, Urban, Wastewater",74,37,0.689189189189189,1
+MFD_g_2667,59,51,0.353347359335383,Core,"Water, Urban, Wastewater",74,37,0.797297297297297,1
+Nocardioides,63,47,0.339860818902735,Core,"Water, Urban, Wastewater",74,37,0.851351351351351,11
+Rhodobacter,63,49,0.33851216485947,Core,"Water, Urban, Wastewater",74,37,0.851351351351351,1
+MFD_g_1047,64,51,0.327722932513352,Core,"Water, Urban, Wastewater",74,37,0.864864864864865,1
+Ahniella,60,42,0.326374278470087,Core,"Water, Urban, Wastewater",74,37,0.810810810810811,1
+Thermomonas,60,39,0.325025624426822,Core,"Water, Urban, Wastewater",74,37,0.810810810810811,1
+JGI_0001001-H03,61,49,0.311539083994174,Core,"Water, Urban, Wastewater",74,37,0.824324324324324,1
+MFD_g_1325,54,42,0.306144467821115,Core,"Water, Urban, Wastewater",74,37,0.72972972972973,1
+MFD_g_9023,53,37,0.30479581377785,Core,"Water, Urban, Wastewater",74,37,0.716216216216216,1
+Dechloromonas,61,41,0.296703889518261,Core,"Water, Urban, Wastewater",74,37,0.824324324324324,1
+Christensenellaceae_R-7_group,66,46,0.289960619301937,Core,"Water, Urban, Wastewater",74,37,0.891891891891892,2
+Nitrosomonas,55,44,0.285914657172142,Core,"Water, Urban, Wastewater",74,37,0.743243243243243,1
+Conexibacter,54,39,0.279171386955818,Core,"Water, Urban, Wastewater",74,37,0.72972972972973,10
+Ca_Accumulibacter,55,45,0.275125424826024,Core,"Water, Urban, Wastewater",74,37,0.743243243243243,1
+Mycobacterium,58,42,0.272428116739494,Core,"Water, Urban, Wastewater",74,37,0.783783783783784,15
+Tessaracoccus,60,42,0.26568484652317,Core,"Water, Urban, Wastewater",74,37,0.810810810810811,1
+Ellin6067,63,48,0.250849652047257,Core,"Water, Urban, Wastewater",74,37,0.851351351351351,5
+SM1A02,56,40,0.249500998003992,Core,"Water, Urban, Wastewater",74,37,0.756756756756757,2
+Pirellula,64,49,0.245455035874198,Core,"Water, Urban, Wastewater",74,37,0.864864864864865,7
+MFD_g_864,48,37,0.242757727787668,Core,"Water, Urban, Wastewater",74,37,0.648648648648649,1
+Sulfuritalea,57,43,0.236014457571344,Core,"Water, Urban, Wastewater",74,37,0.77027027027027,1
+MFD_g_25480,56,39,0.204995414576253,Core,"Water, Urban, Wastewater",74,37,0.756756756756757,1
