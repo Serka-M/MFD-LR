@@ -241,3 +241,35 @@ plot_sylph_sr <- ggplot(data=sylph_sr, aes(x=mfd_sampletype, y=class, by=group, 
 
 #saveRDS(plot_sylph_sr,"../data/catalogs/sylph.rds")
 ```
+
+
+### Plot classification rates by sample type and habitat
+```{r, include=TRUE}
+preset_sylph <- list(labs(title="", y="Short reads classified (%)", x="", color="Database:"),
+                     geom_quasirandom(size = 0.01, alpha=0.4, dodge.width = 0.9),
+                     geom_boxplot(outlier.shape=NA, fill=NA, width=0.3, alpha = 0.4, lwd=0.1, position = position_dodge(width = 0.9), color="black"), 
+                     scale_x_discrete(guide = guide_axis(angle = 45)),
+                     scale_y_continuous(expand=c(0,0), breaks = c(0,25,50,75,100), limits=c(0,102)),
+                     scale_color_manual(values = c("#e7298a","#66a61e","#e6ab02")),
+                     guides(colour = guide_legend(override.aes = list(size=1.5), nrow=1, byrow=TRUE)),
+                     facet_grid(cols = vars(mfd_areatype), scales = "free", space = "free"),
+                     preset_gen, theme(strip.text = element_text(size=6)))
+
+plot_sylph_sr_soil <- ggplot(data=sylph_sr[sylph_sr$mfd_sampletype == "Soil",], aes(x=mfd_hab1, y=class, by=group, color=group)) + 
+                      labs(x="Sample habitat (soil sample type)") + preset_sylph + theme(legend.position = "none")
+
+plot_sylph_sr_sed <- ggplot(data=sylph_sr[sylph_sr$mfd_sampletype == "Sediment",], aes(x=mfd_hab1, y=class, by=group, color=group)) + 
+                     labs(x="Sample habitat (sediment sample type)") + preset_sylph
+
+plot_sylph_sr_water <- ggplot(data=sylph_sr[sylph_sr$mfd_sampletype == "Water",], aes(x=mfd_hab1, y=class, by=group, color=group)) + 
+                       labs(x="Sample habitat (water sample type)") + preset_sylph
+
+fig_sylph_hab_ <- ggarrange(plot_sylph_sr_sed,plot_sylph_sr_water, nrow=1, ncol=2, common.legend = TRUE, legend="bottom", 
+                            align = c("v"), labels = c("b","c"), font.label = list(size = 9))
+
+fig_sylph_hab <- ggarrange(plot_sylph_sr_soil,fig_sylph_hab_, nrow=2, ncol=1, common.legend = FALSE, align = c("v"), 
+                           labels = c("a",""), font.label = list(size = 9))
+
+ggsave(fig_sylph_hab, file="../analysis/figures/FigS9.pdf", height = 180, width = 200, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
