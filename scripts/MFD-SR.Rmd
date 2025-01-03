@@ -1,7 +1,7 @@
 ---
-title: "R code for plotting data from the main short-read MFD project"
+title: "R code for plotting data related to the Microflora Danica ~10,000 shallow metagenomes"
 author: "Mantas Sereika"
-date: "2024"
+date: "2025"
 output:
   html_document: default
   pdf_document: default
@@ -24,7 +24,7 @@ library(ggbeeswarm)
 ```
 
 
-### Load data
+### Load 16S-related data
 ```{r, include=TRUE}
 mags <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
 mags_16s_lr <- read.delim("../data/MFD-SR/MFG_MFD-LR.tsv", sep="\t", header=F)
@@ -41,15 +41,15 @@ core_hab3 <- read.delim("../data/MFD-SR/2024-03-07_core-genera-mfdo3.csv", sep="
 ### Plot presets
 ```{r, include=TRUE}
 preset_gen <- list(theme_bw(),
-                    theme(legend.position = "bottom",
-                          legend.text=element_text(size=7),
-                          legend.title = element_text(size=7),
-                           axis.title.y = element_text(size = 7), 
-                           axis.title.x = element_text(size = 7),
-                           axis.text.y = element_text(size = 6),
-                           axis.text.x = element_text(size = 6),
-                           panel.grid.minor = element_line(size = 0.15),
-                           panel.grid.major = element_line(size = 0.3)))
+                   theme(legend.position = "bottom",
+                         legend.text=element_text(size=7),
+                         legend.title = element_text(size=7),
+                         axis.title.y = element_text(size = 7), 
+                         axis.title.x = element_text(size = 7),
+                         axis.text.y = element_text(size = 6),
+                         axis.text.x = element_text(size = 6),
+                         panel.grid.minor = element_line(size = 0.15),
+                         panel.grid.major = element_line(size = 0.3)))
 
 preset_gen2 <- list(preset_gen, coord_flip(),
                     theme(legend.position = "none",axis.ticks = element_blank()))
@@ -198,3 +198,46 @@ plots_core_hab <- ggarrange(plot_core_area, plot_core_hab1, plot_core_hab2, plot
 ggsave(plots_core_hab, file="../analysis/figures/FigS8.pdf", height = 90, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
+
+### Load sylph-related data
+```{r, include=TRUE}
+meta <- read.delim("../data/MFD-SR/2023-12-21_mfd_db.csv", sep=",", header=T)
+meta <-  meta[, c("fieldsample_barcode","habitat_typenumber","mfd_sampletype","mfd_areatype", "mfd_hab1","mfd_hab2","mfd_hab3", "longitude", "latitude")]
+meta$mfd_hab1 <- ifelse(meta$mfd_hab1 == "", "Other", meta$mfd_hab1)
+
+mfd_lib <- read.delim("../data/MFD-SR/MFD_LIB.tsv", sep="\t", header=F)
+colnames(mfd_lib) <- c("fieldsample_barcode","lib_id")
+
+sylph_gtdb <- read.delim("../data/MFD-SR/sylph-gtdb.tsv", sep="\t", header=F)
+sylph_gtdb$group <- "GTDB"
+
+sylph_gtdb_pub <- read.delim("../data/MFD-SR/sylph-gtdb-pub.tsv", sep="\t", header=F)
+sylph_gtdb_pub$group <- "GTDB + Public catalogues"
+
+sylph_gtdb_pub_lr <- read.delim("../data/MFD-SR/sylph-gtdb-pub-lr.tsv", sep="\t", header=F)
+sylph_gtdb_pub_lr$group <- "GTDB + Public catalogues + MFD-LR"
+
+sylph_sr <- rbind(sylph_gtdb,sylph_gtdb_pub,sylph_gtdb_pub_lr)
+colnames(sylph_sr) <- c("lib_id","class","group")
+
+sylph_sr <- merge(sylph_sr,mfd_lib,by="lib_id")
+sylph_sr <- merge(sylph_sr,meta,by="fieldsample_barcode")
+```
+
+
+### Plot classification rates by sample type
+```{r, include=TRUE}
+sylph_sr$group <- factor(sylph_sr$group,levels = c("GTDB","GTDB + Public catalogues","GTDB + Public catalogues + MFD-LR"))
+
+plot_sylph_sr <- ggplot(data=sylph_sr, aes(x=mfd_sampletype, y=class, by=group, color=group)) + 
+                 geom_quasirandom(size = 0.01, alpha=0.4, dodge.width = 0.9) + 
+                 geom_boxplot(outlier.shape=NA, fill=NA, width=0.3, alpha = 0.4, lwd=0.1, position = position_dodge(width = 0.9), color="black") + 
+                 labs(title="", y="Short reads classified (%)", x="Sample type", color="Database:") + 
+                 scale_x_discrete(guide = guide_axis(angle = 0)) + scale_y_continuous(expand=c(0,0), breaks = c(0,25,50,75,100), limits=c(0,102)) + 
+                 scale_color_manual(values = c("#e7298a","#66a61e","#e6ab02")) +  preset_gen + 
+                 guides(colour = guide_legend(override.aes = list(size=1.5), nrow=3, byrow=TRUE)) +
+                 theme(legend.justification = "center", legend.spacing.x = unit(0.1, 'cm'), legend.spacing.y = unit(0.1, 'cm'), 
+                       legend.key.height=unit(0.1, 'cm'), legend.key.width=unit(0.1, 'cm'), legend.box.spacing = unit(0, "cm"))
+
+#saveRDS(plot_sylph_sr,"../data/catalogs/sylph.rds")
+```
