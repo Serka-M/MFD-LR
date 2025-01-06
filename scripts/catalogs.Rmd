@@ -47,8 +47,11 @@ preset_gen <- list(theme_bw(),
                          panel.grid.minor = element_line(size = 0.15),
                          panel.grid.major = element_line(size = 0.3)))
 
-preset_gen2 <- list(preset_gen, coord_flip(),
-                    theme(legend.position = "none",axis.ticks = element_blank()))
+preset_gen2 <- list(preset_gen, scale_y_discrete(expand = c(0, 0)),
+                    scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)),
+                    guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)),
+                    scale_fill_gradient2(midpoint = 40, limits=c(0,80), breaks=c(0,20,40,60,80), labels=c("0","20","40","60","80"),
+                                         low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd"))
 ```
 
 ### Function for linking rRNA genes into clusters
@@ -160,13 +163,8 @@ ssu$frac2 <- paste0(format(round(ssu$frac,1),nsmall=1)," %")
 ssu$group <- factor(ssu$group,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
 
 plot_rrna <- ggplot(data = ssu, mapping = aes(x = type, y = group, fill = frac)) + geom_tile(width=1) +
-             scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) +
-             labs(title="", y="", x="rRNA operons", fill="Estimated as complete (%):") +
              geom_text(aes(label = rrna_all), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1)  +
-             preset_gen + guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)) +
-             scale_fill_gradient2(midpoint = 40, limits=c(0,80), breaks=c(0,20,40,60,80), labels=c("0","20","40","60","80"),
-                                  low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd")
-               
+             labs(title="", y="", x="rRNA operons", fill="Estimated as complete (%):") + preset_gen2 
 plot_rrna
 ```
 
@@ -281,13 +279,192 @@ as_filt$type <- factor(as_filt$type,levels = c("PKS","NRPS","RiPPs","Terpenes","
 as_filt$edge_frac2 <- paste0(format(round(as_filt$edge_frac,1),nsmall=1)," %")
 
 plot_bgc <- ggplot(data = as_filt, mapping = aes(x = type, y = group, fill = edge_frac)) + geom_tile(width=1) +
-            scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) +
             geom_text(aes(label = bgc_sum), size=1.75, vjust=-0.7) +  geom_text(aes(label = edge_frac2), size=1.75, vjust=1) +
-            labs(title="", y="", x="BGCs", fill="Estimated as complete (%):") + preset_gen +
-            guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)) +
-            scale_fill_gradient2(midpoint = 40, limits=c(0,80), breaks=c(0,20,40,60,80), labels=c("0","20","40","60","80"),
-                                 low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd")
-               
-
+            labs(title="", y="", x="BGCs", fill="Estimated as complete (%):") + preset_gen2
 plot_bgc
 ```
+
+
+### Function for loading and wrangling defensome data
+```{r, include=TRUE}
+df_proc <- function(sys,genes,contigs,category) {
+  
+  df_genes <- read.delim(genes, sep="\t", header=T)
+  df_genes$sub <- gsub("SoFic","SoFIC", df_genes$sub)
+  
+  df_genes_ <- read.delim(sys, sep="\t", header=T)
+  df_genes_$sys <- gsub("Cas","CRISPR-Cas", df_genes_$sys)
+  df_genes_$sub <- gsub("SoFic","SoFIC", df_genes_$sub)
+  df_genes_ <- df_genes_ %>% select(sys,sub) %>% distinct()
+  
+  df_genes <- merge(df_genes,df_genes_,by="sub")
+  df_genes$link <- paste(df_genes$bin,df_genes$sys,sep="_")
+  df_genes$link_c <- paste(df_genes$bin,df_genes$contig,sep="_")
+  
+  con_len <- read.delim(contigs, sep="\t", header=T)
+  con_len$contig <- sub(" .*", "", con_len$contig)
+  con_len$link_c <- paste(con_len$bin,con_len$contig,sep="_")
+  df_genes <- merge(df_genes,con_len[,c("link_c","len")],by="link_c")
+  df_genes$group <- category
+
+  return (df_genes)}
+```
+
+
+### Get defensome data for catalogs
+```{r, include=TRUE}
+df_lr <- df_proc("../data/catalogs/df/df_mfd-lr_sys.tsv","../data/catalogs/df/df_mfd-lr_bakta.tsv","../data/catalogs/df/contigs_mfd-lr_sub.tsv","MFD-LR")
+df_lr <- df_lr[df_lr$bin %in% mfd_lr[mfd_lr$rep_status == "TRUE",]$bin,]
+
+df_sr <- df_proc("../data/catalogs/df/df_mfd-sr_sys.tsv","../data/catalogs/df/df_mfd-sr_bakta.tsv","../data/catalogs/df/contigs_mfd-sr_sub.tsv","MFD-SR")
+df_sr <- df_sr[df_sr$bin %in% mfd_sr_drep$bin,]
+
+df_spire <- df_proc("../data/catalogs/df/df_spire_sys.tsv","../data/catalogs/df/df_spire_bakta.tsv","../data/catalogs/df/contigs_spire_sub.tsv","SPIRE")
+df_rbg <- df_proc("../data/catalogs/df/df_rbg_sys.tsv","../data/catalogs/df/df_rbg_bakta.tsv","../data/catalogs/df/contigs_rbg_sub.tsv","RBG")
+df_smag <- df_proc("../data/catalogs/df/df_smag_sys.tsv","../data/catalogs/df/df_smag_bakta.tsv","../data/catalogs/df/contigs_smag_sub.tsv","SMAG")
+df_gem <- df_proc("../data/catalogs/df/df_gem_sys.tsv","../data/catalogs/df/df_gem_bakta.tsv","../data/catalogs/df/contigs_gem_sub.tsv","GEM")
+df_tpmc <- df_proc("../data/catalogs/df/df_tpmc_sys.tsv","../data/catalogs/df/df_tpmc_bakta.tsv","../data/catalogs/df/contigs_tpmc_sub.tsv","TPMC")
+df_owc <- df_proc("../data/catalogs/df/df_owc_sys.tsv","../data/catalogs/df/df_owc_bakta.tsv","../data/catalogs/df/contigs_owc_sub.tsv","OWC")
+```
+
+
+### Function for clustering defense genes
+```{r, include=TRUE}
+df_clust <- function(df,link_dist,edge_dist) {
+
+    df <- df %>%
+      arrange(link_c, start) %>%
+      group_by(link_c) %>%
+      mutate(
+          prev_end = lag(end, default = 10**9),
+          next_start = lead(start, default = 10**9),
+          prev_sys = lag(sys, default = "Contig_start"),
+          next_sys = lead(sys, default = "Contig_end"),
+          clust_in = (abs(start - prev_end) <= link_dist) | (abs(next_start - end) <= link_dist),
+          clust_end = !(abs(end - next_start) <= link_dist),
+          clust_id = cumsum(lag(clust_end, default = TRUE))
+      ) %>% ungroup()
+
+    df$cluster <- paste0(df$link_c,"_cluster_",df$clust_id)
+    
+    df1 <- df[!duplicated(df$cluster),]
+    df1 <- df1[df1$start <= edge_dist,]
+    
+    df2 <- df[rev(seq_len(nrow(df))), ]
+    df2 <- df2[!duplicated(df2$cluster),]
+    df2 <- df2[(df2$len - df2$end) <= edge_dist,]
+    
+    df$clust_edge <- ifelse(df$cluster %in% df1$cluster, TRUE, 
+                     ifelse(df$cluster %in% df2$cluster, TRUE, FALSE))
+    
+  return (df)}
+```
+
+
+### Function for classifying defense gene clusters
+```{r, include=TRUE}
+df_sum <- function(df,gene_min,fam_min) {
+  # Gene counts
+  df_n <- aggregate(df$cluster,by=list(df$bin,df$cluster), FUN=length)
+  colnames(df_n) <- c("bin","cluster","df_genes")
+  
+  # System counts
+  df$link_f <- paste(df$cluster,df$sys,sep="_")
+  df_ <- df[!duplicated(df$link_f),]
+  df_fam <- aggregate(df_$cluster,by=list(df_$cluster), FUN=length)
+  colnames(df_fam) <- c("cluster","df_sys")
+  df_n <- merge(df_n,df_fam, by="cluster")
+  
+  # Cluster lengths
+  df1 <- df[!duplicated(df$cluster),]
+  df2 <- df[rev(seq_len(nrow(df))), ]
+  df2 <- df2[!duplicated(df2$cluster),]
+  df_len <- merge(df1[,c("cluster","start")],df2[,c("cluster","end")],by="cluster")
+  df_len$len <- df_len$end - df_len$start
+  df_n <- merge(df_n,df_len,by="cluster")
+  
+  # Fragmentation and island status
+  df_n$clust_edge <- ifelse(df_n$cluster %in% df[df$clust_edge == FALSE,]$cluster, FALSE, TRUE)
+  df_n$island <- ifelse(df_n$df_genes >= gene_min & df_n$df_sys >= fam_min, TRUE, FALSE)
+  df_n$group <- unique(df$group)
+  
+  # System content
+  df_sys <- df %>% group_by(cluster) %>% summarise(sys_all = paste(unique(sys), collapse = ", "))
+  df_n <- merge(df_n,df_sys[,c("cluster","sys_all")],by="cluster")
+  df_n$type <- ifelse(df_n$df_sys == 1, df_n$sys_all, "Hybrid")
+  
+  return (df_n)}
+```
+
+
+### Process defense genes for catalogs
+```{r, include=TRUE}
+# Cluster
+link_dist <- 20000
+edge_dist <- 1000
+
+df_lr_ <- df_clust(df_lr,link_dist,edge_dist)
+df_sr_ <- df_clust(df_sr,link_dist,edge_dist)
+df_spire_ <- df_clust(df_spire,link_dist,edge_dist)
+df_rbg_ <- df_clust(df_rbg,link_dist,edge_dist)
+df_smag_ <- df_clust(df_smag,link_dist,edge_dist)
+df_gem_ <- df_clust(df_gem,link_dist,edge_dist)
+df_tpmc_ <- df_clust(df_tpmc,link_dist,edge_dist)
+df_owc_ <- df_clust(df_owc,link_dist,edge_dist)
+
+# Summarise
+gene_min <- 3
+fam_min <- 0
+
+df_lr_c <- df_sum(df_lr_,gene_min,fam_min)
+df_sr_c <- df_sum(df_sr_,gene_min,fam_min)
+df_spire_c <- df_sum(df_spire_,gene_min,fam_min)
+df_rbg_c <- df_sum(df_rbg_,gene_min,fam_min)
+df_smag_c <- df_sum(df_smag_,gene_min,fam_min)
+df_gem_c <- df_sum(df_gem_,gene_min,fam_min)
+df_tpmc_c <- df_sum(df_tpmc_,gene_min,fam_min)
+df_owc_c <- df_sum(df_owc_,gene_min,fam_min)
+
+df_c <- rbind(df_lr_c,df_sr_c,df_spire_c,df_rbg_c,df_smag_c,df_gem_c,df_tpmc_c,df_owc_c)
+```
+
+
+### Plot defense island count summary
+```{r, include=TRUE}
+# Get fragmentation counts
+df_c_ <- df_c[df_c$island == TRUE,]
+
+df_c_agr_all <- aggregate(df_c_$cluster,by=list(df_c_$type,df_c_$group), FUN=length)
+colnames(df_c_agr_all) <- c("type","group","di_all")
+df_c_agr_all$link <- paste0(df_c_agr_all$group,"_",df_c_agr_all$type)
+
+df_c_agr_full <- aggregate(df_c_[df_c_$clust_edge == FALSE,]$cluster,by=list(df_c_[df_c_$clust_edge == FALSE,]$type,df_c_[df_c_$clust_edge == FALSE,]$group), FUN=length)
+colnames(df_c_agr_full) <- c("type","group","di_full")
+df_c_agr_full$link <- paste0(df_c_agr_full$group,"_",df_c_agr_full$type)
+
+df_c_agr <- merge(df_c_agr_all,df_c_agr_full[,c("link","di_full")],by="link", all=T)
+df_c_agr[is.na(df_c_agr)] <- 0
+
+df_c_agr$frac <- round(df_c_agr$di_full/df_c_agr$di_all*100,2)
+
+# Subset to most common islands and order
+df_c_n <- aggregate(df_c_$cluster,by=list(df_c_$type), FUN=length)
+colnames(df_c_n) <- c("type","type_sum_all")
+
+df_c_n <- df_c_n[order(df_c_n$type_sum_all,decreasing=TRUE),]
+df_c_agr <- df_c_agr[df_c_agr$type %in% head(df_c_n$type,5),]
+
+df_c_agr$group <- factor(df_c_agr$group,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
+df_c_agr$type <- factor(df_c_agr$type,levels = head(df_c_n$type,5))
+
+df_c_agr$frac2 <- paste0(format(round(df_c_agr$frac,1),nsmall=1)," %")
+
+df_c_agr <- df_c_agr[df_c_agr$type != "Hybrid",]
+
+plot_df <- ggplot(data = df_c_agr, mapping = aes(x = type, y = group, fill = frac)) + geom_tile(width=1) +
+           geom_text(aes(label = di_all), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1) + 
+           labs(title="", y="", x="Defense islands", fill="Estimated as complete (%):") + preset_gen2
+plot_df
+```
+
+
