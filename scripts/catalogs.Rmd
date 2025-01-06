@@ -544,7 +544,7 @@ plot_upset
 
 ### Plot MAG counts for catalogs 
 ```{r, include=TRUE}
-mags_n_drep <- aggregate(mags_drep$bin,by=list(mags_drep$MAG_status,mags_drep$group), FUN=length)
+mags_n_drep <- aggregate(mags_stat$bin,by=list(mags_stat$MAG_status,mags_stat$group), FUN=length)
 mags_n_drep <- mags_n_drep[order(mags_n_drep$x,decreasing=TRUE),]
 mags_n_drep$Group.1 <- factor(mags_n_drep$Group.1,levels = c("MQ","HQ"))
 mags_n_drep$Group.2 <- factor(mags_n_drep$Group.2,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
@@ -557,11 +557,11 @@ mags_n_drep$x_ <- ifelse(mags_n_drep$x > 1000, mags_n_drep$x_, " ")
 mags_n_drep$x <- ifelse(mags_n_drep$Group.1 == "HQ", mags_n_drep$x + 1000, mags_n_drep$x)
 
 plot_mags_n <-  ggplot() + 
-                     geom_bar(data=mags_n_drep, aes(fill=Group.1, y=x, x=Group.2), position="stack", stat="identity") + 
-                     geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=1.75, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
-                     geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.5, position = position_stack(vjust = 0.5), color="white") +
-                     labs(title="", y="De-replicated MAGs", x="") + scale_y_continuous(expand=c(0,0), limits = c(0,95000)) + preset_gen + coord_flip()  +
-                     scale_fill_manual(name = "MAG\nquality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + theme(legend.position = "right")
+                geom_bar(data=mags_n_drep, aes(fill=Group.1, y=x, x=Group.2), position="stack", stat="identity") + 
+                geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=1.75, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
+                geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.5, position = position_stack(vjust = 0.5), color="white") +
+                labs(title="", y="De-replicated MAGs", x="") + scale_y_continuous(expand=c(0,0), limits = c(0,95000)) + preset_gen + coord_flip()  +
+                scale_fill_manual(name = "MAG\nquality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + theme(legend.position = "right")
 plot_mags_n
 ```
 
@@ -572,10 +572,11 @@ plot_mags_n
 plot_table_ <- plot_table + theme(plot.margin = unit(c(-0.2,0,0,0.25), 'cm'))
 plot_upset_ <- as.ggplot(plot_upset) + theme(plot.margin = unit(c(-0.15,-1.8,-0.7,-0.25), 'cm'))
 
-#plot_upset_ <- ggarrange(plot_upset_, as_ggplot(get_legend(plot_mags_n_drep+guides(fill = guide_legend(override.aes = list(size=1),reverse=T))+
-#                                                           theme(legend.key.size = unit(0.3, "cm"),legend.margin = unit(c(-3,0,0,0), 'cm'),
-#                                                                 legend.box.background = element_blank(),legend.background = element_blank()))),
-#                         nrow=1, ncol=2, widths = c(1,0.2), align = "none")
+plot_mags_n_ <- plot_mags_n+ guides(fill = guide_legend(override.aes = list(size=1),reverse=T)) +
+                theme(legend.key.size = unit(0.3, "cm"),legend.margin = unit(c(-3,0,0,0), 'cm'),
+                      legend.box.background = element_blank(),legend.background = element_blank())
+
+plot_upset_ <- ggarrange(plot_upset_, as_ggplot(get_legend(plot_mags_n_)), nrow=1, ncol=2, widths = c(1,0.2), align = "none")
 
 fig_ab <- ggarrange(plot_table_,plot_upset_, nrow=1, ncol=2, widths = c(1,1.5), common.legend = FALSE,
                     align = c("v"), labels = c("a","b"), font.label = list(size = 9))
