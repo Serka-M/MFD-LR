@@ -1,0 +1,293 @@
+---
+title: "R code for comparing different genome catalogs"
+author: "Mantas Sereika"
+date: "2025"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+### Load dependencies
+```{r, include=TRUE, message=FALSE}
+library(stringr)
+library(stringi)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(ggsankey)
+library(ggbeeswarm)
+library(grid)
+library(ggplotify)
+library(lemon)
+library(pals)
+library(gridExtra)
+library(RColorBrewer)
+```
+
+
+### Load MFD catalog data
+```{r, include=TRUE}
+mfd_lr <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
+mfd_sr_drep <- read.delim("../data/catalogs/mfd-sr_drep.tsv", sep="\t", header=T)
+```
+
+
+### Plot presets
+```{r, include=TRUE}
+preset_gen <- list(theme_bw(),
+                   theme(legend.position = "bottom",
+                         legend.text=element_text(size=7),
+                         legend.title = element_text(size=7),
+                         axis.title.y = element_text(size = 7), 
+                         axis.title.x = element_text(size = 7),
+                         axis.text.y = element_text(size = 6),
+                         axis.text.x = element_text(size = 6),
+                         panel.grid.minor = element_line(size = 0.15),
+                         panel.grid.major = element_line(size = 0.3)))
+
+preset_gen2 <- list(preset_gen, coord_flip(),
+                    theme(legend.position = "none",axis.ticks = element_blank()))
+```
+
+### Function for linking rRNA genes into clusters
+```{r, include=TRUE}
+rrna_proc <- function(genes,link_dist,category) {
+    rrna <- read.delim(genes, sep="\t", header=T)
+    rrna$group <- category
+    rrna$link_c <- paste(rrna$bin,rrna$contig,sep="_")
+
+    rrna <- rrna %>%
+      arrange(link_c, start) %>%
+      group_by(link_c) %>%
+      mutate(
+          prev_end = lag(end, default = 10**9),
+          next_start = lead(start, default = 10**9),
+          prev_seq = lag(rrna, default = "Contig_start"),
+          next_seq = lead(rrna, default = "Contig_end"),
+          clust_in = (abs(start - prev_end) <= link_dist) | (abs(next_start - end) <= link_dist),
+          clust_end = !(abs(end - next_start) <= link_dist),
+          clust_id = cumsum(lag(clust_end, default = TRUE))
+      ) %>% ungroup()
+    
+    rrna$cluster <- paste0(rrna$link_c,"_cluster_",rrna$clust_id)
+
+  return (rrna)}
+```
+
+
+### Function for checking rRNA cluster completeness
+```{r, include=TRUE}
+rrna_clust <- function(rrna) {
+    # Gene counts
+    rrna_n <- aggregate(rrna$cluster,by=list(rrna$bin,rrna$cluster), FUN=length)
+    colnames(rrna_n) <- c("bin","cluster","rrna_n")
+  
+    # Cluster lengths
+    rrna1 <- rrna[!duplicated(rrna$cluster),]
+    rrna2 <- rrna[rev(seq_len(nrow(rrna))), ]
+    rrna2 <- rrna2[!duplicated(rrna2$cluster),]
+    rrna_len <- merge(rrna1[,c("cluster","start")],rrna2[,c("cluster","end")],by="cluster")
+    rrna_len$len <- rrna_len$end - rrna_len$start
+    
+    # Content
+    rrna_type <- rrna %>% group_by(cluster) %>% summarise(rrna_all = paste(unique(rrna), collapse = ", "))
+    rrna_type$operon <- ifelse(grepl("16S",rrna_type$rrna_all) & grepl("5S",rrna_type$rrna_all) & grepl("23S",rrna_type$rrna_all), "Complete", "Incomplete")
+  
+    # Aggregate
+    rrna_c <- merge(rrna_len,rrna_n,by="cluster")
+    rrna_c <- merge(rrna_c,rrna_type[,c("cluster","rrna_all","operon")],by="cluster")
+    
+  return (rrna_c)}
+```
+
+
+### Link rRNA genes for catalogs
+```{r, include=TRUE}
+# Make clusters
+link_dist <- 3000
+
+rrna_lr <- rrna_proc("../data/catalogs/rrna/rrna_mfd-lr.tsv",link_dist,"MFD-LR")
+rrna_lr <- rrna_lr[rrna_lr$bin %in% mfd_lr[mfd_lr$rep_status == "TRUE",]$bin,]
+
+rrna_sr <- rrna_proc("../data/catalogs/rrna/rrna_mfd-sr.tsv",link_dist,"MFD-SR")
+rrna_sr <- rrna_sr[rrna_sr$bin %in% mfd_sr_drep$bin,]
+
+rrna_spire <- rrna_proc("../data/catalogs/rrna/rrna_spire.tsv",link_dist,"SPIRE")
+rrna_smag <- rrna_proc("../data/catalogs/rrna/rrna_smag.tsv",link_dist,"SMAG")
+rrna_rbg <- rrna_proc("../data/catalogs/rrna/rrna_rbg.tsv",link_dist,"RBG")
+rrna_gem <- rrna_proc("../data/catalogs/rrna/rrna_gem.tsv",link_dist,"GEM")
+rrna_tpmc <- rrna_proc("../data/catalogs/rrna/rrna_tpmc.tsv",link_dist,"TPMC")
+rrna_owc <- rrna_proc("../data/catalogs/rrna/rrna_owc.tsv",link_dist,"OWC")
+
+# Check completeness
+rrna_lr_c <- rrna_clust(rrna_lr)
+rrna_sr_c <- rrna_clust(rrna_sr)
+rrna_spire_c <- rrna_clust(rrna_spire)
+rrna_smag_c <- rrna_clust(rrna_smag)
+rrna_rbg_c <- rrna_clust(rrna_rbg)
+rrna_gem_c <- rrna_clust(rrna_gem)
+rrna_tpmc_c <- rrna_clust(rrna_tpmc)
+rrna_owc_c <- rrna_clust(rrna_owc)
+```
+
+
+### Plot rRNA cluster by catalog
+```{r, include=TRUE}
+rrna_c <- rbind(rrna_lr_c,rrna_sr_c,rrna_spire_c,rrna_rbg_c,rrna_gem_c,rrna_smag_c,rrna_tpmc_c,rrna_owc_c)
+rrna <- rbind(rrna_lr,rrna_sr,rrna_spire,rrna_rbg,rrna_gem,rrna_smag,rrna_tpmc,rrna_owc)
+
+rrna$group2 <- ifelse(grepl("16S",rrna$rrna), "16S rRNA",
+                      ifelse(grepl("23S",rrna$rrna), "23S rRNA",
+                             ifelse(grepl("5S",rrna$rrna), "5S rRNA", "Error")))
+
+ssu <- aggregate(rrna$cluster,by=list(rrna$group,rrna$group2), FUN=length)
+colnames(ssu) <- c("group","type","rrna_all")
+ssu$link <- paste(ssu$group,ssu$type,sep="_")
+
+ssu_compl <- aggregate(rrna[rrna$cluster %in% rrna_c[rrna_c$operon=="Complete",]$cluster,]$cluster,
+                       by=list(rrna[rrna$cluster %in% rrna_c[rrna_c$operon=="Complete",]$cluster,]$group,
+                               rrna[rrna$cluster %in% rrna_c[rrna_c$operon=="Complete",]$cluster,]$group2), FUN=length)
+
+colnames(ssu_compl) <- c("group","type","rrna_operon")
+ssu_compl$link <- paste(ssu_compl$group,ssu_compl$type,sep="_")
+
+ssu <- merge(ssu,ssu_compl[,c("link","rrna_operon")],by="link")
+ssu$frac <- round(ssu$rrna_operon/ssu$rrna_all*100,2)
+ssu$frac2 <- paste0(format(round(ssu$frac,1),nsmall=1)," %")
+
+ssu$group <- factor(ssu$group,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
+
+plot_rrna <- ggplot(data = ssu, mapping = aes(x = type, y = group, fill = frac)) + geom_tile(width=1) +
+             scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) +
+             labs(title="", y="", x="rRNA operons", fill="Estimated as complete (%):") +
+             geom_text(aes(label = rrna_all), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1)  +
+             preset_gen + guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)) +
+             scale_fill_gradient2(midpoint = 40, limits=c(0,80), breaks=c(0,20,40,60,80), labels=c("0","20","40","60","80"),
+                                  low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd")
+               
+plot_rrna
+```
+
+
+### Load genome catalog IDs
+```{r, include=TRUE}
+drep_spire <- read.delim("../data/catalogs/id/mags_drep_spire.txt", sep="\t", header=F)
+drep_rbg <- read.delim("../data/catalogs/id/mags_drep_rbg.txt", sep="\t", header=F)
+drep_smag <- read.delim("../data/catalogs/id/mags_drep_smag.txt", sep="\t", header=F)
+drep_gem <- read.delim("../data/catalogs/id/mags_drep_gem.txt", sep="\t", header=F)
+drep_tpmc <- read.delim("../data/catalogs/id/mags_drep_tpmc.txt", sep="\t", header=F)
+drep_owc <- read.delim("../data/catalogs/id/mags_drep_owc.txt", sep="\t", header=F)
+```
+
+
+### Function for wrangling Antismash results
+```{r, include=TRUE}
+as_proc <- function(load,category, sub) {
+  # Load and wrangle
+  as <- read.delim(load, sep="\t", header=T)
+  colnames(as)[1] <- "bin"
+  as <- as[as$bin %in% sub,]
+  as$KCB_perc[is.na(as$KCB_perc)] <- 0
+  as$group <- category
+  
+  # Classify
+  PKS <- c("T1PKS", "T2PKS", "T3PKS", "HR-T2PKS", "PKS-like","transAT-PKS", "transAT-PKS-like", "hglE-KS", "prodigiosin")
+  NRPS <- c("NRPS", "NRPS-like", "thioamide-NRP", "NAPAA")
+  RiPPs <- c("lantipeptide","thiopeptide", "bacteriocin", "linaridin", "cyanobactin", "glycocin", "LAP", "lassopeptide","sactipeptide",
+             "bottromycin", "microcin", "microviridin", "proteusin", "guanidinotides", "lanthipeptide", "lipolanthine", "RaS-RiPP", "fungal-RiPP",
+             "thioamitides", "lanthipeptide-class-i", "lanthipeptide-class-ii", "lanthipeptide-class-iii", "lanthipeptide-class-iv",
+             "lanthipeptide-class-v", "ranthipeptide", "redox-cofactor", "RRE-containing", "epipeptide", "cyclic-lactone-autoinducer", "spliceotide",
+             "crocagin", "RiPP-like", "achaeal-RiPP")
+  TERP <- c("terpene")
+  SACH <- c("amglyccycl", "oligosaccharide", "cf_saccharide", "saccharide", "2dos")
+  BL <- c("betalactone")
+  METAL <- c("NI-siderophore", "opine-like-metallophore", "aminopolycarboxylic-acid")
+  HCN <- c("hydrogen-cyanide")
+  HL <- c("hserlactone")
+  IND <- c("indole")
+  ARL <- c("arylpolyene")
+  
+  as$class <- ifelse(as$product %in% PKS, "PKS", 
+              ifelse(as$product %in% NRPS, "NRPS",
+              ifelse(as$product %in% RiPPs,"RiPPs",
+              ifelse(as$product %in% TERP,"Terpenes",
+              ifelse(as$product %in% SACH,"Saccharides",
+              ifelse(as$product %in% BL,"Betalactones",
+              ifelse(as$product %in% HL,"Homoserine lactones",
+              ifelse(as$product %in% METAL,"Metallophores",
+              ifelse(as$product %in% HCN,"Hydrogen cyanides",
+              ifelse(as$product %in% IND,"Indoles",
+              ifelse(as$product %in% ARL,"Arylpolyenes",      
+              ifelse(grepl("/",as$product),"Hybrids","Other"))))))))))))
+  
+  # Re-assign some hybrids
+  as_all <- unique(as$product)
+  as_single <- unique(as[!grepl("/",as$product),]$product)
+  
+  as$class <- ifelse(as$class == "Hybrids", 
+              ifelse(grepl(paste(PKS,collapse="|"),as$product) & grepl(paste(NRPS,collapse="|"),as$product),
+                     "PKS/NRPS hybrids","Hybrids"), as$class)
+
+  as$class <- ifelse(as$class == "Hybrids",
+              ifelse(grepl(paste(PKS,collapse="|"),as$product) & !grepl(paste(setdiff(as_single, PKS),collapse="|"),as$product),
+                     "PKS","Hybrids"), as$class)
+
+  as$class <- ifelse(as$class == "Hybrids",
+              ifelse(grepl(paste(NRPS,collapse="|"),as$product) & !grepl(paste(setdiff(as_single, NRPS),collapse="|"),as$product),
+                     "NRPS","Hybrids"), as$class)
+
+  as$class <- ifelse(as$class == "Hybrids", 
+              ifelse(grepl(paste(RiPPs,collapse="|"),as$product) & !grepl(paste(setdiff(as_single, RiPPs),collapse="|"),as$product),
+                     "RiPPs","Hybrids"), as$class)
+  return (as)}
+```
+
+
+### Load antismash results
+```{r, include=TRUE}
+as_lr <- as_proc("../data/catalogs/bgc/BGC_lr_sum.tsv","MFD-LR",mfd_lr[mfd_lr$rep_status == "TRUE",]$bin) 
+as_sr <- as_proc("../data/catalogs/bgc/BGC_sr_sum.tsv","MFD-SR",mfd_sr_drep$bin) 
+as_spire <- as_proc("../data/catalogs/bgc/BGC_spire_sum.tsv","SPIRE",drep_spire$V1) 
+as_smag <- as_proc("../data/catalogs/bgc/BGC_smag_sum.tsv","SMAG",drep_smag$V1) 
+as_rbg <- as_proc("../data/catalogs/bgc/BGC_rbg_sum.tsv","RBG",drep_rbg$V1) 
+as_gem <- as_proc("../data/catalogs/bgc/BGC_gem_sum.tsv","GEM",drep_gem$V1) 
+as_tpmc <- as_proc("../data/catalogs/bgc/BGC_tpmc_sum.tsv","TPMC",drep_tpmc$V1) 
+as_owc <- as_proc("../data/catalogs/bgc/BGC_owc_sum.tsv","OWC",drep_owc$V1) 
+```
+
+
+### Plot BGCs by catalog
+```{r, include=TRUE}
+as <- rbind(as_lr,as_sr,as_smag,as_rbg,as_gem,as_tpmc,as_owc,as_spire)
+
+as$link_t <- paste(as$group,as$class,sep="_")
+as_sum <- aggregate(as$record_id,by=list(as$link_t), FUN=length)
+colnames(as_sum) <- c("link","bgc_sum")
+
+as_edge <- aggregate(as$record_id,by=list(as$link_t,as$group,as$class,as$contig_edge), FUN=length)
+colnames(as_edge) <- c("link","group","type","edge","bgc")
+as_edge <- merge(as_edge,as_sum, by="link")
+
+as_edge$edge_frac <- round(as_edge$bgc/as_edge$bgc_sum*100,2)
+
+as_filt <- as_edge[as_edge$type %in% c("PKS","NRPS","RiPPs","Terpenes","Betalactones", "Arylpolyenes"),]
+as_filt <- as_filt[as_filt$edge == "False",]
+
+as_filt$group <- factor(as_filt$group,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
+as_filt$type <- factor(as_filt$type,levels = c("PKS","NRPS","RiPPs","Terpenes","Betalactones", "Arylpolyenes"))
+
+as_filt$edge_frac2 <- paste0(format(round(as_filt$edge_frac,1),nsmall=1)," %")
+
+plot_bgc <- ggplot(data = as_filt, mapping = aes(x = type, y = group, fill = edge_frac)) + geom_tile(width=1) +
+            scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) +
+            geom_text(aes(label = bgc_sum), size=1.75, vjust=-0.7) +  geom_text(aes(label = edge_frac2), size=1.75, vjust=1) +
+            labs(title="", y="", x="BGCs", fill="Estimated as complete (%):") + preset_gen +
+            guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)) +
+            scale_fill_gradient2(midpoint = 40, limits=c(0,80), breaks=c(0,20,40,60,80), labels=c("0","20","40","60","80"),
+                                 low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd")
+               
+
+plot_bgc
+```
