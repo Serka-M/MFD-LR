@@ -161,9 +161,68 @@ plot_order <- gtdb_plot(count_order,"order",0.1)
 plot_family <- gtdb_plot(count_family,"family",0.1)
 plot_genus <- gtdb_plot(count_genus,"genus",0.1)
 
-plot_phyl_cov <- ggarrange(plot_phylum,plot_class,plot_order,plot_family, labels = c("a","b","c","d"), font.label = list(size = 9),
-                           nrow=4, ncol=1, align = "none", common.legend = TRUE, legend = "bottom")
+plot_cov <- ggarrange(plot_phylum,plot_class,plot_order,plot_family, labels = c("a","b","c","d"), font.label = list(size = 9),
+                      nrow=4, ncol=1, align = "none", common.legend = TRUE, legend = "bottom")
 
-ggsave(file="../analysis/figures/FigS14.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+ggsave(plot_cov, file="../analysis/figures/FigS14.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
+
+### Load phylogenetic tree
+```{r, include=TRUE}
+gtdb_tree <- read.tree("../data/GTDB/gtdb-r220_MFD-LR.tree")
+```
+
+
+### Wrangle tree and GTDB metadata
+```{r, include=TRUE}
+# Get species per phylum counts
+gtdb_sub <- gtdb_meta[, c("accession","phylum")]
+colnames(gtdb_sub) <- c("label","phylum")
+
+gtdb_sub_count <- aggregate(gtdb_meta$species, by=list(gtdb_meta$domain,gtdb_meta$phylum), FUN=length)
+colnames(gtdb_sub_count) <- c("domain",	"phylum",	"gtdb_species")
+
+# Get MAG ids
+tips <- as.data.frame(unique(gtdb_tree$tip.label))
+mags_id <- as.data.frame(str_subset(tips[,1], "bin"))
+colnames(mags_id) <- "label"
+
+# Prune tree
+gtdb_sub_ <- as.data.frame(gtdb_sub[, c("label")])
+colnames(gtdb_sub_) <- "label"
+sub <- as.data.frame(rbind(gtdb_sub_,mags_id))
+gtdb_tree <- ape::keep.tip(gtdb_tree, c(as.character(sub$label)))
+
+# Mark domains
+tree_df <- gtdb_tree %>% as.treedata %>% as_tibble
+gtdb_tree <- groupClade(gtdb_tree, .node=c(tree_df[(tree_df$label == "Prokaryotes"), ]$node,tree_df[(tree_df$label == "Archaea"), ]$node))
+
+# Get data-frames with GTDB and MAG names and phyla classification
+mags_ <- as.data.frame(mags_novel[, c("bin","phylum")])
+colnames(mags_)[1] <- "label"
+label_phyla <- as.data.frame(rbind(mags_,gtdb_sub))
+
+# Make list of common phylum and label data-frame accordingly
+abund_phyla <- as.data.frame(head(gtdb_sub_count[order(gtdb_sub_count$gtdb_species, decreasing = TRUE),]$phylum,15))
+colnames(abund_phyla)[1] <- "phylum"
+
+label_phyla$phylum_ <- ifelse((label_phyla$phylum %in% abund_phyla$phylum), label_phyla$phylum,"Other phyla")
+list_phyla <- c(abund_phyla$phylum,"Other phyla")
+```
+
+
+### Plot tree
+```{r, include=TRUE}
+tree_gtdb <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
+             scale_color_manual(values=c("#d8b365", "#74c476"), labels=c("Bacteria","Archaea")) +
+             geom_point2(aes(subset=(label %in% mags$bin)), shape=21, size=1, stroke = 0, fill="#b10026") +  
+             scale_fill_brewer(palette = "Paired")  +
+             guides(color = guide_legend(order=1, ncol=2, title="Domain", override.aes = list(shape=NA, linewidth=2)), fill=none) + new_scale_fill() + 
+             geom_fruit(geom = geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
+             guides(fill=guide_legend(order=2, title="Phylum", ncol=2)) +
+             scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
+                                                           "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9"))
+  
+ggsave(tree_gtdb, file="../analysis/figures/Fig4.pdf", height = 8, width = 12, useDingbats=FALSE)
+```
