@@ -1,0 +1,169 @@
+---
+title: "R code for MAG phylogenetic analysis and comparisons to GTDB"
+author: "Mantas Sereika"
+date: "2025"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+###  Load dependencies
+```{r, include=TRUE, message=FALSE}
+library(ggplot2)
+library(stringr)
+library(tidyverse)
+library(ggpubr)
+library(dplyr)
+library(ape)
+library(treeio)
+library(ggtree)
+library(ggtreeExtra)
+library(ggsankey)
+library(ggnewscale)
+library(caper)
+library(rsvg)
+```
+
+### Load data
+```{r, include=TRUE}
+mags <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
+gtdb_meta <- read.delim("../data/GTDB/gtdb_metadata_r220.tsv", sep="\t", header=T)
+```
+
+
+### Plot presets
+```{r, include=TRUE}
+preset_gen <- list(theme_bw(),
+                   theme(legend.position = "bottom",
+                         legend.text=element_text(size=7),
+                         legend.title = element_text(size=7),
+                         axis.title.y = element_text(size = 7), 
+                         axis.title.x = element_text(size = 7),
+                         axis.text.y = element_text(size = 6),
+                         axis.text.x = element_text(size = 6),
+                         panel.grid.minor = element_line(size = 0.15),
+                         panel.grid.major = element_line(size = 0.3)))
+```
+
+
+### Function for splitting GTDB ranks
+```{r, include=TRUE}
+gtdb_rank <- function(class,pattern,trim_left,trim_right) {
+  rank <-  str_extract(class,pattern)
+  rank <-  gsub(trim_left, "", rank)
+  rank <-  gsub(trim_right, "", rank)
+  return (rank) }
+```
+
+
+### Wrangle GTDB taxonomies
+```{r, include=TRUE}
+# MFD-LR MAGs
+mags$domain <- gtdb_rank(mags$GTDB_taxonomy,"d__[a-zA-Z0-9 -_]+;p__","d__",";p__")
+mags$phylum <- gtdb_rank(mags$GTDB_taxonomy,";p__[a-zA-Z0-9 -_]+;c__",";p__",";c__")
+mags$class <- gtdb_rank(mags$GTDB_taxonomy,";c__[a-zA-Z0-9 -_]+;o__",";c__",";o__")
+mags$order <- gtdb_rank(mags$GTDB_taxonomy,";o__[a-zA-Z0-9 -_]+;f__",";o__",";f__")
+mags$family <- gtdb_rank(mags$GTDB_taxonomy,";f__[a-zA-Z0-9 -_]+;g__",";f__",";g__")
+mags$genus <- gtdb_rank(mags$GTDB_taxonomy,";g__[a-zA-Z0-9 -_]+;s__",";g__",";s__")
+mags$species <- gtdb_rank(mags$GTDB_taxonomy,";s__[a-zA-Z0-9 -_]+",";s__","")
+
+mags$phylum[is.na(mags$phylum)] <- paste0("Unclassified")
+mags$class[is.na(mags$class)] <- paste0("Unclassified")
+mags$order[is.na(mags$order)] <- paste0("Unclassified")
+mags$family[is.na(mags$family)] <- paste0("Unclassified")
+mags$genus[is.na(mags$genus)] <- paste0("Unclassified")
+mags$species[is.na(mags$species)] <- paste0("Unclassified")
+
+# GTDB genomes
+gtdb_meta$domain <- gtdb_rank(gtdb_meta$gtdb_taxonomy,"d__[a-zA-Z0-9 -_]+;p__","d__",";p__")
+gtdb_meta$phylum <- gtdb_rank(gtdb_meta$gtdb_taxonomy,";p__[a-zA-Z0-9 -_]+;c__",";p__",";c__")
+gtdb_meta$class <- gtdb_rank(gtdb_meta$gtdb_taxonomy,";c__[a-zA-Z0-9 -_]+;o__",";c__",";o__")
+gtdb_meta$order <- gtdb_rank(gtdb_meta$gtdb_taxonomy,";o__[a-zA-Z0-9 -_]+;f__",";o__",";f__")
+gtdb_meta$family <- gtdb_rank(gtdb_meta$gtdb_taxonomy,";f__[a-zA-Z0-9 -_]+;g__",";f__",";g__")
+gtdb_meta$genus <- gtdb_rank(gtdb_meta$gtdb_taxonomy,";g__[a-zA-Z0-9 -_]+;s__",";g__",";s__")
+gtdb_meta$species <- gtdb_rank(gtdb_meta$gtdb_taxonomy,";s__[a-zA-Z0-9 -_]+",";s__","")
+```
+
+
+### Count genomes per GTDB ranks
+```{r, include=TRUE}
+gtdb_count <- function(df,rank) {
+  # All MAGs
+  count_all <-  aggregate(df[,rank], by=list(df[,rank]), FUN=length)
+  colnames(count_all)[2] <- "gtdb_species"
+  # HQ MAGs
+  count_hq <- aggregate(df[df$mimag_high_quality == "t",rank], by=list(df[df$mimag_high_quality == "t",rank]), FUN=length)
+  colnames(count_hq)[2] <- "gtdb_species_hq"
+  # rRNA
+  count_rrna <- aggregate(df[df$ssu_count > 0,rank], by=list(df[df$ssu_count > 0,rank]), FUN=length)
+  colnames(count_rrna)[2] <- "gtdb_species_rrna"
+  # Combine
+  count_all <- merge(count_all,count_hq, by="Group.1", all=T)
+  count_all <- merge(count_all,count_rrna, by="Group.1", all=T)
+  count_all[is.na(count_all)] <- 0
+  return (count_all) }
+
+count_phylum <- gtdb_count(gtdb_meta,"phylum")
+count_class <- gtdb_count(gtdb_meta,"class")
+count_order <- gtdb_count(gtdb_meta,"order")
+count_family <- gtdb_count(gtdb_meta,"family")
+count_genus <- gtdb_count(gtdb_meta,"genus")
+```
+
+
+### Compare genome counts in GTDB metadata vs MFD MAGs
+```{r, include=TRUE}
+gtdb_comp <- function(count,mags,rank) {
+  count$MAG <- ifelse((count$Group.1 %in% mags[,rank]), "Y","N")
+  count_tmp <- aggregate(mags[,rank], by=list(mags[,rank]), FUN=length)
+  colnames(count_tmp)[2] <- "mfd_mags"
+  count <- merge(count,count_tmp, by="Group.1", all=TRUE)
+  count <- count[!is.na(count$gtdb_species),]
+  count$mfd_mags[is.na(count$mfd_mags)] <- 0
+  count$total_mags <- count$gtdb_species + count$mfd_mags
+  count$gain <- round(count$total_mags/count$gtdb_species*100-100,3)
+  count$gain2 <- round(count$total_mags/count$gtdb_species,3)
+  return (count) }
+
+mags_novel <- mags[mags$species == "Unclassified" & mags$rep_status == "TRUE",]
+
+count_phylum <- gtdb_comp(count_phylum,mags_novel,"phylum")
+count_class <- gtdb_comp(count_class,mags_novel,"class")
+count_order <- gtdb_comp(count_order,mags_novel,"order")
+count_family <- gtdb_comp(count_family,mags_novel,"family")
+count_genus <- gtdb_comp(count_genus,mags_novel,"genus")
+```
+
+
+### Plot MAG presence in taxonomic groups
+```{r, include=TRUE}
+gtdb_plot <- function(count,label,dotsize) {
+  count <- count[order(count$gtdb_species,decreasing=TRUE),]
+  count$ID <- seq.int(nrow(count))
+  count_ <- count %>% dplyr::select(ID,gtdb_species,total_mags) %>%  pivot_longer(!ID, names_to = "group", values_to = "count")
+  count_$group2 <- ifelse(count_$ID %in% count[count$mfd_mags == 0, ]$ID,"zero",count_$group)
+  count_ <- count_[order(count_$group2,decreasing=TRUE),]
+  
+  plot <- ggplot(data=count_, aes(x=ID, y=count, color=group2)) + 
+  geom_line(aes(group=ID),col="black", size=0.1, alpha =0.5) + geom_point(size=dotsize, alpha=0.5) + 
+  labs(y=paste("Species per",label,"in GTDB",sep=" "), x="Taxa queue position by species count in decreasing order") +
+  preset_gen + guides(color = guide_legend(override.aes = list(size = 1))) +
+  scale_y_continuous(trans="log10", expand=c(0.05,0.05)) + 
+  scale_x_continuous(expand=c(0.05,0.05), breaks = c(1, pretty(count$ID)[pretty(count$ID) != 0])) +
+  scale_color_manual(name = "", values=c("gtdb_species"="#bf812d","total_mags"="#35978f", "zero"="#bdbdbd"),
+                     labels=c("gtdb_species"="GTDB genomes","total_mags"="With MFD mags", "zero"="No MAGs recovered for group"))
+  return (plot) }
+
+plot_phylum <- gtdb_plot(count_phylum,"phylum",0.6)
+plot_class <- gtdb_plot(count_class,"class",0.1)
+plot_order <- gtdb_plot(count_order,"order",0.1)
+plot_family <- gtdb_plot(count_family,"family",0.1)
+plot_genus <- gtdb_plot(count_genus,"genus",0.1)
+
+plot_phyl_cov <- ggarrange(plot_phylum,plot_class,plot_order,plot_family, labels = c("a","b","c","d"), font.label = list(size = 9),
+                           nrow=4, ncol=1, align = "none", common.legend = TRUE, legend = "bottom")
+
+ggsave(file="../analysis/figures/FigS14.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
