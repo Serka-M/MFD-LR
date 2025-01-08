@@ -8,7 +8,7 @@ output:
 ---
 
 
-###  Load dependencies
+### Load dependencies
 ```{r, include=TRUE, message=FALSE}
 library(ggplot2)
 library(stringr)
@@ -23,7 +23,9 @@ library(ggsankey)
 library(ggnewscale)
 library(caper)
 library(rsvg)
+library(grid)
 ```
+
 
 ### Load data
 ```{r, include=TRUE}
@@ -214,7 +216,7 @@ list_phyla <- c(abund_phyla$phylum,"Other phyla")
 
 ### Plot tree
 ```{r, include=TRUE}
-tree_gtdb <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
+plot_tree <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
              scale_color_manual(values=c("#d8b365", "#74c476"), labels=c("Bacteria","Archaea")) +
              geom_point2(aes(subset=(label %in% mags$bin)), shape=21, size=1, stroke = 0, fill="#b10026") +  
              scale_fill_brewer(palette = "Paired")  +
@@ -224,5 +226,52 @@ tree_gtdb <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<
              scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
                                                            "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9"))
   
-ggsave(tree_gtdb, file="../analysis/figures/Fig4.pdf", height = 8, width = 12, useDingbats=FALSE)
+ggsave(plot_tree, file="../analysis/figures/Fig4.pdf", height = 8, width = 12, useDingbats=FALSE)
 ```
+
+
+### Make alternative tree with all the branches from MAGs labelled
+```{r, include=TRUE}
+gtdb_tree2 <- gtdb_tree
+
+tree_df2 <- gtdb_tree2 %>% as.treedata %>% as_tibble
+tree_df2$mag <- ifelse(grepl("bin",tree_df2$label), 1, 0)
+tree_df2$arc <- ifelse(tree_df2$label %in% gtdb_meta[gtdb_meta$domain=="Archaea",]$accession, 1, 0)
+tree_df2$x <- ifelse(tree_df2$mag == 1, 0, ifelse(tree_df2$arc==1,2,1))
+
+gtdb_tree2 <- groupOTU(gtdb_tree2, split(tree_df2$label, tree_df2$x))
+tree_df2 <- gtdb_tree2 %>% as.treedata %>% as_tibble
+```
+
+
+### Plot alternative tree
+```{r, include=TRUE}
+plot_tree2 <- ggtree(gtdb_tree2, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
+              scale_color_manual(values=c("#b10026","#d8b365", "#74c476"), labels=c("MFD MAGs","GTDB bacterial","GTDB archaeal")) +
+              scale_fill_brewer(palette = "Paired")  +
+              guides(color = guide_legend(order=1, ncol=3, title="MAG group:", override.aes = list(shape=NA, linewidth=2)), fill=none) + new_scale_fill() + 
+              geom_fruit(geom = geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
+              guides(fill=guide_legend(order=2, title="Phylum", ncol=2)) +
+              scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
+                                                            "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9")) 
+
+ggsave(plot_tree2, file="../analysis/figures/FigS12.pdf", height = 8, width = 12, useDingbats=FALSE)
+```
+
+
+### Combine plots from the phylogeny workflow
+```{r, include=TRUE}
+wf_arc <- rsvg("../data/GTDB/summary_arc.svg", width = 3000, height = 1500)
+wf_bac <- rsvg("../data/GTDB/summary_bac.svg", width = 3000, height = 1500)
+
+plot_wf_arc <- ggplot() + annotation_custom(rasterGrob(as.raster(wf_arc), interpolate = TRUE), 
+                                            xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + theme_void()
+
+plot_wf_bac <- ggplot() + annotation_custom(rasterGrob(as.raster(wf_bac), interpolate = TRUE), 
+                                            xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + theme_void()
+
+plot_wf <- ggarrange(plot_wf_bac,plot_wf_arc, nrow=2, ncol=1,common.legend = FALSE, labels = c("a","b"), font.label = list(size = 9))
+
+ggsave(plot_wf, file="../analysis/figures/FigS13.pdf", height = 180, width = 180, units ="mm", dpi=300, useDingbats=FALSE)
+```
+
