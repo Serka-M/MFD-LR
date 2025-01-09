@@ -32,6 +32,11 @@ library(tools)
 ```{r, include=TRUE}
 mfd_lr <- read.delim("../analysis/datasets/dataset_S3.tsv", sep="\t", header=T)
 mfd_sr_drep <- read.delim("../data/catalogs/mfd-sr_drep.tsv", sep="\t", header=T)
+
+mags_drep <- read.delim("../data/catalogs/catalogs_drep.tsv", sep="\t", header=T)
+mags_stat <- read.delim("../data/catalogs/catalogs_mags.tsv", sep="\t", header=T)
+
+df_cat <- read.delim("../data/catalogs/catalogs.tsv", sep="\t", header=T, check.names = FALSE)
 ```
 
 
@@ -54,6 +59,100 @@ preset_gen2 <- list(preset_gen, scale_y_discrete(expand = c(0, 0)),
                     scale_fill_gradient2(midpoint = 40, limits=c(0,80), breaks=c(0,20,40,60,80), labels=c("0","20","40","60","80"),
                                          low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd"))
 ```
+
+
+### Plot table with genome catalog stats
+```{r, include=TRUE}
+colnames(df_cat) <- gsub(" ", "\n", colnames(df_cat))
+colnames(df_cat) <- gsub("_", " ", colnames(df_cat))
+
+tt <- ttheme_default(
+      core = list(fg_params = list(hjust = ifelse(col(df_cat) == 1, 0.5, 0.5),
+                                   fontface = ifelse(col(df_cat) == 1, "bold", "plain"),
+                                   fontsize = 6.25),
+                  bg_params = list(fill = NA, col = NA),
+                  padding = unit(c(1.25, 4.25), "mm")),
+      colhead = list(fg_params = list(hjust = 0.5, fontface = "bold", fontsize = 6),
+                     bg_params = list(fill = NA, col = NA),
+                     padding = unit(c(1.25, 4), "mm")))
+
+table_grob <- tableGrob(df_cat, theme=tt, rows = NULL) %>%
+              tab_add_hline(at.row = 1:2, row.side = "top", linewidth = 1.5) %>%
+              tab_add_hline(at.row = nrow(df_cat)+1, row.side = "bottom", linewidth = 1.5) 
+
+table_grob$widths[1] <- unit(10, "mm")
+
+plot_table <- ggplot() + annotation_custom(table_grob) + theme_void()
+plot_table
+```
+
+
+### Upset plot for shared species between catalogs
+```{r, include=TRUE}
+mags_drep_ <- merge(mags_stat,mags_drep,by="bin")
+
+mags_drep_[,"MFD-LR"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="MFD-LR",]$cluster,1,0)
+
+mags_drep_[,"MFD-SR"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="MFD-SR",]$cluster,1,0)
+
+mags_drep_[,"SPIRE"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="SPIRE",]$cluster,1,0)
+
+mags_drep_[,"RBG"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="RBG",]$cluster,1,0)
+
+mags_drep_[,"GEM"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="GEM",]$cluster,1,0)
+
+mags_drep_[,"SMAG"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="SMAG",]$cluster,1,0)
+
+mags_drep_[,"TPMC"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="TPMC",]$cluster,1,0)
+
+mags_drep_[,"OWC"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="OWC",]$cluster,1,0)
+
+mags_drep_$cluster_qual <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$MAG_status=="HQ",]$cluster,"HQ","MQ")
+mags_drep_ <- mags_drep_[!duplicated(mags_drep_$cluster),]
+
+names <- c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE")
+mags_drep_[names] = mags_drep_[names] == 1
+mags_drep_ <- mags_drep_[, c("cluster","cluster_qual",names)]
+mags_drep_$cluster_qual <- factor(mags_drep_$cluster_qual,levels = c("MQ","HQ"))
+
+plot_upset <- ComplexUpset::upset(mags_drep_,names,sort_sets=FALSE, set_sizes=FALSE, height_ratio=0.33, min_size=200, intersections='all',
+              matrix=(intersection_matrix(geom=geom_point(size=1.7))),
+              themes=upset_modify_themes(list('intersections_matrix'=theme(text=element_text(size=8),plot.margin = unit(c(-3,0,-2,0), 'cm')))),
+              base_annotations=list('Intersection size'=intersection_size(bar_number_threshold=1, counts=T, text=list(size=1.7, angle=0), mapping=aes(fill=cluster_qual)) +
+              stat_summary(fun = function(x) {sum_x <- sum(x); if (sum_x >= 1000) {return(sum_x)} else {return(NA)}},
+                           fun.min = function(x) {sum_x <- sum(x); if (sum_x >= 1000) {return(sum_x)} else {return(NA)}},
+                           geom='text', position=position_stack(vjust = 0.7), size=1.5, color="white", aes(label=..y..)) +
+              scale_fill_manual(values = c("MQ" = "#d95f02","HQ"="#1b9e77"), name="") + ylab("Species-level clusters") + 
+              theme(axis.text.y = element_text(size = 6), axis.title.y = element_text(size = 7),  plot.margin = unit(c(0,0,-2,0), 'cm'),legend.position = "none"))) +
+              theme(legend.position = "none",panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3), panel.spacing = unit(0, "cm")) + 
+              labs(x="")
+plot_upset
+```
+
+
+### Plot MAG counts for catalogs 
+```{r, include=TRUE}
+mags_n_drep <- aggregate(mags_stat$bin,by=list(mags_stat$MAG_status,mags_stat$group), FUN=length)
+mags_n_drep <- mags_n_drep[order(mags_n_drep$x,decreasing=TRUE),]
+mags_n_drep$Group.1 <- factor(mags_n_drep$Group.1,levels = c("MQ","HQ"))
+mags_n_drep$Group.2 <- factor(mags_n_drep$Group.2,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
+
+mags_n_drep_ <- mags_n_drep %>% group_by(Group.2) %>% summarise(Total = sum(x))
+
+mags_n_drep$x_ <- mags_n_drep$x
+mags_n_drep$x_ <- ifelse(mags_n_drep$Group.2 != "OWC", mags_n_drep$x_, " ")
+mags_n_drep$x_ <- ifelse(mags_n_drep$x > 1000, mags_n_drep$x_, " ")
+mags_n_drep$x <- ifelse(mags_n_drep$Group.1 == "HQ", mags_n_drep$x + 1000, mags_n_drep$x)
+
+plot_mags_n <-  ggplot() + 
+                geom_bar(data=mags_n_drep, aes(fill=Group.1, y=x, x=Group.2), position="stack", stat="identity") + 
+                geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=1.75, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
+                geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.5, position = position_stack(vjust = 0.5), color="white") +
+                labs(title="", y="De-replicated MAGs", x="") + scale_y_continuous(expand=c(0,0), limits = c(0,95000)) + preset_gen + coord_flip()  +
+                scale_fill_manual(name = "MAG\nquality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + theme(legend.position = "right")
+plot_mags_n
+```
+
 
 ### Function for linking rRNA genes into clusters
 ```{r, include=TRUE}
@@ -466,103 +565,6 @@ plot_df <- ggplot(data = df_c_agr, mapping = aes(x = type, y = group, fill = fra
            geom_text(aes(label = di_all), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1) + 
            labs(title="", y="", x="Defense islands", fill="Estimated as complete (%):") + preset_gen2
 plot_df
-```
-
-
-### Plot table with genome catalog stats
-```{r, include=TRUE}
-df_cat <- read.delim("../data/catalogs/catalogs.tsv", sep="\t", header=T, check.names = FALSE)
-colnames(df_cat) <- gsub(" ", "\n", colnames(df_cat))
-colnames(df_cat) <- gsub("_", " ", colnames(df_cat))
-
-tt <- ttheme_default(
-      core = list(fg_params = list(hjust = ifelse(col(df_cat) == 1, 0.5, 0.5),
-                                   fontface = ifelse(col(df_cat) == 1, "bold", "plain"),
-                                   fontsize = 6.25),
-                  bg_params = list(fill = NA, col = NA),
-                  padding = unit(c(1.25, 4.25), "mm")),
-      colhead = list(fg_params = list(hjust = 0.5, fontface = "bold", fontsize = 6),
-                     bg_params = list(fill = NA, col = NA),
-                     padding = unit(c(1.25, 4), "mm")))
-
-table_grob <- tableGrob(df_cat, theme=tt, rows = NULL) %>%
-              tab_add_hline(at.row = 1:2, row.side = "top", linewidth = 1.5) %>%
-              tab_add_hline(at.row = nrow(df_cat)+1, row.side = "bottom", linewidth = 1.5) 
-
-table_grob$widths[1] <- unit(10, "mm")
-
-plot_table <- ggplot() + annotation_custom(table_grob) + theme_void()
-plot_table
-```
-
-
-### Upset plot for shared species between catalogs
-```{r, include=TRUE}
-mags_drep <- read.delim("../data/catalogs/catalogs_drep.tsv", sep="\t", header=T)
-mags_stat <- read.delim("../data/catalogs/catalogs_mags.tsv", sep="\t", header=T)
-
-mags_drep_ <- merge(mags_stat,mags_drep,by="bin")
-
-mags_drep_[,"MFD-LR"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="MFD-LR",]$cluster,1,0)
-
-mags_drep_[,"MFD-SR"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="MFD-SR",]$cluster,1,0)
-
-mags_drep_[,"SPIRE"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="SPIRE",]$cluster,1,0)
-
-mags_drep_[,"RBG"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="RBG",]$cluster,1,0)
-
-mags_drep_[,"GEM"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="GEM",]$cluster,1,0)
-
-mags_drep_[,"SMAG"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="SMAG",]$cluster,1,0)
-
-mags_drep_[,"TPMC"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="TPMC",]$cluster,1,0)
-
-mags_drep_[,"OWC"] <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$group=="OWC",]$cluster,1,0)
-
-mags_drep_$cluster_qual <- ifelse(mags_drep_$cluster %in% mags_drep_[mags_drep_$MAG_status=="HQ",]$cluster,"HQ","MQ")
-mags_drep_ <- mags_drep_[!duplicated(mags_drep_$cluster),]
-
-names <- c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE")
-mags_drep_[names] = mags_drep_[names] == 1
-mags_drep_ <- mags_drep_[, c("cluster","cluster_qual",names)]
-mags_drep_$cluster_qual <- factor(mags_drep_$cluster_qual,levels = c("MQ","HQ"))
-
-plot_upset <- ComplexUpset::upset(mags_drep_,names,sort_sets=FALSE, set_sizes=FALSE, height_ratio=0.33, min_size=200, intersections='all',
-              matrix=(intersection_matrix(geom=geom_point(size=1.7))),
-              themes=upset_modify_themes(list('intersections_matrix'=theme(text=element_text(size=8),plot.margin = unit(c(-3,0,-2,0), 'cm')))),
-              base_annotations=list('Intersection size'=intersection_size(bar_number_threshold=1, counts=T, text=list(size=1.7, angle=0), mapping=aes(fill=cluster_qual)) +
-              stat_summary(fun = function(x) {sum_x <- sum(x); if (sum_x >= 1000) {return(sum_x)} else {return(NA)}},
-                           fun.min = function(x) {sum_x <- sum(x); if (sum_x >= 1000) {return(sum_x)} else {return(NA)}},
-                           geom='text', position=position_stack(vjust = 0.7), size=1.5, color="white", aes(label=..y..)) +
-              scale_fill_manual(values = c("MQ" = "#d95f02","HQ"="#1b9e77"), name="") + ylab("Species-level clusters") + 
-              theme(axis.text.y = element_text(size = 6), axis.title.y = element_text(size = 7),  plot.margin = unit(c(0,0,-2,0), 'cm'),legend.position = "none"))) +
-              theme(legend.position = "none",panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3), panel.spacing = unit(0, "cm")) + 
-              labs(x="")
-plot_upset
-```
-
-
-### Plot MAG counts for catalogs 
-```{r, include=TRUE}
-mags_n_drep <- aggregate(mags_stat$bin,by=list(mags_stat$MAG_status,mags_stat$group), FUN=length)
-mags_n_drep <- mags_n_drep[order(mags_n_drep$x,decreasing=TRUE),]
-mags_n_drep$Group.1 <- factor(mags_n_drep$Group.1,levels = c("MQ","HQ"))
-mags_n_drep$Group.2 <- factor(mags_n_drep$Group.2,levels = c("OWC","MFD-SR","TPMC","MFD-LR","GEM","SMAG","RBG","SPIRE"))
-
-mags_n_drep_ <- mags_n_drep %>% group_by(Group.2) %>% summarise(Total = sum(x))
-
-mags_n_drep$x_ <- mags_n_drep$x
-mags_n_drep$x_ <- ifelse(mags_n_drep$Group.2 != "OWC", mags_n_drep$x_, " ")
-mags_n_drep$x_ <- ifelse(mags_n_drep$x > 1000, mags_n_drep$x_, " ")
-mags_n_drep$x <- ifelse(mags_n_drep$Group.1 == "HQ", mags_n_drep$x + 1000, mags_n_drep$x)
-
-plot_mags_n <-  ggplot() + 
-                geom_bar(data=mags_n_drep, aes(fill=Group.1, y=x, x=Group.2), position="stack", stat="identity") + 
-                geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=1.75, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
-                geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.5, position = position_stack(vjust = 0.5), color="white") +
-                labs(title="", y="De-replicated MAGs", x="") + scale_y_continuous(expand=c(0,0), limits = c(0,95000)) + preset_gen + coord_flip()  +
-                scale_fill_manual(name = "MAG\nquality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + theme(legend.position = "right")
-plot_mags_n
 ```
 
 
