@@ -1,7 +1,7 @@
 ---
 title: "R code for plotting mmcomp output"
 author: "Mantas Sereika"
-date: "2024"
+date: "2025"
 output:
   html_document: default
   pdf_document: default
@@ -95,7 +95,6 @@ plot_asm <- ggplot(data=df_main, aes(x=yield_gb, y=map_yield_gb/yield_gb_*100, c
 plot_kmer <- ggplot(data=df_main, aes(x=yield_gb, y=(kmer_total-kmer_dist)/kmer_total*100, color=hab, group=fieldsample_barcode)) + 
              labs(x="Read yield (Gbp)", y="Redundant k-mers (%)", color="Habitat:") +
              preset_gen2 + scale_y_continuous(limits=c(0,75), expand=c(0,0))
-plot_kmer
 ```
 
 
