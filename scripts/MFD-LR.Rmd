@@ -1,7 +1,7 @@
 ---
 title: "R code for plotting MFD-LR MAG catalog stats"
 author: "Mantas Sereika"
-date: "2024"
+date: "2025"
 output:
   html_document: default
   pdf_document: default
@@ -85,38 +85,22 @@ labels <- c("Bogs, mires and fens"="#85660D",
 
 labels_n <- gen %>% select(mfd_hab1_, mfd_hab1_n) %>% distinct() %>% deframe()
 
-preset_gen1 <- list(theme_bw(),
-                    theme(legend.position = "none",
-                           axis.title.y = element_text(size = 7), 
-                           axis.title.x = element_text(size = 7),
-                           axis.text.y = element_text(size = 6),
-                           axis.text.x = element_text(size = 6),
-                           panel.grid.minor = element_line(size = 0.15),
-                           panel.grid.major = element_line(size = 0.3)),
-                    scale_x_discrete(guide = guide_axis(angle = 45)),
-                    scale_color_manual(values=labels))
+preset_gen <- list(theme_bw(),
+                   theme(legend.position = "none",
+                         legend.text=element_text(size=7),
+                         legend.title = element_text(size=7),
+                         axis.title.y = element_text(size = 7), 
+                         axis.title.x = element_text(size = 7),
+                         axis.text.y = element_text(size = 6),
+                         axis.text.x = element_text(size = 6),
+                         panel.grid.minor = element_line(size = 0.15),
+                         panel.grid.major = element_line(size = 0.3)))
 
-preset_gen2 <- list(theme_bw(),
-                    theme(legend.position = "bottom",
-                          legend.text=element_text(size=7),
-                          legend.title = element_text(size=7),
-                           axis.title.y = element_text(size = 7), 
-                           axis.title.x = element_text(size = 7),
-                           axis.text.y = element_text(size = 6),
-                           axis.text.x = element_text(size = 6),
-                           panel.grid.minor = element_line(size = 0.15),
-                           panel.grid.major = element_line(size = 0.3)))
+preset_gen1 <- list(preset_gen, scale_x_discrete(guide = guide_axis(angle = 45)), scale_color_manual(values=labels))
 
-preset_gen3 <- list(theme_bw(),
-                    theme(legend.position = "none",
-                           axis.title.y = element_text(size = 7), 
-                           axis.title.x = element_text(size = 7),
-                           axis.text.y = element_text(size = 6),
-                           axis.text.x = element_text(size = 6),
-                           axis.ticks = element_blank(),
-                           panel.grid.minor = element_line(size = 0.15),
-                           panel.grid.major = element_line(size = 0.3)),
-                     coord_flip())
+preset_gen2 <- list(preset_gen, theme(legend.position = "bottom"))
+
+preset_gen3 <- list(preset_gen, coord_flip())
 ```
 
 
