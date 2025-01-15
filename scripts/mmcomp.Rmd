@@ -8,17 +8,12 @@ output:
 ---
 
 
-###  Load dependencies
+### Load dependencies
 ```{r, include=TRUE, message=FALSE}
-library(stringr)
-library(stringi)
-library(tidyverse)
 library(dplyr)
+library(tidyverse)
 library(ggplot2)
 library(ggpubr)
-library(grid)
-library(gridExtra)
-library(tools)
 library(scales)
 ```
 
@@ -172,6 +167,6 @@ plot_fig <- ggarrange(plot_mags_n,plot_kaiju_r,plot_melon_r, plot_melon_c, plot_
                       legend = "bottom", common.legend = TRUE, align = c("hv"), labels = c("a","b","c","d","e","f","g","h","i"), font.label = list(size = 9))
 
 plot_fig
-ggsave(file="../analysis/figures/FigS4.pdf", height = 180, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS4.pdf", height = 180, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 

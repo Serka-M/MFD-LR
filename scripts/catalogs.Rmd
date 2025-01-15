@@ -12,19 +12,31 @@ output:
 ```{r, include=TRUE, message=FALSE}
 library(stringr)
 library(stringi)
-library(tidyverse)
-library(dplyr)
-library(ggplot2)
-library(ggpubr)
+
+
+
 library(ggsankey)
-library(ggbeeswarm)
-library(grid)
-library(ggplotify)
+
+
+
 library(lemon)
 library(pals)
-library(gridExtra)
+
 library(RColorBrewer)
 library(tools)
+
+
+
+
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(ggbeeswarm)
+library(ggpubr)
+library(ggplotify)
+library(grid)
+library(gridExtra)
+library(ComplexUpset)
 ```
 
 
@@ -572,7 +584,7 @@ plot_df
 ```{r, include=TRUE}
 # First half
 plot_table_ <- plot_table + theme(plot.margin = unit(c(-0.2,0,0,0.25), 'cm'))
-plot_upset_ <- as.ggplot(plot_upset) + theme(plot.margin = unit(c(-0.15,-1.8,-0.7,-0.25), 'cm'))
+plot_upset_ <- as.ggplot(plot_upset) + theme(plot.margin = unit(c(-0.15,-1.8,-0.65,-0.25), 'cm'))
 
 plot_mags_n_ <- plot_mags_n+ guides(fill = guide_legend(override.aes = list(size=1),reverse=T)) +
                 theme(legend.key.size = unit(0.3, "cm"),legend.margin = unit(c(-3,0,0,0), 'cm'),
@@ -596,13 +608,22 @@ plot_rrna_ <- plot_rrna + margins
 fig_ce <- ggarrange(plot_rrna_,plot_df_,plot_bgc_, nrow=1, ncol=3, widths = c(1,1,1.35), common.legend = TRUE, legend="bottom", 
                     align = c("h"), labels = c("c","d", "e"), font.label = list(size = 9))
 
-plot_sylph_sr <- readRDS("../data/catalogs/sylph.rds") + theme(plot.margin = unit(c(-0.2,0.1,0,0.1), 'cm'))
+plot_sylph_sr <- readRDS("../data/catalogs/sylph.rds") +
+                 theme(plot.margin = unit(c(-0.2,0.1,0,0.1), 'cm'),
+                       legend.box.spacing = unit(-0.1, "cm"), legend.background = element_blank(),
+                       legend.box.background = element_blank(), legend.key.size = unit(0.1, "cm"),
+                       legend.key.height = unit(0.01, 'cm'), legend.key.width = unit(0.1, 'cm'),
+                       legend.key = element_rect(color = NA, fill = NA), legend.spacing.y = unit(-0.5, "lines"),
+                       legend.text = element_text(lineheight = 0.01, vjust = 0)) +
+                 guides(color = guide_legend(ncol = 1, byrow = TRUE, override.aes = list(size = 1.5))) 
 
 fig_cf <- ggarrange(fig_ce, plot_sylph_sr, nrow=1, ncol=2, widths = c(1.5,1), common.legend = FALSE, legend="bottom",
-                    align = c("h"), labels = c("", "f"), font.label = list(size = 9))
+                    align = c("none"), labels = c("", "f"), font.label = list(size = 9))
 
 # Merge
 fig_full <- ggarrange(fig_ab,fig_cf, nrow=2, ncol=1, heights = c(1,1.1), common.legend = FALSE, align = c("hv"))
-ggsave(file="../analysis/figures/Fig3.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi=300)
+fig_full
+
+#ggsave(file="../analysis/figures/Fig3.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi=300)
 ```
 

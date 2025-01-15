@@ -10,18 +10,20 @@ output:
 
 ### Load dependencies
 ```{r, include=TRUE, message=FALSE}
-library(ggplot2)
 library(stringr)
-library(tidyverse)
-library(ggpubr)
-library(dplyr)
 library(ape)
-library(treeio)
+library(caper)
+
+
+
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(ggnewscale)
+library(ggpubr)
 library(ggtree)
 library(ggtreeExtra)
-library(ggsankey)
-library(ggnewscale)
-library(caper)
+library(treeio)
 library(rsvg)
 library(grid)
 ```
@@ -166,7 +168,7 @@ plot_genus <- gtdb_plot(count_genus,"genus",0.1)
 plot_cov <- ggarrange(plot_phylum,plot_class,plot_order,plot_family, labels = c("a","b","c","d"), font.label = list(size = 9),
                       nrow=4, ncol=1, align = "none", common.legend = TRUE, legend = "bottom")
 
-ggsave(plot_cov, file="../analysis/figures/FigS14.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(plot_cov, file="../analysis/figures/FigS14.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -220,13 +222,15 @@ plot_tree <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<
              scale_color_manual(values=c("#d8b365", "#74c476"), labels=c("Bacteria","Archaea")) +
              geom_point2(aes(subset=(label %in% mags$bin)), shape=21, size=1, stroke = 0, fill="#b10026") +  
              scale_fill_brewer(palette = "Paired")  +
-             guides(color = guide_legend(order=1, ncol=2, title="Domain", override.aes = list(shape=NA, linewidth=2)), fill=none) + new_scale_fill() + 
-             geom_fruit(geom = geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
-             guides(fill=guide_legend(order=2, title="Phylum", ncol=2)) +
+             guides(color=guide_legend(order=1, ncol=2, title="Domain", override.aes = list(shape=NA, linewidth=1.5)), fill=none) + new_scale_fill() + 
+             geom_fruit(geom=geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
+             guides(fill=guide_legend(order=2, ncol=2, title="Phylum", override.aes = list(size=2))) +
+             theme(legend.text=element_text(size=7), legend.title = element_text(size=7)) +
              scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
                                                            "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9"))
-  
-ggsave(plot_tree, file="../analysis/figures/Fig4.pdf", height = 8, width = 12, useDingbats=FALSE)
+
+#ggsave(plot_tree, file="../analysis/figures/Fig4.pdf", height = 8, width = 12, useDingbats=FALSE)
+ggsave(plot_tree, file="../analysis/figures/Fig4_.pdf", height = 120, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -255,7 +259,7 @@ plot_tree2 <- ggtree(gtdb_tree2, layout="circular", aes(color=group), lwd=0.05) 
               scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
                                                             "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9")) 
 
-ggsave(plot_tree2, file="../analysis/figures/FigS12.pdf", height = 8, width = 12, useDingbats=FALSE)
+ggsave(plot_tree2, file="../analysis/figures/FigS12_.pdf", height = 8, width = 12, useDingbats=FALSE)
 ```
 
 
@@ -272,6 +276,6 @@ plot_wf_bac <- ggplot() + annotation_custom(rasterGrob(as.raster(wf_bac), interp
 
 plot_wf <- ggarrange(plot_wf_bac,plot_wf_arc, nrow=2, ncol=1,common.legend = FALSE, labels = c("a","b"), font.label = list(size = 9))
 
-ggsave(plot_wf, file="../analysis/figures/FigS13.pdf", height = 180, width = 180, units ="mm", dpi=300, useDingbats=FALSE)
+#ggsave(plot_wf, file="../analysis/figures/FigS13.pdf", height = 180, width = 180, units ="mm", dpi=300, useDingbats=FALSE)
 ```
 
