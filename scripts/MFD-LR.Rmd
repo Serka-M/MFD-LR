@@ -10,21 +10,20 @@ output:
 
 ###  Load dependencies
 ```{r, include=TRUE, message=FALSE}
-library(stringr)
 library(stringi)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(ggbeeswarm)
+library(ggsankey)
 library(ggpubr)
+library(ggplotify)
+library(grid)
+library(gridExtra)
 library(mapDK)
 library(iNEXT)
-library(ggsankey)
-library(ggbeeswarm)
-library(grid)
-library(ggplotify)
 library(lemon)
 library(pals)
-library(gridExtra)
 ```
 
 
@@ -181,7 +180,7 @@ sankey <- ggplot(gen_sankey_, aes(x = x, next_x = next_x, node = node, next_node
                                     "mfd_hab3" = "Habitat descriptor\n(level 3)"))
 
 sankey
-ggsave(file="../analysis/figures/FigS1.pdf", height = 180, width = 150, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS1.pdf", height = 180, width = 150, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -203,9 +202,10 @@ map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") +
 gen$name1 <- ""
 
 preset_fig1 <- list(geom_quasirandom(size = 0.2, width = 0.2, aes(color=mfd_hab1_)),
-                    scale_color_manual(values=labels),
+                    scale_color_manual(values=labels), preset_gen3,
                     geom_boxplot(outlier.shape=NA, width=0.6, alpha = 0.4, lwd=0.2), 
-                    preset_gen3, theme(plot.margin = unit(c(-0.75,0.3,0.05,-0.2), 'lines')) )
+                    theme(plot.margin = unit(c(-0.75,0.3,0.05,-0.2), 'lines'),
+                          axis.ticks.x=element_blank(),axis.ticks.y=element_blank()))
 
 plot_scale <- scale_y_continuous(expand=c(0,0), limits = c(0,102), breaks = c(0,25,50,75,100))
 
@@ -237,10 +237,11 @@ fig1_bf <- ggarrange(plot_yield, plot_n50, plot_asm, plot_bin, plot_mags,
                      nrow=5, ncol=1, legend = "none", common.legend = FALSE,
                      labels = c("b","c","d","e","f"), font.label = list(size = 9))
 
-fig1 <- ggarrange(map, fig1_bf, nrow=1, ncol=2, common.legend = FALSE, widths=c(2,1), align = c("v"), labels = c("a"), font.label = list(size = 9))
+fig1 <- ggarrange(map, fig1_bf, nrow=1, ncol=2, common.legend = FALSE, widths=c(2,1),
+                  align = c("v"), labels = c("a"), font.label = list(size = 9))
 fig1
 
-ggsave(file="../analysis/figures/Fig1_pre.pdf", height = 100, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/Fig1_pre.pdf", height = 100, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -266,7 +267,7 @@ plots_mag_hab <- ggarrange(plot_gb, plot_asm, plot_count, plot_bind, nrow=2, nco
                            legend = "none", common.legend = FALSE, labels = c("a","b", "c", "d"), font.label = list(size = 9))
 plots_mag_hab  
 
-ggsave(file="../analysis/figures/FigS3.pdf", height = 150, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS3.pdf", height = 150, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -316,7 +317,8 @@ mags <- mags[order(mags$MAG_status2,decreasing=TRUE),]
 preset_drep <- list(geom_point(alpha=0.5, size=0.8, stroke=0.15, pch=21), preset_gen2,
                     scale_fill_manual(name = "MAG quality:", values = c("cMAG" = "#045a8d","HQ"="#a6dba0","MQ" = "#fee090")),
                     scale_color_manual(name = "Domain:", values=c("Bacteria"="gray90", "Archaea"="#99000d")),
-                    guides(colour = guide_legend(override.aes = list(size=2, stroke=0.75, alpha=0.75)), fill = guide_legend(override.aes = list(size=2))))
+                    guides(colour = guide_legend(override.aes = list(size=2, stroke=0.75, alpha=0.75)),
+                           fill = guide_legend(override.aes = list(size=2))))
 
 plot_cm2 <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=Completeness_CheckM2,y=Contamination_CheckM2,fill=MAG_status2, col=domain)) + 
             scale_x_continuous(breaks=c(50,60,70,80,90,100), expand=c(0,0), limits = c(49,101)) +
@@ -342,8 +344,9 @@ plot_gc_hp <- ggplot(data=mags[mags$rep_status == TRUE,],aes(x=hp_long/(Genome_S
 
 plot_mag_drep <- ggarrange(plot_cm2,plot_n50_cov,plot_cd_cov,plot_cd_gc,plot_cd_hp,plot_gc_hp, nrow=3, ncol=2, 
                            legend = "bottom", common.legend = TRUE, labels = c("a","b","c","d","e","f"), font.label = list(size = 9))
+plot_mag_drep
 
-ggsave(file="../analysis/figures/FigS5.pdf", height = 200, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS5.pdf", height = 200, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -399,7 +402,8 @@ mags_sankey_$next_node <- factor(mags_sankey_$next_node,levels =
                                 "Omitted", "Known species","Unassigned\nspecies", "Unassigned genus",
                                 "Unassigned family","Unassigned order","Unassigned class"))
 
-sankey <- ggplot(mags_sankey_, aes(x = x, next_x = next_x, node = node, next_node = next_node, fill = factor(node), label = paste0(node," (", n,")"))) +  
+sankey <- ggplot(mags_sankey_, aes(x = x, next_x = next_x, node = node, next_node = next_node,
+                                   fill = factor(node),label = paste0(node," (", n,")"))) +  
           geom_sankey(flow.alpha = 0.5, node.color = "black", size=0.2, show.legend = FALSE, width = 0.1) +
           geom_sankey_label(size = 1.75, color = "black", fill= "white",hjust=0, alpha=0.85, width=2.25) +  theme_bw() +
           theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(),
@@ -416,8 +420,8 @@ sankey
 ### Plot general MAG stats:
 ```{r, include=TRUE}
 preset_mags <- list(geom_boxplot(width=0.75, alpha = 0.75, lwd=0.2, outlier.size=0.1), scale_x_discrete(limits=rev),
-                    preset_gen3,theme(plot.margin = unit(c(-2, 0, 0, -2), "mm")),
-                    scale_fill_manual(name = "MAG quality:", values = c("cMAG" = "#045a8d","HQ"="#1b9e77","MQ" = "#d95f02")))
+                    preset_gen3,scale_fill_manual(name = "MAG quality:", values = c("cMAG" = "#045a8d","HQ"="#1b9e77","MQ" = "#d95f02")),
+                    theme(plot.margin = unit(c(-2, 0, 0, -2), "mm"),axis.ticks.x=element_blank(),axis.ticks.y=element_blank()))
 
 plot_mag_n50 <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Contig_N50/10**3, fill=MAG_status)) +
                 preset_mags + labs(title="", y="Contig N50 (kbp)", x="") + scale_y_continuous(trans="log2") 
@@ -471,13 +475,14 @@ fig2_ab <- ggarrange(sankey, as.ggplot(drep_rf2), nrow=1, ncol=2, legend = "none
 fig2_cf <- ggarrange(plot_mag_size, plot_mag_cov, plot_mag_n50, plot_mag_cd, nrow=2, ncol=2, legend = "none", align = "hv",
                      common.legend = FALSE, labels = c("c","d","e","f"), font.label = list(size = 9)) 
 
-fig2_cfg <- ggarrange(fig2_cf, core_gen, common.legend = FALSE, nrow=1, ncol=2, align = "v", labels = c(NA,"g"), font.label = list(size = 9), widths=c(1.15,1)) +
+fig2_cfg <- ggarrange(fig2_cf, core_gen, common.legend = FALSE, nrow=1, ncol=2, align = "v",
+                      labels = c(NA,"g"), font.label = list(size = 9), widths=c(1.15,1)) +
             theme(plot.margin = unit(c(0, 0, 5, -11), "mm"))
 
 fig2 <- ggarrange(fig2_ab,fig2_cfg, nrow=2, ncol=1, legend = "none", align = "h", common.legend = FALSE, heights=c(1.25,1), widths=c(1,1))
 fig2
 
-ggsave(file="../analysis/figures/Fig2.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/Fig2.pdf", height = 140, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -512,7 +517,7 @@ grid.draw(drep_rf_hab_plot2)
 
 drep_rf_hab_plot3 <- grid.arrange(drep_rf_hab_plot2)
 
-ggsave(drep_rf_hab_plot3, file="../analysis/figures/FigS6.pdf", height = 120, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(drep_rf_hab_plot3, file="../analysis/figures/FigS6.pdf", height = 120, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -534,7 +539,7 @@ plot_drep_n <- ggplot(data=mags_drep_n2, aes(x=factor(id,level=rev(id)), y=drep_
                preset_gen2 + theme(legend.position = "right") + scale_color_brewer(palette = "Dark2") + coord_flip() 
 
 plot_drep_n
-ggsave(file="../analysis/figures/FigS7.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS7.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -567,7 +572,7 @@ drep_rf_phyl_plot2$data[[2]]$linewidth <- 0.8    # Line size
 drep_rf_phyl_plot2 <- ggplot_gtable(drep_rf_phyl_plot2)
 grid.draw(drep_rf_phyl_plot2)
 
-ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS10.pdf", height = 145, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS10.pdf", height = 145, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -612,6 +617,6 @@ plot_phylum <- ggplot(data = phylum_count_all2, mapping = aes(x = Group.2, y = f
                guides(fill = guide_colorbar(title.position = "left", title.vjust = 0.75)) + preset_gen2
 
 plot_phylum
-ggsave(file="../analysis/figures/FigS11.pdf", height = 180, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS11.pdf", height = 180, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 

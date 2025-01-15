@@ -10,17 +10,11 @@ output:
 
 ### Load dependencies
 ```{r, include=TRUE, message=FALSE}
-library(stringr)
-library(stringi)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-library(ggpubr)
-library(grid)
-library(gridExtra)
-library(tools)
-library(scales)
 library(ggbeeswarm)
+library(ggpubr)
 ```
 
 
@@ -195,7 +189,7 @@ plot_core_hab3 <- ggplot(data=core_hab_sum[core_hab_sum$group=="Habitat (level 3
 plots_core_hab <- ggarrange(plot_core_area, plot_core_hab1, plot_core_hab2, plot_core_hab3, nrow=2, ncol=2, align = c("v"),
                             legend = "none", common.legend = FALSE, labels = c("a","b","c","d"), font.label = list(size = 9))
 
-ggsave(plots_core_hab, file="../analysis/figures/FigS8.pdf", height = 90, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(plots_core_hab, file="../analysis/figures/FigS8.pdf", height = 90, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -270,6 +264,6 @@ fig_sylph_hab_ <- ggarrange(plot_sylph_sr_sed,plot_sylph_sr_water, nrow=1, ncol=
 fig_sylph_hab <- ggarrange(plot_sylph_sr_soil,fig_sylph_hab_, nrow=2, ncol=1, common.legend = FALSE, align = c("v"), 
                            labels = c("a",""), font.label = list(size = 9))
 
-ggsave(fig_sylph_hab, file="../analysis/figures/FigS9.pdf", height = 180, width = 200, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(fig_sylph_hab, file="../analysis/figures/FigS9.pdf", height = 180, width = 200, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
