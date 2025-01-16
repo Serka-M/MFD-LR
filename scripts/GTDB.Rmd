@@ -10,12 +10,6 @@ output:
 
 ### Load dependencies
 ```{r, include=TRUE, message=FALSE}
-library(stringr)
-library(ape)
-library(caper)
-
-
-
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
