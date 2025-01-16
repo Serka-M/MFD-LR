@@ -220,17 +220,18 @@ list_phyla <- c(abund_phyla$phylum,"Other phyla")
 ```{r, include=TRUE}
 plot_tree <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
              scale_color_manual(values=c("#d8b365", "#74c476"), labels=c("Bacteria","Archaea")) +
-             geom_point2(aes(subset=(label %in% mags$bin)), shape=21, size=1, stroke = 0, fill="#b10026") +  
+             geom_point2(aes(subset=(label %in% mags$bin)), shape=21, size=0.6, stroke = 0, fill="#b10026") +  
              scale_fill_brewer(palette = "Paired")  +
-             guides(color=guide_legend(order=1, ncol=2, title="Domain", override.aes = list(shape=NA, linewidth=1.5)), fill=none) + new_scale_fill() + 
+             guides(color=guide_legend(order=1, ncol=2, title="Domain", keywidth=0.8, override.aes = list(shape=NA, linewidth=0.9)), fill=none) + 
+             new_scale_fill() + 
              geom_fruit(geom=geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
-             guides(fill=guide_legend(order=2, ncol=2, title="Phylum", override.aes = list(size=2))) +
-             theme(legend.text=element_text(size=7), legend.title = element_text(size=7)) +
+             guides(fill=guide_legend(order=2, ncol=2, title="Phylum", keywidth=0.7, keyheight=0.7)) +
+             theme(legend.text=element_text(size=6), legend.title = element_text(size=7),legend.box.spacing = unit(0, "cm"),
+                   legend.background = element_blank(),legend.box.background = element_blank(),legend.key = element_blank()) +
              scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
                                                            "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9"))
 
-#ggsave(plot_tree, file="../analysis/figures/Fig4.pdf", height = 8, width = 12, useDingbats=FALSE)
-ggsave(plot_tree, file="../analysis/figures/Fig4_.pdf", height = 120, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(plot_tree, file="../analysis/figures/Fig4.pdf", height = 120, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -251,15 +252,18 @@ tree_df2 <- gtdb_tree2 %>% as.treedata %>% as_tibble
 ### Plot alternative tree
 ```{r, include=TRUE}
 plot_tree2 <- ggtree(gtdb_tree2, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
-              scale_color_manual(values=c("#b10026","#d8b365", "#74c476"), labels=c("MFD MAGs","GTDB bacterial","GTDB archaeal")) +
+              scale_color_manual(values=c("#b10026","#d8b365", "#74c476"), labels=c("MFD-LR","GTDB bacterial","GTDB archaeal")) +
               scale_fill_brewer(palette = "Paired")  +
-              guides(color = guide_legend(order=1, ncol=3, title="MAG group:", override.aes = list(shape=NA, linewidth=2)), fill=none) + new_scale_fill() + 
+              guides(color = guide_legend(order=1, ncol=3, title="Genome source", keywidth=0.8, override.aes = list(shape=NA, linewidth=0.9)), fill=none) + 
+              new_scale_fill() + 
               geom_fruit(geom = geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
-              guides(fill=guide_legend(order=2, title="Phylum", ncol=2)) +
+              guides(fill=guide_legend(order=2, ncol=2, title="Phylum", keywidth=0.7, keyheight=0.7)) +
+              theme(legend.text=element_text(size=6), legend.title = element_text(size=7),legend.box.spacing = unit(0, "cm"),
+                    legend.background = element_blank(),legend.box.background = element_blank(),legend.key = element_blank()) +
               scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
                                                             "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9")) 
 
-ggsave(plot_tree2, file="../analysis/figures/FigS12_.pdf", height = 8, width = 12, useDingbats=FALSE)
+#ggsave(plot_tree2, file="../analysis/figures/FigS12.pdf", height = 120, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 

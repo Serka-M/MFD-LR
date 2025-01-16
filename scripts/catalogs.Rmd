@@ -10,24 +10,6 @@ output:
 
 ### Load dependencies
 ```{r, include=TRUE, message=FALSE}
-library(stringr)
-library(stringi)
-
-
-
-library(ggsankey)
-
-
-
-library(lemon)
-library(pals)
-
-library(RColorBrewer)
-library(tools)
-
-
-
-
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
