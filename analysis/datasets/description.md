@@ -45,6 +45,7 @@
 | ENA_raw2 | ENA ID for batch 2 of raw Nanopore signal data |
 | ENA_raw3 | ENA ID for batch 3 of raw Nanopore signal data |
 | ENA_reads | ENA ID for the sequenced reads |
+| ENA_assembly | ENA ID for the metagenomic assemblies |
 
 ### Dataset S2 — dataset for shallow metagenomes used for multi-sample binning
 | Category | Description |
