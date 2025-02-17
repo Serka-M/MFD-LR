@@ -417,6 +417,57 @@ sankey
 ```
 
 
+### Subsample MAGs for IDEEL test
+### Pick species representatives of HQ (less contamination), bacterial (archaea often missing from protein databases) MAGs
+```{r, include=TRUE}
+mags$gtdb_status2 <- ifelse(mags$gtdb_status == "Known species","Known species",
+                            ifelse(mags$gtdb_status == "Unassigned species", "Unclassified species",
+                                   ifelse(mags$gtdb_status == "Unassigned genus","Unclassified genus","Unclassified family")))
+
+#mags_sub <- mags[mags$rep_status=="TRUE" & mags$MAG_status == "HQ" & mags$domain == "Bacteria",]
+#mags_sub <- mags_sub %>% group_by(gtdb_status2) %>% slice_sample(n = 100, weight_by = cov) %>% ungroup()
+#write.table(mags_sub$bin,"../data/MFD-LR/mags_sub.txt",quote=F,row.names=FALSE,col.names=FALSE,sep="")
+```
+
+
+### Get IDEEL scores for subsampled MAGs
+```{r, include=TRUE}
+ideel <- read.delim("../data/MFD-LR/ideel_sub.tsv", sep="\t", header=F)
+
+ideel$bin <- sapply(strsplit(ideel$V1, "_"), `[`, 1)
+ideel$ratio <- ideel$V3/ideel$V4
+ideel$status <- ifelse((ideel$ratio >= 0.95), 1, 0)
+
+ideel_all <- aggregate(ideel$status, by=list(Category=ideel$bin), FUN=length)
+ideel_full <- aggregate(ideel$status, by=list(Category=ideel$bin), FUN=sum)
+ideel_count <- merge(ideel_all,ideel_full,by="Category")
+colnames(ideel_count) <- c("bin","ideel_all","ideel_full")
+ideel_count$ideel_frac <- ideel_count$ideel_full / ideel_count$ideel_all
+
+mags_ideel <- merge(mags,ideel_count,by="bin")
+mags_ideel <- mags_ideel[mags_ideel$rep_status=="TRUE",]
+```
+
+
+### Plot IDEEL scores
+```{r, include=TRUE}
+mags_ideel$gtdb_status2 <- factor(mags_ideel$gtdb_status2,levels=c("Known species","Unclassified species","Unclassified genus","Unclassified family"))
+
+plot_ideel <- ggplot(data=mags_ideel,aes(x=cov,y=ideel_frac*100,col=gtdb_status2)) + 
+              geom_point(alpha=0.6, size=0.8) + 
+              scale_color_manual(name = "MAG representation in GTDB R220:", 
+                                 values = c("Known species" = "#045a8d", "Unclassified species"="#a6dba0", "Unclassified genus" = "#fee090", "Unclassified family" = "#C4451C")) +
+              scale_x_continuous(breaks=c(10,20,40,80,160,320,640,1280),trans = "log2", limits=c(10,1400),expand=c(0,0)) +
+              scale_y_continuous(breaks=c(0,20,40,60,80,100),limits=c(0,102), expand=c(0,0)) +
+              labs(y="IDEEL score (%)", x="MAG coverage") + preset_gen +
+              guides(colour = guide_legend(override.aes = list(size=1.5), nrow=2, byrow=TRUE)) +
+              theme(legend.position = "bottom", legend.key.height=unit(0.1, 'cm'), legend.key.width=unit(0.1, 'cm'))
+plot_ideel
+
+#ggsave(file="../analysis/figures/IDEEL.pdf", height = 90, width = 120, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
 ### Plot general MAG stats:
 ```{r, include=TRUE}
 preset_mags <- list(geom_boxplot(width=0.75, alpha = 0.75, lwd=0.2, outlier.size=0.1), scale_x_discrete(limits=rev),
