@@ -263,8 +263,8 @@ plot_tree2 <- ggtree(gtdb_tree2, layout="circular", aes(color=group), lwd=0.05) 
 
 ### Combine plots from the phylogeny workflow
 ```{r, include=TRUE}
-wf_arc <- rsvg("../data/GTDB/summary_arc.svg", width = 3000, height = 1500)
-wf_bac <- rsvg("../data/GTDB/summary_bac.svg", width = 3000, height = 1500)
+wf_arc <- rsvg("../data/GTDB/summary_arc_trim.svg", width = 3000, height = 1500)
+wf_bac <- rsvg("../data/GTDB/summary_bac_trim.svg", width = 3000, height = 1500)
 
 plot_wf_arc <- ggplot() + annotation_custom(rasterGrob(as.raster(wf_arc), interpolate = TRUE), 
                                             xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + theme_void()
@@ -272,7 +272,7 @@ plot_wf_arc <- ggplot() + annotation_custom(rasterGrob(as.raster(wf_arc), interp
 plot_wf_bac <- ggplot() + annotation_custom(rasterGrob(as.raster(wf_bac), interpolate = TRUE), 
                                             xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf) + theme_void()
 
-plot_wf <- ggarrange(plot_wf_bac,plot_wf_arc, nrow=2, ncol=1,common.legend = FALSE, labels = c("a","b"), font.label = list(size = 9))
+plot_wf <- ggarrange(plot_wf_bac,plot_wf_arc, nrow=2, ncol=1,common.legend = FALSE, labels = c("a","b"), align = c("h"), font.label = list(size = 9))
 
 #ggsave(plot_wf, file="../analysis/figures/FigS13.pdf", height = 180, width = 180, units ="mm", dpi=300, useDingbats=FALSE)
 ```
