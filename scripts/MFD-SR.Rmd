@@ -195,27 +195,28 @@ plots_core_hab <- ggarrange(plot_core_area, plot_core_hab1, plot_core_hab2, plot
 
 ### Load sylph-related data
 ```{r, include=TRUE}
-meta <- read.delim("../data/MFD-SR/2023-12-21_mfd_db.csv", sep=",", header=T)
-meta <-  meta[, c("fieldsample_barcode","habitat_typenumber","mfd_sampletype","mfd_areatype", "mfd_hab1","mfd_hab2","mfd_hab3", "longitude", "latitude")]
+meta <- read.delim("../data/MFD-SR/MFD-SR_metadata_2025-02.tsv", sep="\t", header=T)
+
+meta <- meta[! meta$mfd_sampletype == "Other",]
+meta$lib_id <- gsub(".fastq.gz","",meta$flat_name)
 meta$mfd_hab1 <- ifelse(meta$mfd_hab1 == "", "Other", meta$mfd_hab1)
+meta$mfd_areatype <- ifelse(meta$mfd_areatype == "Agriculture (reclaimed lowland)", "Agriculture", meta$mfd_areatype)
 
-mfd_lib <- read.delim("../data/MFD-SR/MFD_LIB.tsv", sep="\t", header=F)
-colnames(mfd_lib) <- c("fieldsample_barcode","lib_id")
-
-sylph_gtdb <- read.delim("../data/MFD-SR/sylph-gtdb.tsv", sep="\t", header=F)
+sylph_gtdb <- read.delim("../data/MFD-SR/sylph-sum-sr-gtdb.tsv", sep="\t", header=F)
 sylph_gtdb$group <- "GTDB"
 
-sylph_gtdb_pub <- read.delim("../data/MFD-SR/sylph-gtdb-pub.tsv", sep="\t", header=F)
+sylph_gtdb_pub <- read.delim("../data/MFD-SR/sylph-sum-sr-pub.tsv", sep="\t", header=F)
 sylph_gtdb_pub$group <- "GTDB + Public catalogues"
 
-sylph_gtdb_pub_lr <- read.delim("../data/MFD-SR/sylph-gtdb-pub-lr.tsv", sep="\t", header=F)
+sylph_gtdb_pub_lr <- read.delim("../data/MFD-SR/sylph-sum-sr-pub-mfdlr.tsv", sep="\t", header=F)
 sylph_gtdb_pub_lr$group <- "GTDB + Public catalogues + MFD-LR"
 
 sylph_sr <- rbind(sylph_gtdb,sylph_gtdb_pub,sylph_gtdb_pub_lr)
 colnames(sylph_sr) <- c("lib_id","class","group")
+sylph_sr <- merge(sylph_sr,meta,by="lib_id")
 
-sylph_sr <- merge(sylph_sr,mfd_lib,by="lib_id")
-sylph_sr <- merge(sylph_sr,meta,by="fieldsample_barcode")
+sylph_sr <- sylph_sr[sylph_sr$after_total_bases >= 10**9,]
+sylph_sr <- sylph_sr %>% group_by(lib_id) %>% filter(n() == 3) %>% ungroup()
 ```
 
 
@@ -247,7 +248,7 @@ preset_sylph <- list(labs(title="", y="Short reads classified (%)", x="", color=
                      scale_color_manual(values = c("#e7298a","#66a61e","#e6ab02")),
                      guides(colour = guide_legend(override.aes = list(size=1.5), nrow=1, byrow=TRUE)),
                      facet_grid(cols = vars(mfd_areatype), scales = "free", space = "free"),
-                     preset_gen, theme(strip.text = element_text(size=6)))
+                     preset_gen, theme(strip.text = element_text(size=6), legend.spacing.x = unit(0.1, 'cm'), legend.key.width = unit(0.2, "cm")))
 
 plot_sylph_sr_soil <- ggplot(data=sylph_sr[sylph_sr$mfd_sampletype == "Soil",], aes(x=mfd_hab1, y=class, by=group, color=group)) + 
                       labs(x="Sample habitat (soil sample type)") + preset_sylph + theme(legend.position = "none")
@@ -259,7 +260,7 @@ plot_sylph_sr_water <- ggplot(data=sylph_sr[sylph_sr$mfd_sampletype == "Water",]
                        labs(x="Sample habitat (water sample type)") + preset_sylph
 
 fig_sylph_hab_ <- ggarrange(plot_sylph_sr_sed,plot_sylph_sr_water, nrow=1, ncol=2, common.legend = TRUE, legend="bottom", 
-                            align = c("v"), labels = c("b","c"), font.label = list(size = 9))
+                            align = c("h"), labels = c("b","c"), font.label = list(size = 9))
 
 fig_sylph_hab <- ggarrange(plot_sylph_sr_soil,fig_sylph_hab_, nrow=2, ncol=1, common.legend = FALSE, align = c("v"), 
                            labels = c("a",""), font.label = list(size = 9))
