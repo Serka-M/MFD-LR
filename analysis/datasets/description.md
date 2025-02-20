@@ -112,7 +112,7 @@
 | accession | ENA ID for the genome bin |
 | genus_proposed | Proposed genus name for lineage |
 | species_proposed | Proposed species name for lineage |
-| language | Language of the proposed name (N.L — Neo Latin) |
+| language | Language of the proposed name (N.L. — Neo Latin) |
 | gender | Grammatical gender of the lineage name |
 | genus_explanation | Explanation of the genus name |
 | species_explanation | Explanation of the species name |
