@@ -109,14 +109,24 @@
 | Category | Description |
 | --- | --- |
 | bin | Genome bin ID |
+| accession | ENA ID for the genome bin |
 | genus_proposed | Proposed genus name for lineage |
-| species_proposed | Proposed species name for lineage  |
+| species_proposed | Proposed species name for lineage |
+| language | Language of the proposed name (N.L — Neo Latin) |
 | gender | Grammatical gender of the lineage name |
 | genus_explanation | Explanation of the genus name |
 | species_explanation | Explanation of the species name |
-| GTDB_phylum | Phylum taxononomy of the lineage in GTDB R220 |
-| GTDB_class | Class taxononomy of the lineage in GTDB R220 |
-| GTDB_order | Order taxononomy of the lineage in GTDB R220 |
-| GTDB_family | Family taxononomy of the lineage in GTDB R220 |
+| genus_GTDB | Representation of the proposed genus in GTDB |
+| coverage | Average genome bin coverage, reported by CoverM |
+| GC_content | Genome bin guanine-cytosine content percentage |
+| completeness_estimate | Genome bin completeness estimate, reported by CheckM2 |
+| contamination_estimate | Genome bin contamination estimate, reported by CheckM2 |
+| count_16S | Number of detected 16S rRNA genes |
+| count_tRNA | Number of detected different tRNA genes |
+| taxonomy_GTDB | MAG taxonomic classification, reported by GTDB-tk |
+| sample_name | Sequenced sample ID |
+| sample_type | Sample type |
+| sample_habitat_broad | Broad-scale environmental context (same as mfd_hab1) |
+| sample_habitat_local | Local environmental context (mfd_hab3 or mfd_hab2, if mfd_hab3 missing) |
 
 [//]: # (Written by Mantas Sereika)
