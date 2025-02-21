@@ -117,6 +117,8 @@
 | genus_explanation | Explanation of the genus name |
 | species_explanation | Explanation of the species name |
 | genus_GTDB | Representation of the proposed genus in GTDB |
+| sequencing_technology | Name of the sequencing platform used to sequence the genome |
+| binning_workflow | Name of the bioinformatics workflow used to recover the genome |
 | coverage | Average genome bin coverage, reported by CoverM |
 | GC_content | Genome bin guanine-cytosine content percentage |
 | completeness_estimate | Genome bin completeness estimate, reported by CheckM2 |
@@ -125,6 +127,9 @@
 | count_tRNA | Number of detected different tRNA genes |
 | taxonomy_GTDB | MAG taxonomic classification, reported by GTDB-tk |
 | sample_name | Sequenced sample ID |
+| sample_country | Country of origin for the sequenced sample |
+| longitude | Sample longitude coordinates |
+| latitude| Sample latitude coordinates |
 | sample_type | Sample type |
 | sample_habitat_broad | Broad-scale environmental context (same as mfd_hab1) |
 | sample_habitat_local | Local environmental context (mfd_hab3 or mfd_hab2, if mfd_hab3 missing) |
