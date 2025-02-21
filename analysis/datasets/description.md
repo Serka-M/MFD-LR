@@ -109,16 +109,20 @@
 | Category | Description |
 | --- | --- |
 | bin | Genome bin ID |
-| accession | ENA ID for the genome bin |
 | genus_proposed | Proposed genus name for lineage |
 | species_proposed | Proposed species name for lineage |
 | language | Language of the proposed name (N.L. — Neo Latin) |
 | gender | Grammatical gender of the lineage name |
 | genus_explanation | Explanation of the genus name |
 | species_explanation | Explanation of the species name |
-| genus_GTDB | Representation of the proposed genus in GTDB |
+| genus_status| Status of the genome at genus-level taxonomy |
+| species_status | Status of the genome at species-level taxonomy |
+| novelty_method | Method used to determine novelty of the genome |
+| accession | ENA ID for the genome bin |
 | sequencing_technology | Name of the sequencing platform used to sequence the genome |
 | binning_workflow | Name of the bioinformatics workflow used to recover the genome |
+| genome_size | Size of the genome in bp |
+| total_contigs | Number of contigs for the genome |
 | coverage | Average genome bin coverage, reported by CoverM |
 | GC_content | Genome bin guanine-cytosine content percentage |
 | completeness_estimate | Genome bin completeness estimate, reported by CheckM2 |
