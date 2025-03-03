@@ -432,39 +432,70 @@ mags$gtdb_status2 <- ifelse(mags$gtdb_status == "Known species","Known species",
 
 ### Get IDEEL scores for subsampled MAGs
 ```{r, include=TRUE}
-ideel <- read.delim("../data/MFD-LR/ideel_sub.tsv", sep="\t", header=F)
+ideel_bin <- function(mags,df) {
+  ideel <- read.delim(df, sep="\t", header=F)
+  
+  ideel$bin <- sapply(strsplit(ideel$V1, "_"), `[`, 1)
+  ideel$ratio <- ideel$V3/ideel$V4
+  ideel$status <- ifelse((ideel$ratio >= 0.95), 1, 0)
 
-ideel$bin <- sapply(strsplit(ideel$V1, "_"), `[`, 1)
-ideel$ratio <- ideel$V3/ideel$V4
-ideel$status <- ifelse((ideel$ratio >= 0.95), 1, 0)
+  ideel_all <- aggregate(ideel$status, by=list(Category=ideel$bin), FUN=length)
+  ideel_full <- aggregate(ideel$status, by=list(Category=ideel$bin), FUN=sum)
+  ideel_count <- merge(ideel_all,ideel_full,by="Category")
+  colnames(ideel_count) <- c("bin","ideel_all","ideel_full")
+  ideel_count$ideel_frac <- ideel_count$ideel_full / ideel_count$ideel_all
 
-ideel_all <- aggregate(ideel$status, by=list(Category=ideel$bin), FUN=length)
-ideel_full <- aggregate(ideel$status, by=list(Category=ideel$bin), FUN=sum)
-ideel_count <- merge(ideel_all,ideel_full,by="Category")
-colnames(ideel_count) <- c("bin","ideel_all","ideel_full")
-ideel_count$ideel_frac <- ideel_count$ideel_full / ideel_count$ideel_all
+  mags_ideel <- merge(mags,ideel_count,by="bin")
+  mags_ideel$gtdb_status2 <- factor(mags_ideel$gtdb_status2,levels=rev(c("Known species","Unclassified species","Unclassified genus","Unclassified family")))
+  return (mags_ideel) }
 
-mags_ideel <- merge(mags,ideel_count,by="bin")
-mags_ideel <- mags_ideel[mags_ideel$rep_status=="TRUE",]
+ideel_trembl <- ideel_bin(mags,"../data/MFD-LR/ideel_sub_trembl.tsv")
+ideel_gtdb <- ideel_bin(mags,"../data/MFD-LR/ideel_sub_gtdb.tsv")
 ```
 
 
 ### Plot IDEEL scores
 ```{r, include=TRUE}
-mags_ideel$gtdb_status2 <- factor(mags_ideel$gtdb_status2,levels=c("Known species","Unclassified species","Unclassified genus","Unclassified family"))
+preset_ideel <- list(preset_gen, labs(y="IDEEL score (%)", x="MAG coverage"),
+                     geom_point(alpha=0.6, size=0.6, aes(col=gtdb_status2)),
+                     scale_x_continuous(breaks=c(5,10,20,40,80,160,320,640,1280),trans = "log2", limits=c(5,1400),expand=c(0,0)),
+                     scale_y_continuous(breaks=c(0,20,40,60,80,100),limits=c(0,102), expand=c(0,0)),
+                     guides(colour = guide_legend(override.aes = list(size=1.5), nrow=2, byrow=TRUE, reverse = TRUE, title.position = "top")),
+                     theme(legend.position = "bottom", legend.key.height=unit(0.1, 'cm'), legend.key.width=unit(0.1, 'cm')),
+                     scale_color_manual(name = "MAG representation in GTDB R220:", 
+                                        values = c("Known species" = "#045a8d", "Unclassified species"="#a6dba0",
+                                                   "Unclassified genus" = "#fee090", "Unclassified family" = "#C4451C")))
 
-plot_ideel <- ggplot(data=mags_ideel,aes(x=cov,y=ideel_frac*100,col=gtdb_status2)) + 
-              geom_point(alpha=0.6, size=0.8) + 
-              scale_color_manual(name = "MAG representation in GTDB R220:", 
-                                 values = c("Known species" = "#045a8d", "Unclassified species"="#a6dba0", "Unclassified genus" = "#fee090", "Unclassified family" = "#C4451C")) +
-              scale_x_continuous(breaks=c(10,20,40,80,160,320,640,1280),trans = "log2", limits=c(10,1400),expand=c(0,0)) +
-              scale_y_continuous(breaks=c(0,20,40,60,80,100),limits=c(0,102), expand=c(0,0)) +
-              labs(y="IDEEL score (%)", x="MAG coverage") + preset_gen +
-              guides(colour = guide_legend(override.aes = list(size=1.5), nrow=2, byrow=TRUE)) +
-              theme(legend.position = "bottom", legend.key.height=unit(0.1, 'cm'), legend.key.width=unit(0.1, 'cm'))
-plot_ideel
+plot_ideel_trbl <- ggplot(data=ideel_trembl,aes(x=cov,y=ideel_frac*100)) + preset_ideel + ylab("IDEEL score with TrEMBL 2025_01 (%)")
+plot_ideel_gtdb <- ggplot(data=ideel_gtdb,aes(x=cov,y=ideel_frac*100)) + preset_ideel + ylab("IDEEL score with GTDB R220 (%)")
+```
 
-#ggsave(file="../analysis/figures/IDEEL.pdf", height = 90, width = 120, useDingbats=FALSE,  units ="mm", dpi = 300)
+
+### Comapre IDEEL scores between databases
+```{r, include=TRUE}
+ideel_trembl_ <- ideel_trembl %>% select(bin,ideel_frac)
+colnames(ideel_trembl_) <- c("bin","ideel_frac_trembl")
+ideel_gtdb_ <- merge(ideel_gtdb,ideel_trembl_,by="bin")
+
+plot_ideel_corr <- ggplot(data=ideel_gtdb_,aes(x=ideel_frac_trembl*100,y=ideel_frac*100)) + preset_ideel +
+                   labs(y="IDEEL score with GTDB R220 (%)", x="IDEEL score with TrEMBL 2025_01 (%)") +
+                   scale_x_continuous(breaks=c(50,60,70,80,90,100), limits=c(55,100),expand=c(0,0)) +
+                   scale_y_continuous(breaks=c(50,60,70,80,90,100), limits=c(55,100), expand=c(0,0))
+plot_ideel_corr
+
+median_w_iqr(ideel_trembl$ideel_frac,ideel_trembl$gtdb_status2)
+median_w_iqr(ideel_gtdb$ideel_frac,ideel_gtdb$gtdb_status2)
+```
+
+
+### Combined IDEEL data figure
+```{r, include=TRUE}
+plot_ideel_leg <- as_ggplot(get_legend(plot_ideel_gtdb)) 
+
+plot_ideel <- ggarrange(plot_ideel_trbl,plot_ideel_gtdb,plot_ideel_corr,plot_ideel_leg, nrow=2, ncol=2, align = "hv", common.legend=FALSE, legend = "none",
+                         labels = c("a","b","c",""), heights=c(1,1.2), font.label = list(size = 9))
+
+ggsave(plot_ideel,file="../analysis/figures/IDEEL.pdf", height = 130, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 

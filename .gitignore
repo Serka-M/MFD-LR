@@ -1,3 +1,4 @@
 .DS_Store
 .Rhistory
-data/MFD-LR/ideel_sub.tsv
+data/MFD-LR/ideel_sub_gtdb.tsv
+data/MFD-LR/ideel_sub_trembl.tsv
