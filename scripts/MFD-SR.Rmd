@@ -15,6 +15,9 @@ library(dplyr)
 library(ggplot2)
 library(ggbeeswarm)
 library(ggpubr)
+library(mapDK)
+library(ape)
+library(vegan) 
 ```
 
 
@@ -266,5 +269,223 @@ fig_sylph_hab <- ggarrange(plot_sylph_sr_soil,fig_sylph_hab_, nrow=2, ncol=1, co
                            labels = c("a",""), font.label = list(size = 9))
 
 #ggsave(fig_sylph_hab, file="../analysis/figures/FigS9.pdf", height = 180, width = 200, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
+
+### Select sample subset for comparing coastal and agricultural habitats
+```{r, include=TRUE}
+#meta_sub <- meta[meta$mfd_hab2 != "",]
+#meta_sub <- meta_sub[meta_sub$after_total_bases > 10**9 ,]
+#meta_sub <- meta_sub[meta_sub$mfd_areatype == "Agriculture" | meta_sub$mfd_hab1 == "Coastal",]
+
+#meta_agr <- meta_sub %>% filter(mfd_areatype == "Agriculture") %>% group_by(across(all_of("mfd_hab2"))) %>% filter(n() >= 50) %>% slice_sample(n = 150) %>% ungroup()
+#meta_sub <- rbind(meta_agr,meta_sub[meta_sub$mfd_hab1=="Coastal",])
+#write.table(meta_sub,"../data/MFD-SR/meta_sub.tsv",quote=F,row.names=FALSE,col.names=TRUE,sep="\t")
+```
+
+
+### Subset OTU table to selected samples
+```{r, include=TRUE}
+#otus_all <- read.delim("../data/MFD-SR/2025-02-13_MFD_arcbac_genus_rarefaction_rel.csv", sep=",", header=T)
+#subset_mfd <- colnames(otus_all)[colnames(otus_all) %in% meta_sub$fieldsample_barcode]
+#otus <- otus_all[, c(subset_mfd, "Kingdom", "Phylum", "Class", "Order", "Family", "Genus")]
+#otus <- otus[rowSums(otus[, !(colnames(otus) %in% c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus"))] != 0) > 0, ]
+#write.table(otus,"../data/MFD-SR/otu_sub.csv",quote=F,row.names=FALSE,col.names=TRUE,sep=",")
+```
+
+
+### Make distance matrix
+```{r, include=TRUE}
+#otu_abundance <- otus[, !(colnames(otus) %in% c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus"))]
+#otu_abundance <- as.data.frame(lapply(otu_abundance, as.numeric))
+#otu_abundance <- t(otu_abundance)
+
+#dist_matrix <- vegdist(otu_abundance, method = "bray")
+#saveRDS(dist_matrix, file = "../data/MFD-SR/bray_curtis_dist_matrix.rds")
+```
+
+
+### Reload processed data to improve compute speed
+```{r, include=TRUE}
+meta_sub <- read.delim("../data/MFD-SR/meta_sub.tsv", sep="\t", header=T)
+otus <- read.delim("../data/MFD-SR/otu_sub.csv", sep=",", header=T)
+dist_matrix <- readRDS("../data/MFD-SR/bray_curtis_dist_matrix.rds")
+```
+
+
+### Get pcoa
+```{r, include=TRUE}
+pcoa_result <- pcoa(dist_matrix)
+pcoa_df <- as.data.frame(pcoa_result$vectors[, 1:3])
+colnames(pcoa_df) <- c("pcoa_1","pcoa_2","pcoa_3")
+pcoa_df$fieldsample_barcode <- rownames(pcoa_df)
+
+meta_sub_ <- merge(meta_sub,pcoa_df,by="fieldsample_barcode")
+```
+
+
+### Run ANOSIM tests:  coastal/agriculture (R=0.7554, p=0.001), coastal (R=0.3288, p=0.001)
+```{r, include=TRUE}
+# Variance explained
+pcoa_1 <- round(sum(as.vector(pcoa_result$value$Relative_eig)[1])*100,1)
+pcoa_2 <- round(sum(as.vector(pcoa_result$value$Relative_eig)[2])*100,1)
+pcoa_3 <- round(sum(as.vector(pcoa_result$value$Relative_eig)[3])*100,1)
+
+# ANOSIM - coastal vs agriculture
+dist_samples <- labels(dist_matrix)
+meta_sub_ <- meta_sub_[match(dist_samples, meta_sub_$fieldsample_barcode), ]
+meta_samples <- meta_sub_$fieldsample_barcode
+all(dist_samples == meta_samples) # If TRUE, then the categories match correctly
+
+#grouping_vector <- as.factor(meta_sub_$mfd_hab1)
+#anosim_result <- anosim(dist_matrix, grouping_vector)
+#summary(anosim_result)
+
+# ANOSIM - coastal habitats
+meta_sub_2 <- meta_sub_[meta_sub_$mfd_hab1=="Coastal",]
+sub2 <- dist_samples[dist_samples %in% meta_sub_2$fieldsample_barcode]
+dist_matrix2 <- as.matrix(dist_matrix)[sub2, sub2]
+all(sub2 == meta_sub_2$fieldsample_barcode)
+
+#grouping_vector <- as.factor(meta_sub_2$mfd_hab2)
+#anosim_result2 <- anosim(dist_matrix2, grouping_vector)
+#summary(anosim_result2)
+```
+
+
+### Plot PCoA
+```{r, include=TRUE}
+count_samples <- function(df,group) {
+  samples_n <- aggregate(df[,group], by=list(df[,group]), FUN=length)
+  colnames(samples_n) <- c("group","n")
+  samples_n$n_ <- paste0(samples_n$group," (",samples_n$n,")")
+  samples_n <- samples_n %>% select(group, n_) %>% distinct() %>% deframe()
+  return (samples_n) }
+
+labels_n1 <- count_samples(meta_sub_,"mfd_hab1")
+labels_n2 <- count_samples(meta_sub_,"mfd_hab2")
+
+colors_hab2 <- c("Salt marshes and salt meadows"="#1d91c0",
+                 "Sea cliffs and shingle or stony beaches"="#0c2c84",
+                 "Poales, grass"="#8c2d04", "Poales, Cereal"="#ec7014",
+                 "Asterids"="#fec44f", "Malvids"="#ffd92f",
+                "Fallow"="#dfc27d", "Mixed crops"="#8c510a")
+
+plot_pcoa <- ggplot(meta_sub_, aes(x = pcoa_1, y = pcoa_2, color = mfd_hab2)) +
+             stat_ellipse(aes(fill = mfd_hab1), alpha = 0.1, geom = "polygon") + geom_point(size = 0.7, alpha=0.9) +
+             scale_fill_manual(labels=labels_n1, values=c("Coastal"="#a6cee3","Fields"="#b2df8a")) +
+             scale_color_manual(labels=labels_n2, values=colors_hab2) +
+             labs(x = paste0("PCoA1 - ",pcoa_1," %"), 
+                  y = paste0("PCoA2 - ",pcoa_2," %"), 
+                  color="Habitat descriptor (level 2):", 
+                  fill="Habitat descriptor (level 1):") + preset_gen +
+             guides(color = guide_legend(title.position = "top", override.aes = list(fill = NA, size=1.5)), 
+                    fill = guide_legend(title.position = "top", ncol=1, order=1)) +
+             theme(legend.key.size = unit(6, 'mm'), legend.spacing.x = unit(0.1, 'cm'), legend.spacing.y = unit(0.1, 'cm'),
+                   legend.key.height=unit(0.5, 'cm'), legend.key.width=unit(0.5, 'cm'), legend.box.spacing = unit(0, "cm"),
+                   legend.box.background = element_blank(),legend.background = element_blank())
+plot_pcoa
+```
+
+
+### Plot sample map
+```{r, include=TRUE}
+map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") + 
+       geom_point(data = meta_sub, aes(x=longitude, y=latitude, group=mfd_hab2, color=mfd_hab2), size=0.5)  +
+       scale_color_manual(labels=labels_n2, values=colors_hab2) +
+       guides(colour = guide_legend(override.aes = list(size=1.2), ncol=1, title.position = "top", reverse=TRUE, title="Habitat descriptor (level 2):")) 
+       theme(legend.key=element_blank(), legend.position = c(0.75, 0.85),
+             legend.box.background = element_blank(), legend.background = element_blank(),
+             legend.text=element_text(size=7),legend.title = element_text(size=7),
+             legend.key.size = unit(3.5, 'mm'), legend.spacing.x = unit(1, 'mm'),
+             plot.margin = margin(-5, -5, -5, -5))
+map
+```
+
+
+### Get phylum-level abundances
+```{r, include=TRUE}
+otus_p <- otus %>% group_by(Phylum) %>% summarise(across(where(is.numeric), sum, na.rm = TRUE))
+
+otus_p <- otus_p %>% pivot_longer(cols = -Phylum, names_to = "fieldsample_barcode", values_to = "abund")
+otus_p <- otus_p[otus_p$Phylum != "Unclassified",]
+otus_p <- merge(otus_p,meta_sub[,c("fieldsample_barcode","mfd_hab1","mfd_hab2")],by="fieldsample_barcode")
+
+otus_p_all <- aggregate(otus_p$abund, by=list(otus_p$Phylum), FUN=median)
+otus_p_all <- otus_p_all[order(otus_p_all$x,decreasing=TRUE),]
+
+otus_p_med <- aggregate(otus_p$abund, by=list(otus_p$Phylum,otus_p$mfd_hab2), FUN=median)
+colnames(otus_p_med) <- c("Phylum","mfd_hab2","abund_med")
+otus_p_med <- otus_p_med[otus_p_med$Phylum %in% head(otus_p_all$Group.1,10),]
+otus_p_med <- merge(otus_p_med,meta_sub[,c("mfd_hab1","mfd_hab2")],by="mfd_hab2")
+otus_p_med$abund_med <- round(otus_p_med$abund_med,1)
+```
+
+
+### Phylum median abundance plot
+```{r, include=TRUE}
+otus_p_med <- otus_p_med %>% mutate(Phylum = factor(Phylum, levels = rev(c(otus_p_all$Group.1)))) %>% arrange(Phylum)
+
+plot_abund_phyl <- ggplot(data = otus_p_med, mapping = aes(x = mfd_hab2, y = Phylum, fill = abund_med)) + geom_tile(width=1) +
+                   geom_text(aes(label = abund_med), size=1.75, fontface = "plain") +
+                   labs(title="", y="Phylum", x="", fill="Median relative abundance (%):") + 
+                   scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)) + scale_y_discrete(expand = c(0, 0)) +
+                   scale_fill_gradient2(midpoint = 9.5, limits=c(0,20), breaks=c(0,5,10,15,20),
+                                        low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "#3288bd") + preset_gen +
+                   facet_grid(cols = vars(factor(mfd_hab1, levels = (unique(mfd_hab1)))), scales = "free", space = "free") +
+                   guides(fill = guide_colorbar(title.position = "top")) +
+                   theme(strip.text = element_text(size=6), plot.margin = margin(-15, 5, -0.5, 3),
+                         legend.box.background = element_blank(), legend.background = element_blank(),
+                         legend.key.height = unit(3.5, "mm"), legend.key.width = unit(6.5, "mm"),
+                         legend.direction = "horizontal")
+plot_abund_phyl
+```
+
+
+### Abundance plots for select phyla
+```{r, include=TRUE}
+preset_hab <- list(geom_quasirandom(size = 0.01, width = 0.3), geom_violin(lwd=0.25,linetype="dashed", fill=NA), preset_gen,
+                   scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)),
+                   facet_grid(cols = vars(factor(mfd_hab1, levels = rev(unique(mfd_hab1)))), scales = "free", space = "free") ,
+                   theme(strip.text = element_text(size=6), plot.margin = margin(-15, 2, -0.5, 2)),
+                   scale_y_continuous(trans="log2"),
+                   scale_color_manual(values=colors_hab2))
+
+plot_phyl1 <- ggplot(data=otus_p[otus_p$Phylum=="Firmicutes",], aes(x=mfd_hab2, y=abund, color=mfd_hab2)) + 
+              labs(title="", y="Firmicutes\nabundance (%)", x="") +  preset_hab + theme(axis.text.x = element_blank())
+plot_phyl1
+
+plot_phyl2 <- ggplot(data=otus_p[otus_p$Phylum=="Proteobacteria",], aes(x=mfd_hab2, y=abund, color=mfd_hab2)) + 
+              labs(title="", y="Proteobacteria\nabundance (%)", x="") + preset_hab + theme(axis.text.x = element_blank()) + coord_cartesian(ylim = c(2, 60))
+plot_phyl2
+
+plot_phyl3 <- ggplot(data=otus_p[otus_p$Phylum=="Bacteroidota",], aes(x=mfd_hab2, y=abund, color=mfd_hab2)) + 
+              labs(title="", y="Bacteroidota\nabundance (%)", x="") +  preset_hab
+plot_phyl3
+```
+
+
+### Assemble plots
+```{r, include=TRUE}
+# First half
+plot_habs_ab <- ggarrange(map,plot_pcoa,widths=c(1,1), nrow=1, ncol=2, align = "none", common.legend=FALSE, legend = "none",
+                          labels = c("a","b"), font.label = list(size = 9))
+
+plot_habs_ab_leg <- as_ggplot(get_legend(plot_pcoa)) + theme(plot.margin = margin(-60, 0, 0, 0))
+plot_habs_ab <- ggarrange(plot_habs_ab, plot_habs_ab_leg, nrow=2, align = "none", heights=c(1,0.4)) + theme(plot.margin = margin(0, 0, -60, 0))
+
+# Second half
+plot_df <- ggarrange(plot_phyl1,plot_phyl2,plot_phyl3, nrow=3, ncol=1, heights=c(1,1,1.75), align = "v", common.legend=FALSE, legend = "none",
+                     labels = c("d","e","f"), font.label = list(size = 9))
+
+plot_cf <- ggarrange(plot_abund_phyl,plot_df, nrow=1, ncol=2, align = "hv", common.legend=FALSE, legend="none",
+                     labels = c("c",""), font.label = list(size = 9), widths=c(1,1.1)) + theme(plot.margin = margin(5, 0, 0, 0))
+
+plot_cf_leg <- as_ggplot(get_legend(plot_abund_phyl)) + theme(plot.margin = margin(-110, 0, 0, 0))
+plot_cf <- ggarrange(plot_cf, plot_cf_leg, nrow=2, align = "v", heights=c(1,0.2)) + theme(plot.margin = margin(0, 0, -55, 0))
+
+plot_af <- ggarrange(plot_habs_ab,plot_cf, nrow=2, ncol=1, align = "v", common.legend=FALSE, legend = "none") + theme(plot.margin = margin(0, 0, -10, 0))
+
+#ggsave(plot_af, file="../analysis/figures/FigS5_.pdf", height = 200, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 

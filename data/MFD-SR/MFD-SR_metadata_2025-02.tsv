@@ -890,7 +890,7 @@ MFD01021	9100	Soil	Natural	Forests	Temperate forests		12.32021	55.80289	LIB-MJ13
 MFD01022	2190	Soil	Natural	Dunes	Sea dunes	Humid dune slacks	10.42044	56.52044	LIB-MJ089-H9_02.fastq.gz	18473992	2736152012
 MFD01023	4130	Soil	Natural	Temperate heath and scrub	Temperate heath	Dry heath	9.16535	56.02758	LIB-MJ093-H11_02.fastq.gz	27634078	4014257056
 MFD01024	6430	Soil	Natural	Grassland formations	Semi-natural tall-herb humid meadows	Hydrophilous tall-herb swamp	9.61261	56.01516	LIB-MJ090-B2_04.fastq.gz	23153964	3414205037
-MFD01025	1330	Soil	Natural	Coastal	Salt marshes and salt meadows	Atlantic salt meadows	9.98729	5.50973	LIB-MJ107-C4_02.fastq.gz	18224328	2707667542
+MFD01025	1330	Soil	Natural	Coastal	Salt marshes and salt meadows	Atlantic salt meadows	9.98729	55.0973	LIB-MJ107-C4_02.fastq.gz	18224328	2707667542
 MFD01026	9110	Soil	Natural	Forests	Temperate forests	Beech forests Luzulo-Fagetum	10.46757	57.66361	LIB-MJ090-H1_04.fastq.gz	17433074	2587333184
 MFD01027	6430	Soil	Natural	Grassland formations	Semi-natural tall-herb humid meadows	Hydrophilous tall-herb swamp	9.89459	55.88314	LIB-MJ108-D10_02.fastq.gz	27237030	4047951504
 MFD01029	2250	Soil	Natural	Dunes	Sea dunes	Coastal dunes with Juniperus spp.	10.41796	56.51715	LIB-MJ093-G6_02.fastq.gz	22031362	3291613181
