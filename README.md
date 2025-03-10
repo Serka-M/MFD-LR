@@ -19,14 +19,14 @@ The repo is structured in a way that the folders and the subfolders store the co
 | project_repo | The main repo of the (sub)project, in this case the [alab_repo_template](https://github.com/cmc-aau/alab_repo_template). |
 | ├ scripts/ | The code used to analyse the data and plot the figures. |
 | ├ analysis/ | The results produced by the scripts (processed datasets, figures, etc.). |
-| ├┈┈ datasets/ | Main datasets used in the project and their documentation |
-| ├┈┈ figures/ | Figures used in the manuscript |
+| ├── datasets/ | Main datasets used in the project and their documentation |
+| ├── figures/ | Figures used in the manuscript |
 | ├ data/ | The input for the project. |
-| ├┈┈ MFD-LR/ | Data related to analysing MAGs from this study |
-| ├┈┈ MFD-SR/ | Relevant data from the Microflora Danica 10,000 metagenome study |
-| ├┈┈ GTDB/ | Data for comparing MAGs from this study to GTDB |
-| ├┈┈ catalogs/ | Data for analysis and comparisons of different genome catalogs |
-| ├┈┈ mmcomp/ | Data for yield-normalized metagenomics comparisons |
+| ├── MFD-LR/ | Data related to analysing MAGs from this study |
+| ├── MFD-SR/ | Relevant data from the Microflora Danica 10,000 metagenome study |
+| ├── GTDB/ | Data for comparing MAGs from this study to GTDB |
+| ├── catalogs/ | Data for analysis and comparisons of different genome catalogs |
+| ├── mmcomp/ | Data for yield-normalized metagenomics comparisons |
 | ├ envs/ | The environments loaded to analyse the data. |
 | ├ README.md | The explanation of the project, workflow and results, written in a [flavored markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github) |
 | └ LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
