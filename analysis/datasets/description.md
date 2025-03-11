@@ -109,6 +109,7 @@
 | Category | Description |
 | --- | --- |
 | bin | Genome bin ID |
+| genus_type | Status of the genome as nomenclatural type for the genus |
 | genus_proposed | Proposed genus name for lineage |
 | species_proposed | Proposed species name for lineage |
 | language | Language of the proposed name (N.L. — Neo Latin) |
