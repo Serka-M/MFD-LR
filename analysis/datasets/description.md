@@ -102,7 +102,7 @@
 | GTDB_MSA | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
 | GTDB_RED | Relative Evolutionary Divergence for a distant match, reported by GTDB-tk |
 | SILVA_taxonomy | MAG 16S rRNA taxonomic classification to the SILVA database (top hit) |
-| SILVA_identity | Identity of the MAG 16S rRNA to the SILVA sequence |
+| SILVA_identity | Identity of the MAG 16S rRNA to the top hit match in SILVA |
 | SILVA_length | Alignment length between the MAG 16S rRNA and SILVA sequence |
 
 ### Dataset S4 — dataset for proposing novel lineages under SeqCode
@@ -131,6 +131,8 @@
 | count_16S | Number of detected 16S rRNA genes |
 | count_tRNA | Number of detected different tRNA genes |
 | taxonomy_GTDB | MAG taxonomic classification, reported by GTDB-tk |
+| taxonomy_SILVA | MAG 16S rRNA taxonomic classification to the SILVA 138.2 database (top hit) |
+| taxonomy_SILVA_perc | Identity of the MAG 16S rRNA to the top hit match in SILVA |
 | sample_name | Sequenced sample ID |
 | sample_country | Country of origin for the sequenced sample |
 | longitude | Sample longitude coordinates |
