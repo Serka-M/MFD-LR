@@ -1,0 +1,474 @@
+---
+title: "R code for analysing novel lineages across MFD-SR"
+author: "Mantas Sereika"
+date: "2025"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+###  Load dependencies
+```{r, include=TRUE, message=FALSE}
+library(stringr)
+library(stringi)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(mapDK)
+```
+
+### Plot presets
+```{r, include=TRUE}
+preset_gen <- list(theme_bw(),
+                    theme(legend.position = "bottom",
+                          legend.text=element_text(size=7),
+                          legend.title = element_text(size=7),
+                           axis.title.y = element_text(size = 7), 
+                           axis.title.x = element_text(size = 7),
+                           axis.text.y = element_text(size = 6),
+                           axis.text.x = element_text(size = 6),
+                           panel.grid.minor = element_line(size = 0.15),
+                           panel.grid.major = element_line(size = 0.3)))
+
+preset_gen2 <- list(preset_gen, scale_y_discrete(expand = c(0, 0)),
+                    scale_x_discrete(guide = guide_axis(angle = 30), expand = c(0, 0)),
+                    guides(fill = guide_colorbar(title.position = "top")))
+```
+
+
+### Function for getting medians and IQR
+```{r, include=TRUE}
+median_w_iqr <- function(x,cat) {
+  df_med <- aggregate(x, by=list(cat), FUN=median, na.rm = T)
+  colnames(df_med) <- c("group","median")
+  
+  df_iqr <- aggregate(x, by=list(cat), FUN=IQR, na.rm = T)
+  colnames(df_iqr) <- c("group","iqr")
+  
+  df_q25 <- aggregate(x, by=list(cat), FUN = function(i,...) quantile(i, probs=0.25, na.rm=T))
+  colnames(df_q25) <- c("group","q25")
+  
+  df_q75 <- aggregate(x, by=list(cat), FUN = function(i,...) quantile(i, probs=0.75, na.rm=T))
+  colnames(df_q75) <- c("group","q75")
+  
+  df <- merge(df_med,df_iqr,by="group")
+  df <- merge(df,df_q25,by="group")
+  df <- merge(df,df_q75,by="group")
+  return (df) }
+```
+
+
+### Load data
+```{r, include=TRUE}
+sylph_p <- read.delim("../data/novelty/phylum_sylph.tsv", sep="\t", header=F)
+sylph_o <- read.delim("../data/novelty/order_sylph.tsv", sep="\t", header=F)
+sylph_f <- read.delim("../data/novelty/family_sylph.tsv", sep="\t", header=F)
+sylph_g <- read.delim("../data/novelty/genus_sylph.tsv", sep="\t", header=F)
+
+phyl <- read.delim("../data/novelty/MFD-LR_GTDB-R220.tsv", sep="\t", header=T)
+
+meta <- read.delim("../data/MFD-SR/MFD-SR_metadata_2025-02.tsv", sep="\t", header=T)
+meta$flat_name <- gsub(".fastq.gz","",meta$flat_name)
+```
+
+
+### Aggregate data
+```{r, include=TRUE}
+sylph_sum <- function(df,phyl,rank) {
+  colnames(phyl)[1] <- "V2"
+  df$V2 <- gsub(".fa","",df$V2)
+  df <- merge(df,phyl,by="V2")
+  
+  df_sum <- aggregate(df$V4, by=list(df$V1), FUN=sum)
+  colnames(df_sum) <- c("flat_name",paste0("abund_",rank))
+  
+  df_sub <- df[rowSums(sapply(df, grepl, pattern = paste0(rank,"_novel_*"))) > 0, ]
+  
+  rank2 <- ifelse(rank=="p", "phylum", 
+                  ifelse(rank=="o", "order",
+                         ifelse(rank=="f", "family",
+                                ifelse(rank=="g", "genus", "ERROR" ))))
+  df_sub <- df
+  df_sub$link <- paste(df_sub$V1,df_sub[,rank2],sep="_")
+  df_sub <- df_sub[!duplicated(df_sub$link),]
+  df_count <- aggregate(df_sub$V1, by=list(df_sub$V1), FUN=length)
+  colnames(df_count) <- c("flat_name",paste0("count_",rank))
+  
+  df_sum <- merge(df_sum,df_count,by="flat_name")
+  df_sum$flat_name <- gsub("_R2stq.gz","",df_sum$flat_name)
+  return (df_sum) }
+
+sylph_p_ <- sylph_sum(sylph_p,phyl,"p")
+sylph_o_ <- sylph_sum(sylph_o,phyl,"o")
+sylph_f_ <- sylph_sum(sylph_f,phyl,"f")
+sylph_g_ <- sylph_sum(sylph_g,phyl,"g")
+
+sylph_all <- merge(sylph_g_,sylph_f_,by="flat_name", all=T)
+sylph_all <- merge(sylph_all,sylph_o_,by="flat_name", all=T)
+sylph_all <- merge(sylph_all,sylph_p_,by="flat_name", all=T)
+
+sylph_all <- merge(sylph_all,meta,by="flat_name", all=T)
+sylph_all[is.na(sylph_all)] <- 0
+```
+
+
+### Wrangle and filter
+```{r, include=TRUE}
+sylph_all <- sylph_all[sylph_all$after_total_bases > 10**9 ,]
+sylph_all$mfd_hab1 <- ifelse(sylph_all$mfd_hab1 == "", "Other", sylph_all$mfd_hab1)
+sylph_all$mfd_hab2 <- ifelse(sylph_all$mfd_hab2 == "", "Other", sylph_all$mfd_hab2)
+sylph_all$mfd_hab3 <- ifelse(sylph_all$mfd_hab3 == "", "Other", sylph_all$mfd_hab3)
+sylph_all$mfd_areatype <- ifelse(grepl("Agriculture",sylph_all$mfd_areatype),"Agriculture",sylph_all$mfd_areatype)
+
+sylph_all$novelty <- ifelse(sylph_all$count_p > 0, "Phylum",
+                            ifelse(sylph_all$count_o > 0, "Order",
+                                   ifelse(sylph_all$count_f > 0, "Family",
+                                          ifelse(sylph_all$count_g > 0, "Genus","Linages not found"))))
+
+sylph_all <- sylph_all %>%
+             mutate(novelty = factor(novelty, levels = rev(c("Phylum", "Order", "Family", "Genus","Linages not found")))) %>%
+             arrange(novelty) 
+```
+
+
+### Plot samples by highest novelty level
+```{r, include=TRUE}
+sample_count <- aggregate(sylph_all$novelty, by=list(sylph_all$novelty), FUN=length)
+colnames(sample_count) <- c("sample","n")
+sample_count$sample_n <- paste0(sample_count$sample," (",sample_count$n,")")
+labels_n <- sample_count %>% select(sample, sample_n) %>% distinct() %>% deframe()
+
+map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") + 
+       geom_point(data = sylph_all[sylph_all$latitude > 0 & sylph_all$latitude < 58,],
+                  aes(x=longitude, y=latitude, group=novelty, color=novelty, size=novelty, alpha=novelty)) +
+       scale_color_manual(name = "Highest observed genome novelty:", labels=labels_n,
+                          values = c("Phylum" = "#880808", "Order"="#fee090", "Family" = "#1b9e77", 
+                                     "Genus" = "#a6dba0", "Linages not found" = "gray60")) +
+       scale_size_manual(values = c("Phylum"=1, "Order"=0.6, "Family" = 0.5, "Genus" = 0.4, "Linages not found" = 0.4)) +
+       scale_alpha_manual(values = c("Phylum"=1, "Order"=0.7, "Family" = 0.6, "Genus" = 0.5, "Linages not found" = 0.5)) +
+       theme(legend.key=element_blank(), legend.position = c(0.75, 0.85),
+             legend.box.background = element_blank(), legend.background = element_blank(),
+             legend.text=element_text(size=7),legend.title = element_text(size=7),
+             legend.key.size = unit(3.5, 'mm'), legend.spacing.x = unit(1, 'mm')) +
+       guides(colour = guide_legend(override.aes = list(size=1.2), ncol=1, title.position = "top", reverse=TRUE), size="none", alpha="none") 
+map
+```
+
+
+### Heatmaps for area and sample type
+```{r, include=TRUE}
+def_plot_heatmap <- function(df,group_sample,group_name) {
+  sample_all <- aggregate(df$fieldsample_barcode, by=list(df[,group_sample]), FUN=length)
+  colnames(sample_all) <- c("category","count_all")
+  
+  sample_g <- aggregate(df[df$count_g > 0,]$fieldsample_barcode, by=list(df[df$count_g > 0, group_sample]), FUN=length)
+  sample_f <- aggregate(df[df$count_f > 0,]$fieldsample_barcode, by=list(df[df$count_f > 0, group_sample]), FUN=length)
+  sample_o <- aggregate(df[df$count_o > 0,]$fieldsample_barcode, by=list(df[df$count_o > 0, group_sample]), FUN=length)
+  
+  sample_p <- sylph_all %>% group_by(!!sym(group_sample)) %>% 
+              summarise(count = sum(count_p > 0, na.rm = TRUE)) %>%
+              rename(Group.1 = !!sym(group_sample), x = count)
+
+  sample_g$group <- "Genus"
+  sample_f$group <- "Family"
+  sample_o$group <- "Order"
+  sample_p$group <- "Phylum"
+  
+  sample_mfd <- rbind(sample_g,sample_f,sample_o,sample_p)
+  colnames(sample_mfd) <- c("category","count","group")
+  sample_mfd <- merge(sample_mfd,sample_all,by="category")
+  sample_mfd$frac <- round(sample_mfd$count/sample_mfd$count_all*100,2)
+  sample_mfd$frac2 <- paste0("(",sample_mfd$frac," %)")
+  
+  sample_mfd <- sample_mfd %>%
+                mutate(group = factor(group, levels = rev(c("Phylum", "Order", "Family", "Genus")))) %>% arrange(group)
+
+  sample_mfd <- sample_mfd %>%
+                mutate(category = factor(category, levels = rev(c(sample_all[order(sample_all$count_all, decreasing = TRUE),]$category)))) %>%
+                arrange(category)
+  
+  plot <- ggplot(data = sample_mfd, mapping = aes(x = group, y = category, fill = frac)) + geom_tile(width=1) +
+          geom_text(aes(label = count), size=1.75, vjust=-0.4) +  geom_text(aes(label = frac2), size=1.75, vjust=0.9) +
+          labs(title="", y=group_name, x="", fill="Samples with novel genomes:") + 
+          scale_fill_gradient2(midpoint = 50, limits=c(0.001,100), breaks=c(1,25,50,75,100), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60") + 
+          preset_gen2 + theme(legend.box.background = element_blank(),legend.background = element_blank())
+  
+  return (plot) }
+
+plot_count_type <- def_plot_heatmap(sylph_all,"mfd_sampletype","Sample type") + theme(plot.margin = margin(-15, 1, 0, 0))
+plot_count_area <- def_plot_heatmap(sylph_all,"mfd_areatype","Area type") + theme(plot.margin = margin(-18, 1, 3, 0))
+
+plot_count_type
+plot_count_area
+```
+
+
+### Stats for sample counts
+```{r, include=TRUE}
+message("Samples total: ",nrow(sylph_all[,]))
+message("Samples with genus: ",nrow(sylph_all[sylph_all$count_g >= 1,]))
+message("Samples with families: ",nrow(sylph_all[sylph_all$count_f >= 1,]))
+message("Samples with orders: ",nrow(sylph_all[sylph_all$count_o >= 1,]))
+```
+
+
+### Density plot for genera counts and abundances
+```{r, include=TRUE}
+def_plot_dens <- function(df,x_sample,x_name) {
+  plot <- ggplot() + geom_density(data=df, aes(x=.data[[x_sample]], count=x_sample, linetype=mfd_sampletype, color=mfd_areatype), size=0.6, alpha=0.7) +
+          scale_color_manual(values = c("Urban" = "#7570b3", "Subterranean"="#fdc086", "Agriculture" = "#a65628", "Natural" = "#1b9e77")) + 
+          scale_linetype_manual(values = c("Sediment" = "dotted", "Soil"="solid")) + preset_gen +
+          labs(linetype="Sample type:", color="Area type:", x=x_name, y="Density")
+  return (plot) }
+
+
+sylph_all_ <- sylph_all
+sylph_all_ <- sylph_all_[sylph_all_$mfd_sampletype != "Other" & sylph_all_$mfd_areatype != "Subterranean" & sylph_all_$mfd_sampletype != "Water",]
+
+plot_den_count <- def_plot_dens(sylph_all_,"count_g","Genera with novel genomes (count)") +
+                  scale_x_continuous(expand=c(0,0), breaks=c(0,15,30,45,60), limits=c(0,70)) +
+                  scale_y_continuous(expand=c(0,0), breaks=c(0,0.02,0.04), limits=c(0,0.05))
+plot_den_count
+
+plot_den_abund <- def_plot_dens(sylph_all_,"abund_g","Genera with novel genomes (cumulative abundance, %)") +
+                  scale_y_continuous(expand=c(0,0), breaks=c(0,0.2,0.4), limits=c(0,0.5)) + 
+                  scale_x_continuous(expand=c(0,0), breaks=c(0,2,4,6), limits=c(0,7.5))               
+plot_den_abund
+```
+
+
+### Stats for densities
+```{r, include=TRUE}
+sylph_all_$link <- paste(sylph_all_$mfd_sampletype,sylph_all_$mfd_areatype,sep="_")
+median_w_iqr(sylph_all_$count_g,sylph_all_$link)
+median_w_iqr(sylph_all_$abund_g,sylph_all_$link)
+
+sylph_all$link2 <- paste(sylph_all$mfd_sampletype,sylph_all$mfd_areatype,sylph_all$mfd_hab1,sep="_")
+median_w_iqr(sylph_all$count_g,sylph_all$link2)
+median_w_iqr(sylph_all$count_f,sylph_all$link2)
+```
+
+
+### Stats - medians per group
+```{r, include=TRUE}
+sylph_all$hab <- paste(sylph_all$mfd_sampletype,sylph_all$mfd_areatype,sylph_all$mfd_hab1,sep="; ")
+
+stats_sylph_g <- median_w_iqr(sylph_all[sylph_all$count_g >= 0,]$count_g,sylph_all[sylph_all$count_g >= 0,]$hab)
+colnames(stats_sylph_g) <- c("hab", "mags_median_g","mags_igr_g","mags_q25_g","mags_q75_g")
+
+stats_sylph_f <- median_w_iqr(sylph_all[sylph_all$count_f >= 0,]$count_f,sylph_all[sylph_all$count_f >= 0,]$hab)
+colnames(stats_sylph_f) <- c("hab", "mags_median_f","mags_igr_f","mags_q25_f","mags_q75_f")
+
+stats_sylph_o <- median_w_iqr(sylph_all[sylph_all$count_o >= 0,]$count_o,sylph_all[sylph_all$count_o >= 0,]$hab)
+colnames(stats_sylph_o) <- c("hab", "mags_median_o","mags_igr_o","mags_q25_o","mags_q75_o")
+
+stats_sylph_p <- median_w_iqr(sylph_all[sylph_all$count_p >= 0,]$count_p,sylph_all[sylph_all$count_p >= 0,]$hab)
+colnames(stats_sylph_p) <- c("hab", "mags_median_p","mags_igr_p","mags_q25_p","mags_q75_p")
+
+stats_sylph <- merge(stats_sylph_g,stats_sylph_f,by="hab", all=T)
+stats_sylph <- merge(stats_sylph,stats_sylph_o,by="hab", all=T)
+stats_sylph <- merge(stats_sylph,stats_sylph_p,by="hab", all=T)
+stats_sylph[is.na(stats_sylph)] <- 0
+```
+
+
+### Plot stats - median genomes per group
+```{r, include=TRUE}
+stats_sylph_sub <- stats_sylph %>% select(hab,mags_median_g,mags_median_f,mags_median_o) %>% pivot_longer(cols = !hab, names_to = "novelty",  values_to = "mags") 
+stats_sylph_sub$mags <- round(stats_sylph_sub$mags,0)
+
+stats_sylph_sub$novelty <- gsub("mags_median_g","Genus",stats_sylph_sub$novelty)
+stats_sylph_sub$novelty <- gsub("mags_median_f","Family",stats_sylph_sub$novelty)
+stats_sylph_sub$novelty <- gsub("mags_median_o","Order",stats_sylph_sub$novelty)
+
+stats_sylph_sub <- stats_sylph_sub %>%
+                   mutate(novelty = factor(novelty, levels = rev(c("Order", "Family", "Genus")))) %>%
+                   arrange(novelty)
+
+stats_sylph_sub <- stats_sylph_sub %>%
+                   mutate(hab = factor(hab, levels = rev(c(unique(stats_sylph[order(stats_sylph$mags_median_f, decreasing = TRUE),]$hab))))) %>%
+                   arrange(hab)
+
+stats_sylph_sub <- stats_sylph_sub %>%
+                   mutate(hab = factor(hab, levels = rev(c(unique(stats_sylph[order(stats_sylph$mags_median_g, decreasing = TRUE),]$hab))))) %>%
+                   arrange(hab)
+
+plot_otus_mag <- ggplot(data = stats_sylph_sub, mapping = aes(x = novelty, y = hab, fill = mags)) + 
+                 geom_tile(width=1) + geom_text(aes(label = mags), size=1.75) + 
+                 labs(title="", y="", x="Taxonomic rank", fill="Lineages with novel\ngenomes (median):") + preset_gen2 +
+                 scale_fill_gradient2(midpoint = 15, limits=c(1,45), breaks=c(1,15,30,45), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60")
+plot_otus_mag
+```
+
+
+### Get MAG MFG taxonomy
+```{r, include=TRUE}
+mfg_rank <- function(class,id,pattern,trim_left,trim_right,cutoff) {
+  rank <-  str_extract(class,pattern)
+  rank <-  gsub(trim_left, "", rank)
+  rank <-  gsub(trim_right, "", rank)
+  rank <- ifelse(id >= cutoff, rank, "NOVEL")
+  return (rank) }
+
+mags_mfg1 <- read.delim("../data/MFD-SR/MFG_MFD-LR.tsv", sep="\t", header=F)
+mags_mfg2 <- read.delim("../data/MFD-SR/MFG_GTDB-R220.tsv", sep="\t", header=F)
+mags_mfg3 <- read.delim("../data/MFD-SR/MFG_MFD-SR.tsv", sep="\t", header=F)
+
+mags_mfg <- rbind(mags_mfg1,mags_mfg2,mags_mfg3)
+
+mags_mfg$Genus <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",g:[a-zA-Z0-9 -_]+,s:",",g:",",s:",94.5)
+mags_mfg$Family <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",f:[a-zA-Z0-9 -_]+,g:",",f:",",g:",86.5)
+mags_mfg$Order <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",o:[a-zA-Z0-9 -_]+,f:",",o:",",f:",82)
+mags_mfg$Class <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",c:[a-zA-Z0-9 -_]+,o:",",c:",",o:",78.5)
+mags_mfg$Phylum <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",c:[a-zA-Z0-9 -_]+,o:",",c:",",o:",75)
+```
+
+
+### Truncate shallow OTUs to placeholder lineages without genomes (22437 g, 1095 f, 76 o)
+```{r, include=TRUE}
+#otus_all <- read.delim("../data/MFD-SR/2025-02-13_MFD_arcbac_genus_rarefaction_rel.csv", sep=",", header=T)
+
+otu_sub <- function(otus,mags,rank,group_name) {
+  # Filter to placeholder OTUs
+  otus_sub <- otus[grepl("MFD_",otus[,rank]),]
+  otus_sub <- otus_sub[! otus[,rank] %in% mags[,rank],]
+  
+  # Aggregate to specified rank
+  message(rank," lineages: ",length(unique(otus_sub[, rank])))
+  rank_column <- otus_sub[, rank]
+  otus_sub <- otus_sub[, !(names(otus_sub) %in% c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus"))]
+  otus_sub[is.na(otus_sub)] <- 0
+  
+  if(rank == "Genus") {
+    otus_sub_sum <- otus_sub
+  } else {
+    otus_sub_sum <- aggregate(. ~ rank_column, data = cbind(rank_column, otus_sub), FUN = sum)
+  }
+  
+  otus_sub_sum <- otus_sub_sum[, -1]
+  
+  # Count OTUs per sample
+  otus_sub_sum <- colSums(otus_sub > 0)
+  otus_sub_sum <- data.frame(fieldsample_barcode=names(otus_sub_sum), otus=otus_sub_sum)
+  colnames(otus_sub_sum)[2] <- group_name
+  return (otus_sub_sum) }
+
+#otus_g <- otu_sub(otus_all, mags_mfg, "Genus", "otu_nov_g")
+#otus_f <- otu_sub(otus_all, mags_mfg, "Family", "otu_nov_f")
+#otus_o <- otu_sub(otus_all, mags_mfg, "Order", "otu_nov_o")
+
+#otus_nov <- merge(otus_g,otus_f,by="fieldsample_barcode")
+#otus_nov <- merge(otus_nov,otus_o,by="fieldsample_barcode")
+
+#write.table(otus_nov,"../data/novelty/MFG_OTU_nov.tsv",quote=F,row.names=FALSE,col.names=TRUE,sep="\t")
+```
+
+
+### Reuse and filter subset
+```{r, include=TRUE}
+otu_nov <- read.delim("../data/novelty/MFG_OTU_nov.tsv", sep="\t", header=T)
+otu_nov <- merge(otu_nov, meta, by="fieldsample_barcode", all=T)
+otu_nov$mfd_areatype <- ifelse(grepl("Agriculture",otu_nov$mfd_areatype),"Agriculture",otu_nov$mfd_areatype)
+otu_nov <- otu_nov[otu_nov$after_total_bases > 10**9 ,]
+otu_nov[is.na(otu_nov)] <- 0
+```
+
+
+### Lineage counts
+```{r, include=TRUE}
+otu_nov_ <- otu_nov[otu_nov$mfd_sampletype != "Other" & otu_nov$mfd_areatype != "Subterranean" & otu_nov$mfd_sampletype != "Water",]
+
+plot_den_g <- def_plot_dens(otu_nov_,"otu_nov_g","Undefined genera without genomes (count)") +
+               scale_y_continuous(breaks=c(0,0.01,0.02), expand = c(0,0), limits = c(0,0.028)) +
+               scale_x_continuous(breaks=c(0,60,120,180,240), expand = c(0,0), limits = c(0,250)) 
+plot_den_g
+
+plot_den_f <- def_plot_dens(otu_nov_,"otu_nov_f","Undefined families without genomes (count)") +
+              scale_y_continuous(breaks=c(0,0.07,0.14), expand = c(0,0), limits = c(0,0.15)) + 
+              scale_x_continuous(breaks=c(0,8,16,24,32), expand = c(0,0), limits = c(0,35))         
+plot_den_f
+```
+
+
+### Stats for densities
+```{r, include=TRUE}
+otu_nov$link <- paste(otu_nov$mfd_sampletype,otu_nov$mfd_areatype,sep="_")
+median_w_iqr(otu_nov$otu_nov_g,otu_nov$link)
+median_w_iqr(otu_nov$otu_nov_f,otu_nov$link)
+
+median_w_iqr(otu_nov$otu_nov_g,otu_nov$mfd_sampletype)
+median_w_iqr(otu_nov$otu_nov_f,otu_nov$mfd_sampletype)
+```
+
+
+### Aggregate map and general
+```{r, include=TRUE}
+plot_heatmap_leg <- as_ggplot(get_legend(plot_count_area)) + theme(plot.margin = margin(-6, 3, 0, 0))
+
+plot_heatmaps <- ggarrange(plot_count_type,plot_count_area,plot_heatmap_leg,
+                           heights=c(1,1,0.3), nrow=3, ncol=1, align = "v", common.legend=FALSE, legend = "none", labels = c("b","c",""), font.label = list(size = 9))
+
+plot_ac <- ggarrange(map, plot_heatmaps, nrow=1, ncol=2, widths=c(2.2,1) ,align = "none", labels = c("a",""), font.label = list(size = 9))
+
+plot_dg <- ggarrange(plot_den_count,plot_den_abund,plot_den_g,plot_den_f, nrow=2, ncol=2, widths = c(1,1), align = "none", common.legend=TRUE, legend="bottom",
+                       labels = c("d","e","f","g"), font.label = list(size = 9))
+
+plot_ag <- ggarrange(plot_ac,plot_dg,nrow=2, heights=c(1.25,1))
+#ggsave(plot_ag, file="../analysis/figures/FigS13_.pdf", height=160, width=160, useDingbats=FALSE,  units="mm", dpi=300)
+```
+
+
+### Count placeholder OTUs without genomes
+```{r, include=TRUE}
+otu_nov$hab <- paste(otu_nov$mfd_sampletype,otu_nov$mfd_areatype,otu_nov$mfd_hab1,sep="; ")
+
+otus_g <- median_w_iqr(otu_nov$otu_nov_g,otu_nov$hab)
+colnames(otus_g) <- c("hab", "otus_median_g","otus_igr_g","otus_q25_g","otus_q75_g")
+
+otus_f <- median_w_iqr(otu_nov$otu_nov_f,otu_nov$hab)
+colnames(otus_f) <- c("hab", "otus_median_f","otus_igr_f","otus_q25_f","otus_q75_f")
+
+otus_o <- median_w_iqr(otu_nov$otu_nov_o,otu_nov$hab)
+colnames(otus_o) <- c("hab", "otus_median_o","otus_igr_o","otus_q25_o","otus_q75_o")
+
+otus_all <- merge(otus_g,otus_f,by="hab", all=T)
+otus_all <- merge(otus_all,otus_o,by="hab", all=T)
+otus_all[is.na(otus_all)] <- 0
+```
+
+
+### Plot median OTU counts per habitat
+```{r, include=TRUE}
+otus_all_sample <- otus_all %>% select(hab,otus_median_g,otus_median_f,otus_median_o) %>% pivot_longer(cols = !hab, names_to = "novelty",  values_to = "otus") 
+otus_all_sample$otus <- round(otus_all_sample$otus,0)
+
+otus_all_sample$novelty <- gsub("otus_median_g","Genus",otus_all_sample$novelty)
+otus_all_sample$novelty <- gsub("otus_median_f","Family",otus_all_sample$novelty)
+otus_all_sample$novelty <- gsub("otus_median_o","Order",otus_all_sample$novelty)
+
+otus_all_sample <- otus_all_sample %>% mutate(novelty = factor(novelty, levels = rev(c("Order", "Family", "Genus")))) %>% arrange(novelty)
+
+otus_all_sample <- otus_all_sample %>%
+                   mutate(hab = factor(hab, levels = rev(c(unique(otus_all[order(otus_all$otus_median_f, decreasing = TRUE),]$hab))))) %>%
+                   arrange(hab)
+
+otus_all_sample <- otus_all_sample %>%
+                   mutate(hab = factor(hab, levels = rev(c(unique(otus_all[order(otus_all$otus_median_g, decreasing = TRUE),]$hab))))) %>%
+                   arrange(hab)
+
+plot_otus_ssu <- ggplot(data = otus_all_sample, mapping = aes(x = novelty, y = hab, fill = otus)) + 
+                 geom_tile(width=1) + geom_text(aes(label = otus), size=1.75) + 
+                 labs(title="", y="", x="Taxonomic rank", fill="Undefined lineages without\ngenomes (median):") + preset_gen2  +
+                 scale_fill_gradient2(midpoint = 60, limits=c(1,180), breaks=c(1,60,120,180), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60")
+plot_otus_ssu
+```
+
+
+### Combine median OTU counts
+```{r, include=TRUE}
+plot_otus <- ggarrange(plot_otus_mag, plot_otus_ssu, nrow=1, ncol=2, widths = c(1,1), align = "hv", labels = c("a","b"), font.label = list(size = 9))
+#ggsave(plot_otus, file="../analysis/figures/FigS14_.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
+```
+
