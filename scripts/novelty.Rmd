@@ -370,7 +370,10 @@ otu_sub <- function(otus,mags,rank,group_name) {
 ```{r, include=TRUE}
 otu_nov <- read.delim("../data/novelty/MFG_OTU_nov.tsv", sep="\t", header=T)
 otu_nov <- merge(otu_nov, meta, by="fieldsample_barcode", all=T)
+
 otu_nov$mfd_areatype <- ifelse(grepl("Agriculture",otu_nov$mfd_areatype),"Agriculture",otu_nov$mfd_areatype)
+otu_nov$mfd_hab1 <- ifelse(otu_nov$mfd_hab1 == "", "Other", otu_nov$mfd_hab1)
+
 otu_nov <- otu_nov[otu_nov$after_total_bases > 10**9 ,]
 otu_nov[is.na(otu_nov)] <- 0
 ```
@@ -416,7 +419,7 @@ plot_dg <- ggarrange(plot_den_count,plot_den_abund,plot_den_g,plot_den_f, nrow=2
                        labels = c("d","e","f","g"), font.label = list(size = 9))
 
 plot_ag <- ggarrange(plot_ac,plot_dg,nrow=2, heights=c(1.25,1))
-#ggsave(plot_ag, file="../analysis/figures/FigS13_.pdf", height=160, width=160, useDingbats=FALSE,  units="mm", dpi=300)
+#ggsave(plot_ag, file="../analysis/figures/FigS13.pdf", height=160, width=160, useDingbats=FALSE,  units="mm", dpi=300)
 ```
 
 
@@ -469,6 +472,6 @@ plot_otus_ssu
 ### Combine median OTU counts
 ```{r, include=TRUE}
 plot_otus <- ggarrange(plot_otus_mag, plot_otus_ssu, nrow=1, ncol=2, widths = c(1,1), align = "hv", labels = c("a","b"), font.label = list(size = 9))
-#ggsave(plot_otus, file="../analysis/figures/FigS14_.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(plot_otus, file="../analysis/figures/FigS14.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
