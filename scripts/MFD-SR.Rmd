@@ -53,6 +53,28 @@ preset_gen2 <- list(preset_gen, coord_flip(),
 ```
 
 
+### Function for getting medians and IQR
+```{r, include=TRUE}
+median_w_iqr <- function(x,cat) {
+  df_med <- aggregate(x, by=list(cat), FUN=median, na.rm = T)
+  colnames(df_med) <- c("group","median")
+  
+  df_iqr <- aggregate(x, by=list(cat), FUN=IQR, na.rm = T)
+  colnames(df_iqr) <- c("group","iqr")
+  
+  df_q25 <- aggregate(x, by=list(cat), FUN = function(i,...) quantile(i, probs=0.25, na.rm=T))
+  colnames(df_q25) <- c("group","q25")
+  
+  df_q75 <- aggregate(x, by=list(cat), FUN = function(i,...) quantile(i, probs=0.75, na.rm=T))
+  colnames(df_q75) <- c("group","q75")
+  
+  df <- merge(df_med,df_iqr,by="group")
+  df <- merge(df,df_q25,by="group")
+  df <- merge(df,df_q75,by="group")
+  return (df) }
+```
+
+
 ### Wrangle MAG 16S taxonomy data
 ```{r, include=TRUE}
 # MFD-LR
@@ -192,34 +214,37 @@ plot_core_hab3 <- ggplot(data=core_hab_sum[core_hab_sum$group=="Habitat (level 3
 plots_core_hab <- ggarrange(plot_core_area, plot_core_hab1, plot_core_hab2, plot_core_hab3, nrow=2, ncol=2, align = c("v"),
                             legend = "none", common.legend = FALSE, labels = c("a","b","c","d"), font.label = list(size = 9))
 
-#ggsave(plots_core_hab, file="../analysis/figures/FigS8.pdf", height = 90, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(plots_core_hab, file="../analysis/figures/FigS9.pdf", height = 90, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
 ### Load sylph-related data
 ```{r, include=TRUE}
+# Wrangle metadata
 meta <- read.delim("../data/MFD-SR/MFD-SR_metadata_2025-02.tsv", sep="\t", header=T)
-
 meta <- meta[! meta$mfd_sampletype == "Other",]
 meta$lib_id <- gsub(".fastq.gz","",meta$flat_name)
 meta$mfd_hab1 <- ifelse(meta$mfd_hab1 == "", "Other", meta$mfd_hab1)
 meta$mfd_areatype <- ifelse(meta$mfd_areatype == "Agriculture (reclaimed lowland)", "Agriculture", meta$mfd_areatype)
+meta_filt <- meta[meta$after_total_bases > 10**9,]
 
-sylph_gtdb <- read.delim("../data/MFD-SR/sylph-sum-sr-gtdb.tsv", sep="\t", header=F)
-sylph_gtdb$group <- "GTDB"
+# Function for processing sylph results
+sylph_df <- function(df,group,meta) {
+    df <- read.delim(df, sep="\t", header=F)
+    colnames(df) <- c("lib_id","class")
+    df <- merge(df,meta,by="lib_id",all=T)
+    df$group <- group
+    df <- df[!is.na(df$fieldsample_barcode),]
+    df$class[is.na(df$class)] <- 0
+    return (df) }
 
-sylph_gtdb_pub <- read.delim("../data/MFD-SR/sylph-sum-sr-pub.tsv", sep="\t", header=F)
-sylph_gtdb_pub$group <- "GTDB + Public catalogues"
-
-sylph_gtdb_pub_lr <- read.delim("../data/MFD-SR/sylph-sum-sr-pub-mfdlr.tsv", sep="\t", header=F)
-sylph_gtdb_pub_lr$group <- "GTDB + Public catalogues + MFD-LR"
+sylph_gtdb <- sylph_df("../data/MFD-SR/sylph-sum-sr-gtdb.tsv","GTDB",meta_filt)
+sylph_gtdb_pub <- sylph_df("../data/MFD-SR/sylph-sum-sr-pub.tsv","GTDB + Public catalogues",meta_filt)
+sylph_gtdb_pub_lr <- sylph_df("../data/MFD-SR/sylph-sum-sr-pub-mfdlr.tsv","GTDB + Public catalogues + MFD-LR",meta_filt)
 
 sylph_sr <- rbind(sylph_gtdb,sylph_gtdb_pub,sylph_gtdb_pub_lr)
-colnames(sylph_sr) <- c("lib_id","class","group")
-sylph_sr <- merge(sylph_sr,meta,by="lib_id")
-
-sylph_sr <- sylph_sr[sylph_sr$after_total_bases >= 10**9,]
 sylph_sr <- sylph_sr %>% group_by(lib_id) %>% filter(n() == 3) %>% ungroup()
+median_w_iqr(sylph_sr$class,sylph_sr$group)
 ```
 
 
@@ -268,7 +293,7 @@ fig_sylph_hab_ <- ggarrange(plot_sylph_sr_sed,plot_sylph_sr_water, nrow=1, ncol=
 fig_sylph_hab <- ggarrange(plot_sylph_sr_soil,fig_sylph_hab_, nrow=2, ncol=1, common.legend = FALSE, align = c("v"), 
                            labels = c("a",""), font.label = list(size = 9))
 
-#ggsave(fig_sylph_hab, file="../analysis/figures/FigS9.pdf", height = 180, width = 200, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(fig_sylph_hab, file="../analysis/figures/FigS10.pdf", height = 180, width = 200, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
 
@@ -369,7 +394,7 @@ colors_hab2 <- c("Salt marshes and salt meadows"="#1d91c0",
                  "Sea cliffs and shingle or stony beaches"="#0c2c84",
                  "Poales, grass"="#8c2d04", "Poales, Cereal"="#ec7014",
                  "Asterids"="#fec44f", "Malvids"="#ffd92f",
-                "Fallow"="#dfc27d", "Mixed crops"="#8c510a")
+                 "Fallow"="#dfc27d", "Mixed crops"="#8c510a")
 
 plot_pcoa <- ggplot(meta_sub_, aes(x = pcoa_1, y = pcoa_2, color = mfd_hab2)) +
              stat_ellipse(aes(fill = mfd_hab1), alpha = 0.1, geom = "polygon") + geom_point(size = 0.7, alpha=0.9) +
@@ -486,6 +511,6 @@ plot_cf <- ggarrange(plot_cf, plot_cf_leg, nrow=2, align = "v", heights=c(1,0.2)
 
 plot_af <- ggarrange(plot_habs_ab,plot_cf, nrow=2, ncol=1, align = "v", common.legend=FALSE, legend = "none") + theme(plot.margin = margin(0, 0, -10, 0))
 
-#ggsave(plot_af, file="../analysis/figures/FigS5_.pdf", height = 200, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(plot_af, file="../analysis/figures/FigS5.pdf", height = 200, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
 ```
 
