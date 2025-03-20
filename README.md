@@ -26,7 +26,7 @@ The repo is structured in a way that the folders and the subfolders store the co
 | ├ GTDB/ | Data for comparing MAGs from this study to GTDB |
 | ├ catalogs/ | Data for analysis and comparisons of different genome catalogs |
 | └ mmcomp/ | Data for yield-normalized metagenomics comparisons |
-| envs/ | The environments loaded to analyse the data. |
+| envs/ | Description of R software environments used to analyse the data |
 | README.md | The explanation of the project, workflow and results, written in a [flavored markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github) |
 | LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
 
