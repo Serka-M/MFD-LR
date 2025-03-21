@@ -9,6 +9,7 @@ Repository for scripts and resources used for the recovery and analysis of metag
 * De-replicated MAGs, sequenced reads and raw Nanopore data can be downloaded from [ENA](https://www.ebi.ac.uk/ena/browser/view/PRJEB58634)
 * For convenience, the genome catalogs are also available for download from Zenodo ([dereplicated](https://zenodo.org/records/14537680) and [all MAGs](https://zenodo.org/records/14537760))
 * The main project datasets and their documentation is available [here](https://github.com/Serka-M/mfd_mags/tree/main/analysis/datasets)
+* Files too large to be hosted on GitHub are available at [Zenodo](https://zenodo.org/records/15064411)
 
 ## Repo structure
 
@@ -29,5 +30,3 @@ The repo is structured in a way that the folders and the subfolders store the co
 | envs/ | Description of R software environments used to analyse the data |
 | README.md | The explanation of the project, workflow and results, written in a [flavored markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github) |
 | LICENSE | The [license](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) for the repo. |
-
-
