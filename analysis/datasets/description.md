@@ -3,7 +3,7 @@
 ### Dataset S1 — dataset for per-sample features
 | Category | Description |
 | --- | --- |
-| fieldsample_barcode | Sequenced sample ID |
+| fieldsample_barcode | Sequenced sample identifier |
 | habitat_typenumber | Sample habitat type number, as described in the [MFD metadata](https://github.com/cmc-aau/mfd_metadata) |
 | mfd_sampletype | Sample type |
 | mfd_areatype | Sample area type |
@@ -40,12 +40,12 @@
 | minknow_v | Version of MinKNOW used during sequencing |
 | basecaller | Basecaller name |
 | basecaller_v | Basecaller version |
-| ENA_ID | Sample ID in [ENA](https://www.ebi.ac.uk/ena/browser) |
-| ENA_raw1 | ENA ID for batch 1 of raw Nanopore signal data |
-| ENA_raw2 | ENA ID for batch 2 of raw Nanopore signal data |
-| ENA_raw3 | ENA ID for batch 3 of raw Nanopore signal data |
-| ENA_reads | ENA ID for the sequenced reads |
-| ENA_assembly | ENA ID for the metagenomic assemblies |
+| ENA_ID | Sample identifier in [ENA](https://www.ebi.ac.uk/ena/browser) |
+| ENA_raw1 | ENA identifier for batch 1 of raw Nanopore signal data |
+| ENA_raw2 | ENA identifier for batch 2 of raw Nanopore signal data |
+| ENA_raw3 | ENA identifier for batch 3 of raw Nanopore signal data |
+| ENA_reads | ENA identifier for the sequenced reads |
+| ENA_assembly | ENA identifier for the metagenomic assemblies |
 
 ### Dataset S2 — dataset for shallow metagenomes used for multi-sample binning
 | Category | Description |
@@ -56,8 +56,8 @@
 ### Dataset S3 — dataset for per-MAG features
 | Category | Description |
 | --- | --- |
-| fieldsample_barcode | Sequenced sample ID |
-| bin | Genome bin ID |
+| fieldsample_barcode | Sequenced sample identifier |
+| bin | Genome bin iidentifier |
 | Completeness_CheckM1 | Genome bin completeness estimate, reported by CheckM |
 | Contamination_CheckM1 | Genome bin contamination estimate, reported by CheckM |
 | Strain_Heterogeneity | Genome bin strain heterogeneity estimate, reported by CheckM |
@@ -92,11 +92,11 @@
 | arc_trna | Number of unique tRNA genes genes, reported by tRNAscan-SE (archaeal model) |
 | MAG_status | Genome bin quality ranking according to [MIMAG standards](https://www.nature.com/articles/nbt.3893) |
 | MAG_status2 | Genome bin ranking from `MAG_status`, where circular MAGs are marked separately |
-| drep_cluster | Genome bin de-replication cluster ID |
+| drep_cluster | Genome bin de-replication cluster identifier |
 | rep_status | Genome bin status as species representative within the de-replicated bins |
-| ENA_ID | ENA ID for the genome bin (representative bins only) |
+| ENA_ID | ENA identifier for the genome bin (representative bins only) |
 | GTDB_taxonomy | MAG taxonomic classification, reported by GTDB-tk |
-| GTDB_REF | Reference genome ID for species level matches |
+| GTDB_REF | Reference genome identifier for species level matches |
 | GTDB_ANI | Average nucleotide identity for a top match, reported by GTDB-tk |
 | GTDB_AF | Alignment fraction for tpå match, reported by GTDB-tk |
 | GTDB_MSA | Percentage of amino acids in the multi-sequence alignment, reported by GTDB-tk |
@@ -105,10 +105,42 @@
 | SILVA_identity | Identity of the MAG 16S rRNA to the top hit match in SILVA |
 | SILVA_length | Alignment length between the MAG 16S rRNA and SILVA sequence |
 
-### Dataset S4 — dataset for proposing novel lineages under SeqCode
+### Dataset S4 — DRAM annotation results for Oederibacterium danicum genome
+ Category | Description |
+| --- | --- |
+| gene_id | Unique identifier for each gene in the annotation results |
+| fasta | Name of the file from which the gene was annotated |
+| scaffold | Identifier for the scaffold or contig where the gene is located |
+| gene_position | Position of the gene within the scaffold |
+| start_position | Start coordinate of the gene |
+| end_position | End coordinate of the gene |
+| strandedness | Orientation of the gene |
+| rank | Rank of the gene based on annotation confidence or completeness |
+| kegg_genes_id | KEGG database identifier for the matched gene |
+| ko_id | KEGG Orthology (KO) identifier assigned to the gene |
+| kegg_hit | Description of the best KEGG database match |
+| kegg_RBH | Indicates whether the KEGG match was a reciprocal best hit (RBH) |
+| kegg_identity | Percent identity of the gene to the KEGG database match |
+| kegg_bitScore | Bit score of the KEGG database match |
+| kegg_eVal | E-value of the KEGG database match |
+| peptidase_id | Identifier for the peptidase match from the MEROPS database. |
+| peptidase_family| Peptidase family classification according to the MEROPS database |
+| peptidase_hit | Description of the best peptidase match |
+| peptidase_RBH | Indicates whether the peptidase match was a reciprocal best hit |
+| peptidase_identity | Percent identity of the gene to the peptidase database match |
+| peptidase_bitScore | Bit score of the peptidase database match |
+| peptidase_eVal | E-value of the peptidase database match |
+| pfam_hits | List of Pfam protein domain annotations associated with the gene. |
+| cazy_ids | CAZy database identifiers assigned to the gene |
+| cazy_hits | Description of the best CAZy match |
+| cazy_subfam_ec | CAZy subfamily and enzyme classification (EC number) |
+| cazy_best_hit | Best-scoring CAZy annotation for the gene |
+| heme_regulatory_motif_count | Number of heme regulatory motifs detected in the gene sequence |
+
+### Dataset S5 — dataset for proposing novel lineages under SeqCode
 | Category | Description |
 | --- | --- |
-| bin | Genome bin ID |
+| bin | Genome bin identifier |
 | genus_type | Status of the genome as nomenclatural type for the genus |
 | genus_proposed | Proposed genus name for lineage |
 | species_proposed | Proposed species name for lineage |
@@ -119,7 +151,7 @@
 | genus_status| Status of the genome at genus-level taxonomy |
 | species_status | Status of the genome at species-level taxonomy |
 | novelty_method | Method used to determine novelty of the genome |
-| accession | ENA ID for the genome bin |
+| accession | ENA identifier for the genome bin |
 | sequencing_technology | Name of the sequencing platform used to sequence the genome |
 | binning_workflow | Name of the bioinformatics workflow used to recover the genome |
 | genome_size | Size of the genome in bp |
@@ -133,7 +165,7 @@
 | taxonomy_GTDB | MAG taxonomic classification, reported by GTDB-tk |
 | taxonomy_SILVA | MAG 16S rRNA taxonomic classification to the SILVA 138.2 database (top hit) |
 | taxonomy_SILVA_perc | Identity of the MAG 16S rRNA to the top hit match in SILVA |
-| sample_name | Sequenced sample ID |
+| sample_name | Sequenced sample identifier |
 | sample_country | Country of origin for the sequenced sample |
 | longitude | Sample longitude coordinates |
 | latitude| Sample latitude coordinates |
