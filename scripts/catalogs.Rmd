@@ -112,12 +112,12 @@ mags_drep_$cluster_qual <- factor(mags_drep_$cluster_qual,levels = c("MQ","HQ"))
 plot_upset <- ComplexUpset::upset(mags_drep_,names,sort_sets=FALSE, set_sizes=FALSE, height_ratio=0.33, min_size=200, intersections='all',
               matrix=(intersection_matrix(geom=geom_point(size=1.7))),
               themes=upset_modify_themes(list('intersections_matrix'=theme(text=element_text(size=8),plot.margin = unit(c(-3,0,-2,0), 'cm')))),
-              base_annotations=list('Intersection size'=intersection_size(bar_number_threshold=1, counts=T, text=list(size=1.7, angle=0), mapping=aes(fill=cluster_qual)) +
+              base_annotations=list('Intersection size'=intersection_size(bar_number_threshold=1, counts=T, text=list(size=2, angle=0), mapping=aes(fill=cluster_qual)) +
               stat_summary(fun = function(x) {sum_x <- sum(x); if (sum_x >= 1000) {return(sum_x)} else {return(NA)}},
                            fun.min = function(x) {sum_x <- sum(x); if (sum_x >= 1000) {return(sum_x)} else {return(NA)}},
-                           geom='text', position=position_stack(vjust = 0.7), size=1.5, color="white", aes(label=..y..)) +
+                           geom='text', position=position_stack(vjust = 0.7), size=1.75, color="white", aes(label=..y..)) +
               scale_fill_manual(values = c("MQ" = "#d95f02","HQ"="#1b9e77"), name="") + ylab("Species-level clusters") + 
-              theme(axis.text.y = element_text(size = 6), axis.title.y = element_text(size = 7),  plot.margin = unit(c(0,0,-2,0), 'cm'),legend.position = "none"))) +
+              theme(axis.text.y = element_text(size = 6), axis.title.y = element_text(size = 7, margin = margin(r =-2)),  plot.margin = unit(c(0,0,-2,0), 'cm'),legend.position = "none"))) +
               theme(legend.position = "none",panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3), panel.spacing = unit(0, "cm")) + 
               labs(x="")
 plot_upset
@@ -140,8 +140,8 @@ mags_n_drep$x <- ifelse(mags_n_drep$Group.1 == "HQ", mags_n_drep$x + 1000, mags_
 
 plot_mags_n <-  ggplot() + 
                 geom_bar(data=mags_n_drep, aes(fill=Group.1, y=x, x=Group.2), position="stack", stat="identity") + 
-                geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=1.75, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
-                geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.5, position = position_stack(vjust = 0.5), color="white") +
+                geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=2, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
+                geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.75, position = position_stack(vjust = 0.7), color="white") +
                 labs(title="", y="De-replicated MAGs", x="") + scale_y_continuous(expand=c(0,0), limits = c(0,95000)) + preset_gen + coord_flip()  +
                 scale_fill_manual(name = "MAG\nquality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + theme(legend.position = "right")
 plot_mags_n
@@ -566,16 +566,21 @@ plot_df
 ```{r, include=TRUE}
 # First half
 plot_table_ <- plot_table + theme(plot.margin = unit(c(-0.2,0,0,0.25), 'cm'))
-plot_upset_ <- as.ggplot(plot_upset) + theme(plot.margin = unit(c(-0.15,-1.8,-0.65,-0.25), 'cm'))
+plot_upset_ <- as.ggplot(plot_upset) + theme(plot.margin = unit(c(0,-0.2,-0.6,0.1), 'cm'))
 
-plot_mags_n_ <- plot_mags_n+ guides(fill = guide_legend(override.aes = list(size=1),reverse=T)) +
-                theme(legend.key.size = unit(0.3, "cm"),legend.margin = unit(c(-3,0,0,0), 'cm'),
-                      legend.box.background = element_blank(),legend.background = element_blank())
+#plot_mags_n_ <- plot_mags_n + guides(fill = guide_legend(override.aes = list(size=1),reverse=T)) +
+#                theme(legend.key.size = unit(0.25, "cm"),legend.margin = unit(c(-3,0,0,0), 'cm'),
+#                      legend.box.background = element_blank(),legend.background = element_blank())
+#plot_upset_ <- ggarrange(plot_upset_, as_ggplot(get_legend(plot_mags_n_)), nrow=1, ncol=2, widths = c(1,0.2), align = "none")
 
-plot_upset_ <- ggarrange(plot_upset_, as_ggplot(get_legend(plot_mags_n_)), nrow=1, ncol=2, widths = c(1,0.2), align = "none")
+plot_mags_n_ <- plot_mags_n +  guides(fill = guide_legend(override.aes = list(size=1),reverse=T)) + 
+                theme(legend.key.size = unit(0.5, "cm"), legend.margin = unit(c(0,0,0,0), 'cm'),
+                      legend.box.margin = unit(c(-0.3, 0, 0, 0), 'cm'),
+                      legend.box.background = element_blank(),legend.background = element_blank(),
+                      plot.margin = unit(c(0,0,0.1,-0.3), 'cm'))
 
-fig_ab <- ggarrange(plot_table_,plot_upset_, nrow=1, ncol=2, widths = c(1,1.5), common.legend = FALSE,
-                    align = c("v"), labels = c("a","b"), font.label = list(size = 9))
+fig_ab <- ggarrange(plot_mags_n_, plot_upset_, nrow=1, ncol=2, widths = c(1,1.5), common.legend = FALSE, legend="bottom", 
+                    align = c("none"), labels = c("a","b"), font.label = list(size = 8))
 
 # Second half
 margins <- list(theme(legend.key.width = unit(0.4, "cm"),  legend.key.height = unit(0.35, "cm"), 
@@ -588,7 +593,7 @@ plot_bgc_ <- plot_bgc + margins + theme(axis.text.y=element_blank(), plot.margin
 plot_rrna_ <- plot_rrna + margins
 
 fig_ce <- ggarrange(plot_rrna_,plot_df_,plot_bgc_, nrow=1, ncol=3, widths = c(1,1,1.35), common.legend = TRUE, legend="bottom", 
-                    align = c("h"), labels = c("c","d", "e"), font.label = list(size = 9))
+                    align = c("h"), labels = c("c","d", "e"), font.label = list(size = 8))
 
 plot_sylph_sr <- readRDS("../data/catalogs/sylph.rds") +
                  theme(plot.margin = unit(c(-0.2,0.1,0,0.1), 'cm'),
@@ -600,7 +605,7 @@ plot_sylph_sr <- readRDS("../data/catalogs/sylph.rds") +
                  guides(color = guide_legend(ncol = 1, byrow = TRUE, override.aes = list(size = 1.5))) 
 
 fig_cf <- ggarrange(fig_ce, plot_sylph_sr, nrow=1, ncol=2, widths = c(1.5,1), common.legend = FALSE, legend="bottom",
-                    align = c("none"), labels = c("", "f"), font.label = list(size = 9))
+                    align = c("none"), labels = c("", "f"), font.label = list(size = 8))
 
 # Merge
 fig_full <- ggarrange(fig_ab,fig_cf, nrow=2, ncol=1, heights = c(1,1.1), common.legend = FALSE, align = c("hv"))
