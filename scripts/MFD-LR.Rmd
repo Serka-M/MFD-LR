@@ -256,17 +256,17 @@ fig1
 preset_hab <- list(geom_quasirandom(size = 0.65, width = 0.2), geom_violin(lwd=0.25,linetype="dashed", fill=NA), preset_gen1)
 
 plot_gb <- ggplot(data=gen, aes(x=mfd_hab1_, y=reads_size_bp/10**9, color=mfd_hab1_)) + 
-           labs(title="", y="Sequenced yield (Gbp)", x="") + preset_hab
+           labs(title="", y="Sequenced yield (Gbp)", x="Sample habitat") + preset_hab
 
 plot_asm <- ggplot(data=gen, aes(x=mfd_hab1_, y=assembled, color=mfd_hab1_)) + 
-            labs(title="", y="Data assembled (%)", x="") + preset_hab
+            labs(title="", y="Data assembled (%)", x="Sample habitat") + preset_hab
 
 plot_count <- ggplot(data=gen, aes(x=mfd_hab1_, y=(HQ_mags+MQ_mags), color=mfd_hab1_)) + 
-              labs(title="", y="MAGs recovered (HQ and MQ)", x="") + preset_hab +
+              labs(title="", y="MAGs recovered (HQ and MQ)", x="Sample habitat") + preset_hab +
               scale_y_continuous(expand=c(0,0), limits = c(0,470),breaks=c(0,100,200,300,400)) 
 
 plot_bind <- ggplot(data=gen, aes(x=mfd_hab1_, y=round(r_abund*assembled/100,0), color=mfd_hab1_)) + 
-             labs(title="", y="Data binned in MAGs (%)", x="") + preset_hab +
+             labs(title="", y="Data binned in MAGs (%)", x="Sample habitat") + preset_hab +
              scale_y_continuous(expand=c(0,0), limits = c(0,70),breaks=c(0,20,40,60)) 
 
 plots_mag_hab <- ggarrange(plot_gb, plot_asm, plot_count, plot_bind, nrow=2, ncol=2, align = c("v"),
@@ -624,15 +624,16 @@ mags_drep_n2 <- as.data.frame(head(mags_drep_n2,50))
 mags_drep_n2$id <- paste(mags_drep_n2$genus,mags_drep_n2$drep_cluster,sep=" genus, cluster ")
 
 plot_drep_n <- ggplot(data=mags_drep_n2, aes(x=factor(id,level=rev(id)), y=drep_cluster_n, color=phylum)) + 
-               labs(title="", y="MAGs per cluster", x="", color="Phyla:") + 
+               labs(title="", y="MAGs per cluster", x="Genus (GTDB) and species cluster", color="Phyla:") + 
                geom_segment(aes(xend=id), yend=0, size=0.25, color="gray70") + geom_point() + 
                scale_y_continuous(expand=c(0,0), limits=c(0,45), breaks = c(0, 10, 20, 30, 40)) +
-               preset_gen2 + theme(legend.position = "right") + scale_color_brewer(palette = "Dark2") + coord_flip() 
+               preset_gen2 + theme(legend.position = "right") + 
+               scale_color_brewer(palette = "Dark2") + coord_flip() 
 
 plot_drep_n
 
-#ggsave(file="../analysis/figures/FigS8.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
-#ggsave(file="../analysis/figures/FigS8.png", height = 180, width = 160,  units ="mm", dpi = 450)
+ggsave(file="../analysis/figures/FigS8.pdf", height = 180, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
+ggsave(file="../analysis/figures/FigS8.png", height = 180, width = 160,  units ="mm", dpi = 450)
 ```
 
 
@@ -665,8 +666,8 @@ drep_rf_phyl_plot2$data[[2]]$linewidth <- 0.8    # Line size
 drep_rf_phyl_plot2 <- ggplot_gtable(drep_rf_phyl_plot2)
 grid.draw(drep_rf_phyl_plot2)
 
-#ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS15.pdf", height = 145, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
-#ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS15.png", height = 145, width = 140,  units ="mm", dpi = 450)
+#ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS15.pdf", height = 1+5, width = 140, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(drep_rf_phyl_plot2, file="../analysis/figures/FigS15.png", height = 145, width = 140, units ="mm", dpi = 450)
 ```
 
 
@@ -704,7 +705,7 @@ phylum_count_all2 <- rbind(phylum_count_all,level_phyla)
 phylum_count_all2$frac2 <- paste("(",phylum_count_all2$frac," %)", sep="")
 
 plot_phylum <- ggplot(data = phylum_count_all2, mapping = aes(x = Group.2, y = factor(Group.1,level=level_phyla$Group.1), fill = frac)) +
-               geom_tile(width=1) + scale_x_discrete(guide = guide_axis(angle = 45)) + labs(title="", y="", x="", fill="Fraction of MAGs (%):") +
+               geom_tile(width=1) + scale_x_discrete(guide = guide_axis(angle = 45)) + labs(title="", y="Phylum", x="Habitat", fill="Fraction of MAGs (%):") +
                geom_text(aes(label = x), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1) +
                scale_fill_gradient2(midpoint = 0.05, limits=c(0.01,50), breaks=c(0.01,0.1,1,10), low = "gray95", mid= "#fed976", high = "#800026", 
                                     trans="log10", labels=c("0.01","0.1","1","10"))  +

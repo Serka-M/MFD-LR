@@ -303,7 +303,7 @@ stats_sylph_sub <- stats_sylph_sub %>%
 
 plot_otus_mag <- ggplot(data = stats_sylph_sub, mapping = aes(x = novelty, y = hab, fill = mags)) + 
                  geom_tile(width=1) + geom_text(aes(label = mags), size=1.75) + 
-                 labs(title="", y="", x="Taxonomic rank", fill="Lineages with novel\ngenomes (median):") + preset_gen2 +
+                 labs(title="", y="Sample type, area and habitat descriptor (level 1)", x="Taxonomic rank", fill="Lineages with novel\ngenomes (median):") + preset_gen2 +
                  scale_fill_gradient2(midpoint = 15, limits=c(1,45), breaks=c(1,15,30,45), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60")
 plot_otus_mag
 ```
@@ -473,7 +473,7 @@ otus_all_sample <- otus_all_sample %>%
 
 plot_otus_ssu <- ggplot(data = otus_all_sample, mapping = aes(x = novelty, y = hab, fill = otus)) + 
                  geom_tile(width=1) + geom_text(aes(label = otus), size=1.75) + 
-                 labs(title="", y="", x="Taxonomic rank", fill="Undefined lineages without\ngenomes (median):") + preset_gen2  +
+                 labs(title="", y="Sample type, area and habitat descriptor (level 1)", x="Taxonomic rank", fill="Undefined lineages without\ngenomes (median):") + preset_gen2  +
                  scale_fill_gradient2(midpoint = 60, limits=c(1,180), breaks=c(1,60,120,180), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60")
 plot_otus_ssu
 ```
