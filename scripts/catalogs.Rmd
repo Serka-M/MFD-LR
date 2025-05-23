@@ -142,8 +142,9 @@ plot_mags_n <-  ggplot() +
                 geom_bar(data=mags_n_drep, aes(fill=Group.1, y=x, x=Group.2), position="stack", stat="identity") + 
                 geom_text(data = mags_n_drep_, aes(label = Total, y = Total, x= Group.2), size=2, position = position_stack(vjust = 1), color="black", hjust = -0.25) +
                 geom_text(data=mags_n_drep, aes(label = x_, y = x, x=Group.2, fill=Group.1), size=1.75, position = position_stack(vjust = 0.7), color="white") +
-                labs(title="", y="De-replicated MAGs", x="") + scale_y_continuous(expand=c(0,0), limits = c(0,83000)) + preset_gen + coord_flip()  +
-                scale_fill_manual(name = "MAG quality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + theme(legend.position = "right")
+                labs(title="", y="De-replicated MAGs", x="Genome catalogue") + scale_y_continuous(expand=c(0,0), limits = c(0,83000)) + preset_gen + coord_flip()  +
+                scale_fill_manual(name = "MAG quality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + 
+                theme(legend.position = "right", axis.title.y = element_text(margin = margin(r = -1)))
 plot_mags_n
 ```
 
@@ -577,7 +578,7 @@ plot_mags_n_ <- plot_mags_n +  guides(fill = guide_legend(override.aes = list(si
                 theme(legend.key.size = unit(0.5, "cm"), legend.margin = unit(c(0,0,0,0), 'cm'),
                       legend.box.margin = unit(c(-0.3, 0, 0, 0), 'cm'),
                       legend.box.background = element_blank(),legend.background = element_blank(),
-                      plot.margin = unit(c(0,0,0.1,-0.3), 'cm'))
+                      plot.margin = unit(c(0,0,0.1,0), 'cm'))
 
 fig_ab <- ggarrange(plot_mags_n_, plot_upset_, nrow=1, ncol=2, widths = c(1,1.5), common.legend = FALSE, legend="bottom", 
                     align = c("none"), labels = c("a","b"), font.label = list(size = 8))
@@ -586,13 +587,13 @@ fig_ab <- ggarrange(plot_mags_n_, plot_upset_, nrow=1, ncol=2, widths = c(1,1.5)
 margins <- list(theme(legend.key.width = unit(0.4, "cm"),  legend.key.height = unit(0.35, "cm"), 
                       legend.box.spacing = unit(0, "cm"), legend.box.margin = unit(c(0.1,0,-0.2,-0.7), 'cm'),
                       legend.box.background = element_blank(), legend.key = element_blank(), 
-                      legend.background = element_blank(), plot.margin = unit(c(-0.2,0.1,-0.6,-0.3), 'cm')))
+                      legend.background = element_blank()))
 
-plot_df_ <- plot_df + margins + theme(axis.text.y=element_blank(), plot.margin = unit(c(-0.2,0.1,-0.6,-0.15), 'cm'))
-plot_bgc_ <- plot_bgc + margins + theme(axis.text.y=element_blank(), plot.margin = unit(c(-0.2,0.1,-0.6,-0.15), 'cm'))
-plot_rrna_ <- plot_rrna + margins
+plot_bgc_ <- plot_bgc + margins + theme(axis.text.y=element_blank(), plot.margin = unit(c(-0.2,0.2,-0.6,0), 'cm'))
+plot_df_ <- plot_df + margins + theme(axis.text.y=element_blank(), plot.margin = unit(c(-0.2,0,-0.6,0), 'cm'))
+plot_rrna_ <- plot_rrna + margins + theme(plot.margin = unit(c(-0.2,0,-0.6,0.1), 'cm')) + labs(y="Genome catalogue")
 
-fig_ce <- ggarrange(plot_rrna_,plot_df_,plot_bgc_, nrow=1, ncol=3, widths = c(1,1,1.35), common.legend = TRUE, legend="bottom", 
+fig_ce <- ggarrange(plot_rrna_,plot_df_,plot_bgc_, nrow=1, ncol=3, widths = c(1.15,1,1.5), common.legend = TRUE, legend="bottom", 
                     align = c("h"), labels = c("c","d", "e"), font.label = list(size = 8))
 
 plot_sylph_sr <- readRDS("../data/catalogs/sylph.rds") +

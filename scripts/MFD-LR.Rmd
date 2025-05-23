@@ -362,9 +362,9 @@ plot_mag_drep
 ```{r, include=TRUE}
 mags$sankey1 <- ifelse(mags$MAG_status2 == "cMAG", "Circular",
                        ifelse(mags$Total_Contigs == 1, "Single-contig",
-                              ifelse(mags$Total_Contigs <= 10,"10 or less contigs",
-                                     ifelse(mags$Total_Contigs <= 25,"25 or less contigs",
-                                            ifelse(mags$Total_Contigs <= 50,"50 or less contigs","More than 50 contigs")))))
+                              ifelse(mags$Total_Contigs <= 10,"10 or less\ncontigs",
+                                     ifelse(mags$Total_Contigs <= 25,"25 or less\ncontigs",
+                                            ifelse(mags$Total_Contigs <= 50,"50 or less\ncontigs","More than 50\ncontigs")))))
 
 mags$sankey2 <- paste("",mags$MAG_status, sep="")
 mags$sankey3 <- ifelse(mags$rep_status == TRUE, paste("Dereplicated\n",mags$MAG_status,sep=""), NA)
@@ -372,8 +372,8 @@ mags$sankey3 <- ifelse(mags$rep_status == TRUE, paste("Dereplicated\n",mags$MAG_
 mags$gtdb_status <- ifelse(mags$phylum == "Unclassified", "Unassigned phyla", 
                            ifelse(mags$class == "Unclassified", "Unassigned class",
                                   ifelse(mags$order == "Unclassified", "Unassigned order",
-                                         ifelse(mags$family == "Unclassified", "Unassigned family",
-                                                ifelse(mags$genus == "Unclassified", "Unassigned genus",
+                                         ifelse(mags$family == "Unclassified", "Unassigned\nfamily",
+                                                ifelse(mags$genus == "Unclassified", "Unassigned\ngenus",
                                                        ifelse(mags$species == "Unclassified", "Unassigned species", "Known species"))))))
 
 mags$sankey4 <- ifelse(mags$rep_status == TRUE, mags$gtdb_status, NA)
@@ -395,25 +395,25 @@ mags_sankey_  <- mags_sankey_ %>% filter(!is.na(node))
 
 # Ordering
 mags_sankey_$node <- factor(mags_sankey_$node,levels =
-                              c("More than 50 contigs","50 or less contigs","25 or less contigs","10 or less contigs",
+                              c("More than 50\ncontigs","50 or less\ncontigs","25 or less\ncontigs","10 or less\ncontigs",
                                 "Single-contig", "Circular",
                                 "MQ","HQ","cMAG",
                                 "Redundant","Dereplicated\nMQ","Dereplicated\nHQ","Dereplicated\ncMAG",
-                                "Omitted", "Known species","Unassigned\nspecies", "Unassigned genus",
-                                "Unassigned family","Unassigned order","Unassigned class"))
+                                "Omitted", "Known species","Unassigned\nspecies", "Unassigned\ngenus",
+                                "Unassigned\nfamily","Unassigned order","Unassigned class"))
 
 mags_sankey_$next_node <- factor(mags_sankey_$next_node,levels =
-                              c("More than 50 contigs","50 or less contigs","25 or less contigs","10 or less contigs",
+                              c("More than 50\ncontigs","50 or less\ncontigs","25 or less\ncontigs","10 or less\ncontigs",
                                 "Single-contig", "Circular",
                                 "MQ","HQ","cMAG",
                                 "Redundant","Dereplicated\nMQ","Dereplicated\nHQ","Dereplicated\ncMAG",
-                                "Omitted", "Known species","Unassigned\nspecies", "Unassigned genus",
-                                "Unassigned family","Unassigned order","Unassigned class"))
+                                "Omitted", "Known species","Unassigned\nspecies", "Unassigned\ngenus",
+                                "Unassigned\nfamily","Unassigned order","Unassigned class"))
 
 sankey <- ggplot(mags_sankey_, aes(x = x, next_x = next_x, node = node, next_node = next_node,
                                    fill = factor(node),label = paste0(node," (", n,")"))) +  
           geom_sankey(flow.alpha = 0.5, node.color = "black", size=0.2, show.legend = FALSE, width = 0.1) +
-          geom_sankey_label(size = 1.75, color = "black", fill= "white",hjust=0, alpha=0.85, width=2.25) +  theme_bw() +
+          geom_sankey_label(size = 2, color = "black", fill= "white",hjust=0, alpha=0.85, width=2.25) +  theme_bw() +
           theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(),
                 panel.grid = element_blank(), legend.position = "none", panel.border = element_blank(),
                 axis.text.x = element_text(margin = margin(t = -10),size = 7), plot.margin=grid::unit(c(0,0,0,-18), "mm")) +
@@ -555,12 +555,15 @@ grid.draw(drep_rf2)
 
 ### Make Figure 2
 ```{r, include=TRUE}
-core_gen <- readRDS("../data/MFD-LR/core_genera.rds") + labs(fill="MIMAG ranking:") + scale_x_discrete(guide = guide_axis(angle = 30)) + 
+core_gen <- readRDS("../data/MFD-LR/core_genera.rds") + labs(fill="MIMAG ranking:", x="Metadata category") + scale_x_discrete(guide = guide_axis(angle = 30)) + 
             theme(plot.margin = unit(c(2, 2, -3, 5), "mm"), legend.text=element_text(size=7), legend.title = element_text(size=7),
                   legend.box.spacing = unit(0, "mm"), legend.position = "bottom")
 
-fig2_ab <- ggarrange(sankey, as.ggplot(drep_rf2), nrow=1, ncol=2, legend = "none", align = "h",
-                     common.legend = FALSE, labels = c("a","b"), font.label = list(size = 8), widths=c(1,1))
+drep_rf2_ <- as.ggplot(drep_rf2) + theme(plot.margin = unit(c(0, -3, 0, -1), "mm"))
+sankey_ <- sankey + theme(plot.margin = unit(c(0, 0, 0, -21), "mm"))
+
+fig2_ab <- ggarrange(sankey_, drep_rf2_, nrow=1, ncol=2, legend = "none", align = "none",
+                     common.legend = FALSE, labels = c("a","b"), font.label = list(size = 8), widths=c(1.2,1))
 
 fig2_cf <- ggarrange(plot_mag_size, plot_mag_cov, plot_mag_n50, plot_mag_cd, nrow=2, ncol=2, legend = "none", align = "hv",
                      common.legend = FALSE, labels = c("c","d","e","f"), font.label = list(size = 8)) 
