@@ -203,6 +203,7 @@ map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") +
        scale_y_continuous(breaks = seq(54, 58, by = 1), labels = function(y) paste0(y, "°N")) +
        labs(x = "Longitude", y = "Latitude", col = "Habitat:")
 map
+#write.table(gen[,c("fieldsample_barcode","longitude","latitude","mfd_hab1_")],"../analysis/source/Fig_1a.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -220,18 +221,23 @@ plot_scale <- scale_y_continuous(expand=c(0,0), limits = c(0,102), breaks = c(0,
 
 plot_yield <- ggplot(data=gen, aes(x=name1, y=reads_size_bp/10**9)) + labs(title="", y="Sequenced yield (Gbp)", x="") +
               preset_fig1 + scale_y_continuous(expand=c(0,0), limits = c(0,210), breaks = c(0,50,100,150,200))
+#write.table(gen[,c("fieldsample_barcode","reads_size_bp","mfd_hab1_")],"../analysis/source/Fig_1b.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 plot_n50 <- ggplot(data=gen, aes(x=name1, y=reads_N50_bp/10**3)) + labs(title="", y="Read N50 (kbp)", x="") +
             preset_fig1 + scale_y_continuous(expand=c(0,0), limits = c(0,12.5), breaks = c(0,3,6,9,12))
+#write.table(gen[,c("fieldsample_barcode","reads_N50_bp","mfd_hab1_")],"../analysis/source/Fig_1c.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 plot_asm <- ggplot(data=gen, aes(x=name1, y=assembled)) + labs(title="", y="Sequenced data asssembled (%)", x="") +
             preset_fig1 + plot_scale
+#write.table(gen[,c("fieldsample_barcode","assembled","mfd_hab1_")],"../analysis/source/Fig_1d.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 plot_bin <- ggplot(data=gen, aes(x=name1, y=r_abund*(assembled/100))) + labs(title="", y="Sequenced data binned (%)", x="") +
             preset_fig1 + plot_scale
+#write.table(gen[,c("fieldsample_barcode","assembled","r_abund","mfd_hab1_")],"../analysis/source/Fig_1e.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 plot_mags <- ggplot(data=gen, aes(x=name1, y=HQ_mags+MQ_mags)) + labs(title="", y="MAGs recovered", x="")  +
              preset_fig1 + scale_y_continuous(expand=c(0,0), limits = c(0,420), breaks = c(0,100,200,300,400))
+#write.table(gen[,c("fieldsample_barcode","HQ_mags","MQ_mags","mfd_hab1_")],"../analysis/source/Fig_1f.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -422,6 +428,7 @@ sankey <- ggplot(mags_sankey_, aes(x = x, next_x = next_x, node = node, next_nod
                                     "sankey3" = "Quality ranking\n(dereplicated)", "sankey4" = "Taxonomy\nranking"))
 
 sankey
+#write.table(mags[,c("bin","sankey1","sankey2","sankey3","sankey4")],"../analysis/source/Fig_2a.tsv",quote=T,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -515,15 +522,19 @@ preset_mags <- list(geom_boxplot(width=0.75, alpha = 0.75, lwd=0.2, outlier.size
 
 plot_mag_n50 <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Contig_N50/10**3, fill=MAG_status)) +
                 preset_mags + labs(title="", y="Contig N50 (kbp)", x="") + scale_y_continuous(trans="log2") 
+#write.table(mags[mags$rep_status == TRUE,c("bin","Contig_N50","MAG_status")],"../analysis/source/Fig_2e.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 plot_mag_cov <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=as.numeric(cov), fill=MAG_status)) + 
                 preset_mags + labs(title="", y="MAG coverage", x="") + scale_y_continuous(trans="log2") 
+#write.table(mags[mags$rep_status == TRUE,c("bin","cov","MAG_status")],"../analysis/source/Fig_2d.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 plot_mag_cd <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Coding_Density*100, fill=MAG_status)) + 
                preset_mags + labs(title="", y="Coding density (%)", x="") 
+#write.table(mags[mags$rep_status == TRUE,c("bin","Coding_Density","MAG_status")],"../analysis/source/Fig_2f.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
  
 plot_mag_size <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y=Genome_Size/10**6, fill=MAG_status)) + 
                  preset_mags + labs(title="", y="MAG size (Mbp)", x="")
+#write.table(mags[mags$rep_status == TRUE,c("bin","Genome_Size","MAG_status")],"../analysis/source/Fig_2c.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -532,6 +543,7 @@ plot_mag_size <- ggplot(data=mags[mags$rep_status == TRUE,], aes(x=MAG_status, y
 drep_rf <- aggregate(mags$drep_cluster, by=list(mags$drep_cluster), FUN=length)
 
 drep_rf_ <- iNEXT(drep_rf[,c("x")], q=0, datatype="abundance")
+drep_rf_df <- as.data.frame(drep_rf_$iNextEst)
 
 drep_rf_plot <- ggiNEXT(drep_rf_) + theme_bw(base_size = 5) + 
                 labs(x="MAGs",y="Different microbial species", linetype="") +
@@ -550,6 +562,8 @@ drep_rf2$data[[1]]$size <- 3           # Point size
 drep_rf2$data[[2]]$linewidth <- 0.8    # Line size
 drep_rf2 <- ggplot_gtable(drep_rf2)
 grid.draw(drep_rf2)
+
+#write.table(drep_rf_df[,1:3],"../analysis/source/Fig_2b.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -558,6 +572,7 @@ grid.draw(drep_rf2)
 core_gen <- readRDS("../data/MFD-LR/core_genera.rds") + labs(fill="MIMAG ranking:", x="Metadata category") + scale_x_discrete(guide = guide_axis(angle = 30)) + 
             theme(plot.margin = unit(c(2, 2, -3, 5), "mm"), legend.text=element_text(size=7), legend.title = element_text(size=7),
                   legend.box.spacing = unit(0, "mm"), legend.position = "bottom")
+#write.table(core_gen$data,"../analysis/source/Fig_2g.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 drep_rf2_ <- as.ggplot(drep_rf2) + theme(plot.margin = unit(c(0, -3, 0, -1), "mm"))
 sankey_ <- sankey + theme(plot.margin = unit(c(0, 0, 0, -21), "mm"))

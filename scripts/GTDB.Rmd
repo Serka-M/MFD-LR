@@ -208,6 +208,10 @@ colnames(abund_phyla)[1] <- "phylum"
 
 label_phyla$phylum_ <- ifelse((label_phyla$phylum %in% abund_phyla$phylum), label_phyla$phylum,"Other phyla")
 list_phyla <- c(abund_phyla$phylum,"Other phyla")
+
+tree_df_ <- gtdb_tree %>% as.treedata %>% as_tibble
+label_phyla$domain <- ifelse(label_phyla$label %in% tree_df_[tree_df_$group == 0,]$label,"Bacteria","Archaea")
+#write.table(label_phyla,"../analysis/source/Fig_4.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 

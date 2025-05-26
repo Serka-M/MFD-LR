@@ -121,6 +121,7 @@ plot_upset <- ComplexUpset::upset(mags_drep_,names,sort_sets=FALSE, set_sizes=FA
               theme(legend.position = "none",panel.grid.minor = element_line(size = 0.15), panel.grid.major = element_line(size = 0.3), panel.spacing = unit(0, "cm")) + 
               labs(x="")
 plot_upset
+#write.table(mags_drep_,"../analysis/source/Fig_3b.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -146,6 +147,9 @@ plot_mags_n <-  ggplot() +
                 scale_fill_manual(name = "MAG quality:", values = c("HQ"="#1b9e77", "MQ" = "#d95f02")) + 
                 theme(legend.position = "right", axis.title.y = element_text(margin = margin(r = -1)))
 plot_mags_n
+
+mags_n_df <- merge(mags_n_drep,mags_n_drep_,by="Group.2")
+#write.table(mags_n_df,"../analysis/source/Fig_3a.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -261,6 +265,7 @@ plot_rrna <- ggplot(data = ssu, mapping = aes(x = type, y = group, fill = frac))
              geom_text(aes(label = rrna_all), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1)  +
              labs(title="", y="", x="rRNA operons", fill="Estimated as complete (%):") + preset_gen2 
 plot_rrna
+#write.table(ssu[,c("group","type","rrna_all","rrna_operon","frac")],"../analysis/source/Fig_3c.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -377,6 +382,7 @@ plot_bgc <- ggplot(data = as_filt, mapping = aes(x = type, y = group, fill = edg
             geom_text(aes(label = bgc_sum), size=1.75, vjust=-0.7) +  geom_text(aes(label = edge_frac2), size=1.75, vjust=1) +
             labs(title="", y="", x="BGCs", fill="Estimated as complete (%):") + preset_gen2
 plot_bgc
+#write.table(as_filt[,c("group","type","bgc_sum","bgc","edge_frac")],"../analysis/source/Fig_3e.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -560,6 +566,7 @@ plot_df <- ggplot(data = df_c_agr, mapping = aes(x = type, y = group, fill = fra
            geom_text(aes(label = di_all), size=1.75, vjust=-0.7) + geom_text(aes(label = frac2), size=1.75, vjust=1) + 
            labs(title="", y="", x="Defense islands", fill="Estimated as complete (%):") + preset_gen2
 plot_df
+#write.table(df_c_agr[,c("group","type","di_all","di_full","frac")],"../analysis/source/Fig_3d.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 ```
 
 
@@ -604,6 +611,8 @@ plot_sylph_sr <- readRDS("../data/catalogs/sylph.rds") +
                        legend.key = element_rect(color = NA, fill = NA), legend.spacing.y = unit(-0.5, "lines"),
                        legend.text = element_text(lineheight = 0.01, vjust = 0)) +
                  guides(color = guide_legend(ncol = 1, byrow = TRUE, override.aes = list(size = 1.5))) 
+sylph_sr_df <- as.data.frame(plot_sylph_sr$data)
+#write.table(sylph_sr_df[,c("fieldsample_barcode","group","mfd_sampletype","class")],"../analysis/source/Fig_3f.tsv",quote=F,row.names=FALSE,col.names=T,sep="\t")
 
 fig_cf <- ggarrange(fig_ce, plot_sylph_sr, nrow=1, ncol=2, widths = c(1.5,1), common.legend = FALSE, legend="bottom",
                     align = c("none"), labels = c("", "f"), font.label = list(size = 8))
