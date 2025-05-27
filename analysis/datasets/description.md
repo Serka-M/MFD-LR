@@ -163,6 +163,7 @@
 | count_16S | Number of detected 16S rRNA genes |
 | count_tRNA | Number of detected different tRNA genes |
 | taxonomy_GTDB | MAG taxonomic classification, reported by GTDB-tk |
+| taxonomy_proposed | MAG taxonomic classification with the proposed names |
 | taxonomy_SILVA | MAG 16S rRNA taxonomic classification to the SILVA 138.2 database (top hit) |
 | taxonomy_SILVA_perc | Identity of the MAG 16S rRNA to the top hit match in SILVA |
 | sample_name | Sequenced sample identifier |

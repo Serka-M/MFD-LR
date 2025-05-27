@@ -20,7 +20,8 @@ The repo is structured in a way that the folders and the subfolders store the co
 | scripts/ | The code used to analyse the data and plot the figures. |
 | analysis/ | The results produced by the scripts (processed datasets, figures, etc.). |
 | ├ datasets/ | Main datasets used in the project and their documentation |
-| └ figures/ | Figures used in the manuscript |
+| ├ figures/ | Figures used in the manuscript |
+| └ source/ | Source data for the main figures |
 | data/ | The input for the project. |
 | ├ MFD-LR/ | Data related to analysing MAGs from this study |
 | ├ MFD-SR/ | Relevant data from the Microflora Danica 10,000 metagenome study |
