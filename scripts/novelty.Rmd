@@ -328,7 +328,7 @@ mags_mfg$Genus <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",g:[a-zA-Z0-9 -_]+,s:",",g:"
 mags_mfg$Family <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",f:[a-zA-Z0-9 -_]+,g:",",f:",",g:",86.5)
 mags_mfg$Order <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",o:[a-zA-Z0-9 -_]+,f:",",o:",",f:",82)
 mags_mfg$Class <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",c:[a-zA-Z0-9 -_]+,o:",",c:",",o:",78.5)
-mags_mfg$Phylum <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",c:[a-zA-Z0-9 -_]+,o:",",c:",",o:",75)
+mags_mfg$Phylum <- mfg_rank(mags_mfg$V2,mags_mfg$V3,",p:[a-zA-Z0-9 -_]+,c:",",p:",",c:",75)
 ```
 
 
