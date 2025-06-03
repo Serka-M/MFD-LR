@@ -167,11 +167,11 @@ gen_sankey_$next_node <- factor(gen_sankey_$next_node,levels=rev(samples))
 sankey <- ggplot(gen_sankey_, aes(x = x, next_x = next_x, node = node, next_node = next_node,
                                   fill = factor(node), label = paste0(node," (", n,")"))) +  
           geom_sankey(flow.alpha = 0.5, node.color = "black", size=0.05, show.legend = FALSE, width = 0.1) +
-          geom_sankey_label(size = 1.2, color = "black", fill= "white",hjust=0, alpha=0.85, width=2) +  theme_bw() +
+          geom_sankey_label(size = 1.5, color = "black", fill= "white",hjust=0, alpha=0.85, width=2) +  theme_bw() + coord_cartesian(clip = "off") +
           theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(),
                 panel.grid = element_blank(), legend.position = "none",
-                axis.text.x = element_text(margin = margin(t = -10),size = 7), panel.border = element_blank(),
-                plot.margin=grid::unit(c(-2,2,1,-15), "mm")) +
+                axis.text.x = element_text(margin = margin(t=-25),size = 7), panel.border = element_blank(),
+                plot.margin=grid::unit(c(-8,0,0,-24), "mm"))  +
           scale_fill_manual(values=samples_col,breaks=samples) + 
           scale_x_discrete(labels=c("mfd_sampletype" = "Sample type", 
                                     "mfd_areatype" = "Area type", 
@@ -180,8 +180,8 @@ sankey <- ggplot(gen_sankey_, aes(x = x, next_x = next_x, node = node, next_node
                                     "mfd_hab3" = "Habitat descriptor\n(level 3)"))
 
 sankey
-#ggsave(file="../analysis/figures/FigS1.pdf", height = 180, width = 150, useDingbats=FALSE,  units ="mm", dpi = 300)
-#ggsave(file="../analysis/figures/FigS1.png", height = 180, width = 150,  units ="mm", dpi = 450)
+#ggsave(file="../analysis/figures/FigS1.pdf", height = 200, width = 160, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS1.png", height = 200, width = 160,  units ="mm", dpi = 450)
 ```
 
 
@@ -604,7 +604,7 @@ drep_rf_hab_tmp <- split(drep_rf_hab$x, drep_rf_hab$Group.2)
 drep_rf_hab_ <- iNEXT(drep_rf_hab_tmp, q=0, datatype="abundance")
 
 drep_rf_hab_plot <- ggiNEXT(drep_rf_hab_, color.var="Assemblage") + theme_bw(base_size = 5) + 
-                    labs(x="MAGs",y="Different microbial species", linetype="", fill="", color="") +
+                    labs(x="MAGs",y="Different microbial species", linetype="", fill="", color="Habitat:") +
                     theme(legend.position = "bottom", strip.text = element_text(size=7), legend.spacing = unit(0.1, "mm"),
                           axis.title.y = element_text(size = 7), axis.title.x = element_text(size = 7),
                           axis.text.y = element_text(size = 6), axis.text.x = element_text(size = 6),
@@ -614,7 +614,7 @@ drep_rf_hab_plot <- ggiNEXT(drep_rf_hab_, color.var="Assemblage") + theme_bw(bas
                     scale_color_manual(values=labels) + scale_fill_manual(values=labels) +
                     scale_shape_manual(values=c(19,19,19,19,19,19,19,19,19,19,19,19)) +
                     guides(color=guide_legend(override.aes = list(linewidth=NA, fill=NA, size=1.5)), shape="none",linetype = "none", fill = "none") +
-                    theme(plot.margin = unit(c(2, 4, 0, 2), "mm"), legend.key.height=unit(0.4, 'cm'), legend.key.width=unit(0.25, 'cm'))
+                    theme(plot.margin = unit(c(2, 4, 0, 2), "mm"), legend.key.height=unit(0.3, 'cm'), legend.key.width=unit(0.25, 'cm'))
 
 # Add customizations
 drep_rf_hab_plot2 <- ggplot_build(drep_rf_hab_plot)
@@ -642,10 +642,10 @@ mags_drep_n2 <- as.data.frame(head(mags_drep_n2,50))
 mags_drep_n2$id <- paste(mags_drep_n2$genus,mags_drep_n2$drep_cluster,sep=" genus, cluster ")
 
 plot_drep_n <- ggplot(data=mags_drep_n2, aes(x=factor(id,level=rev(id)), y=drep_cluster_n, color=phylum)) + 
-               labs(title="", y="MAGs per cluster", x="Genus (GTDB) and species cluster", color="Phyla:") + 
+               labs(title="", y="MAGs per cluster", x="Genus (GTDB) and species cluster", color="Phylum:") + 
                geom_segment(aes(xend=id), yend=0, size=0.25, color="gray70") + geom_point() + 
                scale_y_continuous(expand=c(0,0), limits=c(0,45), breaks = c(0, 10, 20, 30, 40)) +
-               preset_gen2 + theme(legend.position = "right") + 
+               preset_gen2 + theme(legend.position = "right",legend.spacing.y = unit(0.1, "cm"), legend.key.height = unit(0.4, "cm")) + 
                scale_color_brewer(palette = "Dark2") + coord_flip() 
 
 plot_drep_n

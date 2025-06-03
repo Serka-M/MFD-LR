@@ -147,10 +147,12 @@ gtdb_plot <- function(count,label,dotsize) {
   geom_line(aes(group=ID),col="black", size=0.1, alpha =0.5) + geom_point(size=dotsize, alpha=0.5) + 
   labs(y=paste("Species per",label,"in GTDB",sep=" "), x="Taxa queue position by species count in decreasing order") +
   preset_gen + guides(color = guide_legend(override.aes = list(size = 1))) +
+  theme(legend.spacing.x = unit(0.2, "cm"), legend.key.width = unit(0.1, "cm")) +
   scale_y_continuous(trans="log10", expand=c(0.05,0.05)) + 
   scale_x_continuous(expand=c(0.05,0.05), breaks = c(1, pretty(count$ID)[pretty(count$ID) != 0])) +
-  scale_color_manual(name = "", values=c("gtdb_species"="#bf812d","total_mags"="#35978f", "zero"="#bdbdbd"),
-                     labels=c("gtdb_species"="GTDB genomes","total_mags"="With MFD-LR MAGs", "zero"="No MAGs recovered for group"))
+  scale_color_manual(name = "Lineage status:", values=c("gtdb_species"="#bf812d","total_mags"="#35978f", "zero"="#bdbdbd"),
+                     labels=c("gtdb_species"="Genomes in GTDB","total_mags"="GTDB + MFD-LR genomes", "zero"="MFD-LR MAGs not recovered for group"))
+  
   return (plot) }
 
 plot_phylum <- gtdb_plot(count_phylum,"phylum",0.6)
@@ -163,7 +165,7 @@ plot_cov <- ggarrange(plot_phylum,plot_class,plot_order,plot_family, labels = c(
                       nrow=4, ncol=1, align = "none", common.legend = TRUE, legend = "bottom")
 
 #ggsave(plot_cov, file="../analysis/figures/FigS17.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
-#ggsave(plot_cov, file="../analysis/figures/FigS17.png", height = 240, width = 180,  units ="mm", dpi = 450)
+#ggsave(plot_cov, file="../analysis/figures/FigS17.png", height = 240, width = 180, units ="mm", dpi = 450)
 ```
 
 
@@ -221,10 +223,10 @@ plot_tree <- ggtree(gtdb_tree, layout="circular", aes(color=group), lwd=0.05) %<
              scale_color_manual(values=c("#d8b365", "#74c476"), labels=c("Bacteria","Archaea")) +
              geom_point2(aes(subset=(label %in% mags$bin)), shape=21, size=0.6, stroke = 0, fill="#b10026") +  
              scale_fill_brewer(palette = "Paired")  +
-             guides(color=guide_legend(order=1, ncol=2, title="Domain", keywidth=0.8, override.aes = list(shape=NA, linewidth=0.9)), fill=none) + 
+             guides(color=guide_legend(order=1, ncol=2, title="Domain:", keywidth=0.8, override.aes = list(shape=NA, linewidth=0.9)), fill=none) + 
              new_scale_fill() + 
              geom_fruit(geom=geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
-             guides(fill=guide_legend(order=2, ncol=2, title="Phylum", keywidth=0.7, keyheight=0.7)) +
+             guides(fill=guide_legend(order=2, ncol=2, title="Phylum:", keywidth=0.7, keyheight=0.7)) +
              theme(legend.text=element_text(size=6), legend.title = element_text(size=7),legend.box.spacing = unit(0, "cm"),
                    legend.background = element_blank(),legend.box.background = element_blank(),legend.key = element_blank()) +
              scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
@@ -253,10 +255,10 @@ tree_df2 <- gtdb_tree2 %>% as.treedata %>% as_tibble
 plot_tree2 <- ggtree(gtdb_tree2, layout="circular", aes(color=group), lwd=0.05) %<+% label_phyla +
               scale_color_manual(values=c("#b10026","#d8b365", "#74c476"), labels=c("MFD-LR","GTDB bacterial","GTDB archaeal")) +
               scale_fill_brewer(palette = "Paired")  +
-              guides(color = guide_legend(order=1, ncol=3, title="Genome source", keywidth=0.8, override.aes = list(shape=NA, linewidth=0.9)), fill=none) + 
+              guides(color = guide_legend(order=1, ncol=3, title="Genome source:", keywidth=0.8, override.aes = list(shape=NA, linewidth=0.9)), fill=none) + 
               new_scale_fill() + 
               geom_fruit(geom = geom_tile, mapping = aes(y=label, x=1, fill=phylum_), width=0.2, pwidth=0.08, offset=-0.2) +
-              guides(fill=guide_legend(order=2, ncol=2, title="Phylum", keywidth=0.7, keyheight=0.7)) +
+              guides(fill=guide_legend(order=2, ncol=2, title="Phylum:", keywidth=0.7, keyheight=0.7)) +
               theme(legend.text=element_text(size=6), legend.title = element_text(size=7),legend.box.spacing = unit(0, "cm"),
                     legend.background = element_blank(),legend.box.background = element_blank(),legend.key = element_blank()) +
               scale_fill_manual(breaks=list_phyla, values=c("#c777cb","#c9443c","#5b3687","#9cb241","#b2467e","#d1972c","#61bc6a","#bf702a",
