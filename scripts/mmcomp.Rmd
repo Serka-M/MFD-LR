@@ -167,7 +167,7 @@ plot_fig <- ggarrange(plot_mags_n,plot_kaiju_r,plot_melon_r, plot_melon_c, plot_
                       legend = "bottom", common.legend = TRUE, align = c("hv"), labels = c("a","b","c","d","e","f","g","h","i"), font.label = list(size = 8))
 
 plot_fig
-ggsave(file="../analysis/figures/FigS4.pdf", height = 180, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
-ggsave(file="../analysis/figures/FigS4.png", height = 180, width = 180,  units ="mm", dpi = 450)
+#ggsave(file="../analysis/figures/FigS4.pdf", height = 180, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/FigS4.png", height = 180, width = 180,  units ="mm", dpi = 450, bg = "white")
 ```
 

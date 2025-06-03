@@ -165,7 +165,7 @@ plot_cov <- ggarrange(plot_phylum,plot_class,plot_order,plot_family, labels = c(
                       nrow=4, ncol=1, align = "none", common.legend = TRUE, legend = "bottom")
 
 #ggsave(plot_cov, file="../analysis/figures/FigS17.pdf", height = 240, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
-#ggsave(plot_cov, file="../analysis/figures/FigS17.png", height = 240, width = 180, units ="mm", dpi = 450)
+#ggsave(plot_cov, file="../analysis/figures/FigS17.png", height = 240, width = 180, units ="mm", dpi = 450, bg = "white")
 ```
 
 
@@ -265,7 +265,7 @@ plot_tree2 <- ggtree(gtdb_tree2, layout="circular", aes(color=group), lwd=0.05) 
                                                             "#45c097","#5e8bd5","#668433","#6d71d8","#c69e54","#ba4758","#ab5634","#d9d9d9")) 
 
 #ggsave(plot_tree2, file="../analysis/figures/FigS11.pdf", height = 120, width = 180, useDingbats=FALSE, units ="mm", dpi = 300)
-#ggsave(plot_tree2, file="../analysis/figures/FigS11.png", height = 120, width = 180, units ="mm", dpi = 450)
+#ggsave(plot_tree2, file="../analysis/figures/FigS11.png", height = 120, width = 180, units ="mm", dpi = 450, bg = "white")
 ```
 
 
