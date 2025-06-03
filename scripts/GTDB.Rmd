@@ -145,11 +145,12 @@ gtdb_plot <- function(count,label,dotsize) {
   
   plot <- ggplot(data=count_, aes(x=ID, y=count, color=group2)) + 
   geom_line(aes(group=ID),col="black", size=0.1, alpha =0.5) + geom_point(size=dotsize, alpha=0.5) + 
-  labs(y=paste("Species per",label,"in GTDB",sep=" "), x="Taxa queue position by species count in decreasing order") +
+  labs(y=paste("Species per",label,sep=" "), x="Taxa queue position by species count in decreasing order") +
   preset_gen + guides(color = guide_legend(override.aes = list(size = 1))) +
   theme(legend.spacing.x = unit(0.2, "cm"), legend.key.width = unit(0.1, "cm")) +
   scale_y_continuous(trans="log10", expand=c(0.05,0.05)) + 
   scale_x_continuous(expand=c(0.05,0.05), breaks = c(1, pretty(count$ID)[pretty(count$ID) != 0])) +
+  guides(colour = guide_legend(override.aes = list(size=1.5))) +
   scale_color_manual(name = "Lineage status:", values=c("gtdb_species"="#bf812d","total_mags"="#35978f", "zero"="#bdbdbd"),
                      labels=c("gtdb_species"="Genomes in GTDB","total_mags"="GTDB + MFD-LR genomes", "zero"="MFD-LR MAGs not recovered for group"))
   
