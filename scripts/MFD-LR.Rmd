@@ -245,7 +245,7 @@ plot_mags <- ggplot(data=gen, aes(x=name1, y=HQ_mags+MQ_mags)) + labs(title="", 
 ```{r, include=TRUE}
 map_ <- map + theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.4), "cm"))
 
-fig1_bf <- ggarrange(plot_yield, plot_n50, plot_asm, plot_bin, plot_mags,
+fig1_bf <- ggarrange(plot_yield, plot_n50, plot_asm, plot_mags, plot_bin,
                      nrow=5, ncol=1, legend = "none", common.legend = FALSE,
                      labels = c("b","c","d","e","f"), font.label = list(size = 8))
 
@@ -253,7 +253,7 @@ fig1 <- ggarrange(map_, fig1_bf, nrow=1, ncol=2, common.legend = FALSE, widths=c
                   align = c("none"), labels = c("a"), font.label = list(size = 8))
 fig1
 
-#ggsave(file="../analysis/figures/Fig1_pre.pdf", height = 100, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300)
+#ggsave(file="../analysis/figures/Fig1_pre.pdf", height = 100, width = 180, useDingbats=FALSE,  units ="mm", dpi = 300, bg = "white")
 ```
 
 
