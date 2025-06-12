@@ -143,7 +143,7 @@ labels_n <- sample_count %>% select(sample, sample_n) %>% distinct() %>% deframe
 map <- mapDK(detail = 'region', map.colour = "grey50", map.fill = "grey98") + 
        geom_point(data = sylph_all[sylph_all$latitude > 0 & sylph_all$latitude < 58,],
                   aes(x=longitude, y=latitude, group=novelty, color=novelty, size=novelty, alpha=novelty)) +
-       scale_color_manual(name = "Highest observed genome novelty:", labels=labels_n,
+       scale_color_manual(name = "Highest observed taxonomic divergence:", labels=labels_n,
                           values = c("Phylum" = "#880808", "Order"="#fee090", "Family" = "#1b9e77", 
                                      "Genus" = "#a6dba0", "Linages not found" = "gray60")) +
        scale_size_manual(values = c("Phylum"=1, "Order"=0.6, "Family" = 0.5, "Genus" = 0.4, "Linages not found" = 0.4)) +
@@ -197,10 +197,10 @@ def_plot_heatmap <- function(df,group_sample,group_name) {
   
   plot <- ggplot(data = sample_mfd, mapping = aes(x = group, y = category, fill = frac)) + geom_tile(width=1) +
           geom_text(aes(label = count), size=1.75, vjust=-0.4) +  geom_text(aes(label = frac2), size=1.75, vjust=0.9) +
-          labs(title="", y=group_name, x="Novelty rank", fill="Samples with novel genomes (%):") + 
+          labs(title="", y=group_name, x="Taxonomic divergence level", fill="Samples with MFD-LR MAGs (%):") + 
           scale_fill_gradient2(midpoint = 50, limits=c(0.001,100), breaks=c(1,25,50,75,100), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60") + 
           preset_gen2 + theme(legend.box.background = element_blank(),legend.background = element_blank(), legend.title = element_text(margin = margin(b = 1)),
-                              legend.key.height = unit(0.5, "cm"), axis.title.y = element_text(margin = margin(r = -2)), axis.title.x = element_text(margin = margin(t = -2)),
+                              legend.key.height = unit(0.5, "cm"), axis.title.y = element_text(margin = margin(r = -1.8)), axis.title.x = element_text(margin = margin(t = -1.8)),
                               legend.title.align = 0.5)
   
   return (plot) }
@@ -235,12 +235,12 @@ def_plot_dens <- function(df,x_sample,x_name) {
 sylph_all_ <- sylph_all
 sylph_all_ <- sylph_all_[sylph_all_$mfd_sampletype != "Other" & sylph_all_$mfd_areatype != "Subterranean" & sylph_all_$mfd_sampletype != "Water",]
 
-plot_den_count <- def_plot_dens(sylph_all_,"count_g","Genera with novel genomes (count)") +
+plot_den_count <- def_plot_dens(sylph_all_,"count_g","Genera with MFD-LR MAGs (count)") +
                   scale_x_continuous(expand=c(0,0), breaks=c(0,15,30,45,60), limits=c(0,70)) +
                   scale_y_continuous(expand=c(0,0), breaks=c(0,0.02,0.04), limits=c(0,0.05))
 plot_den_count
 
-plot_den_abund <- def_plot_dens(sylph_all_,"abund_g","Genera with novel genomes (cumulative abundance, %)") +
+plot_den_abund <- def_plot_dens(sylph_all_,"abund_g","Genera with MFD-LR MAGs (cumulative abundance, %)") +
                   scale_y_continuous(expand=c(0,0), breaks=c(0,0.2,0.4), limits=c(0,0.5)) + 
                   scale_x_continuous(expand=c(0,0), breaks=c(0,2,4,6), limits=c(0,7.5))               
 plot_den_abund
@@ -305,7 +305,7 @@ stats_sylph_sub <- stats_sylph_sub %>%
 
 plot_otus_mag <- ggplot(data = stats_sylph_sub, mapping = aes(x = novelty, y = hab, fill = mags)) + 
                  geom_tile(width=1) + geom_text(aes(label = mags), size=1.75) + 
-                 labs(title="", y="Sample type, area and habitat descriptor (level 1)", x="Taxonomic rank", fill="Lineages with novel\ngenomes (median):") + preset_gen2 +
+                 labs(title="", y="Sample type, area and habitat descriptor (level 1)", x="Taxonomic divergence level", fill="Lineages with MFD-LR\ngenomes (median):") + preset_gen2 +
                  scale_fill_gradient2(midpoint = 15, limits=c(1,45), breaks=c(1,15,30,45), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60")
 plot_otus_mag
 ```
@@ -475,7 +475,7 @@ otus_all_sample <- otus_all_sample %>%
 
 plot_otus_ssu <- ggplot(data = otus_all_sample, mapping = aes(x = novelty, y = hab, fill = otus)) + 
                  geom_tile(width=1) + geom_text(aes(label = otus), size=1.75) + 
-                 labs(title="", y="Sample type, area and habitat descriptor (level 1)", x="Taxonomic rank", fill="Undefined lineages without\ngenomes (median):") + preset_gen2  +
+                 labs(title="", y="Sample type, area and habitat descriptor (level 1)", x="Taxonomic divergence level", fill="Undefined lineages without\ngenomes (median):") + preset_gen2  +
                  scale_fill_gradient2(midpoint = 60, limits=c(1,180), breaks=c(1,60,120,180), low = "#b2182b", mid= "#fee08b", high = "#3288bd", na.value = "gray60")
 plot_otus_ssu
 ```
