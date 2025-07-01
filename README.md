@@ -1,5 +1,5 @@
 [![DOI](https://zenodo.org/badge/730095914.svg)](https://doi.org/10.5281/zenodo.15782214)
-ß
+
 ## Intro
 
 Repository for scripts and resources used for the recovery and analysis of metagenome assembled genomes (MAGs) from the [Microflora Danica](https://github.com/cmc-aau/mfd_wiki/wiki) deep, long-read sequencing project (MFD-LR)
